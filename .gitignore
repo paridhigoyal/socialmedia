@@ -1,0 +1,6 @@
+# Configuration file of django
+.env
+
+**/__pycache__/
+
+db.sqlite3
