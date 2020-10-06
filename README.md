@@ -1,8 +1,8 @@
 
-#Project Objective:
+# Project Objective:
 The explosion of social media project  is to changing the way of communication. Through this links between people will improve and one can post anything of his choice and the other can give reviews in the form of comments and also can like the post and follow them.
 
-#Features:
+# Features:
 -User Authentication
 -Login 
 -Forget password
@@ -15,24 +15,24 @@ The explosion of social media project  is to changing the way of communication. 
 
 
 
-#Technology Stack:
+# Technology Stack:
 
-##Backend:
+## Backend:
 -Python 3.5.2
 -Django
 -Django rest framework
 
-##Database:
+## Database:
 -MySQL
 
-##Frontend:
+## Frontend:
 -React + Redux
 -HTML
 -CSS
 -Bootstrap
 
 
-#Project Structure
+# Project Structure
 .
 ├── manage.py<br/>
 ├── socialmediaapi<br/>
@@ -66,7 +66,7 @@ The explosion of social media project  is to changing the way of communication. 
 
 
 
-#Future scope of the Project:
+# Future scope of the Project:
 In future the chatting application , group can be created,  conference call, video calling,  calling , within the group post something,  make admin member of particular group to maintain group activities,  event management,  pages , save post, notification  .
 
 
