@@ -3,37 +3,37 @@
 The explosion of social media project  is to changing the way of communication. Through this links between people will improve and one can post anything of his choice and the other can give reviews in the form of comments and also can like the post and follow them.
 
 # Features:
--User Authentication
--Login 
--Forget password
--User authorization
--User Profile
--Comment
--Like
--Follow
--Post
+- User Authentication
+- Login 
+- Forget password
+- User authorization
+- User Profile
+- Comment
+- Like
+- Follow
+- Post
 
 
 
 # Technology Stack:
 
 ## Backend:
--Python 3.5.2
--Django
--Django rest framework
+- Python 3.5.2
+- Django
+- Django rest framework
 
 ## Database:
--MySQL
+- MySQL
 
 ## Frontend:
--React + Redux
--HTML
--CSS
--Bootstrap
+- React + Redux
+- HTML
+- CSS
+- Bootstrap
 
 
 # Project Structure
-.
+.<br/>
 ├── manage.py<br/>
 ├── socialmediaapi<br/>
 │   ├── admin.py<br/>
