@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from decouple import config, Csv
 
+# from datetime import timedelta
+from decouple import Csv, config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,10 +27,8 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = config('DEBUG', default=False, cast=bool) 
+DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
-
 
 # Application definition
 
@@ -44,11 +43,16 @@ INSTALLED_APPS = [
     'rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_jwt',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'rest_auth.registration',
 ]
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'socialmediaapi.serializers.RegisterUserSerializer',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +63,23 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
+]
+REST_FRAMEWORK = {
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication', 
+    #     'rest_framework.authentication.BasicAuthentication', 
+    #     # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication', 
+    #     # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+    #     ), 
+    'DEFAULT_PERMISSION_CLASSES': (       
+        'rest_framework.permissions.AllowAny',      
+        'rest_framework.permissions.IsAuthenticated', 
+    ),
+} 
+AUTHENTICATION_BACKENDS = [
+                           'django.contrib.auth.backends.ModelBackend',
+                           'allauth.account.auth_backends.AuthenticationBackend', 
+                           'rest_framework.authentication.SessionAuthentication',
 ]
 
 ROOT_URLCONF = 'socialmediaproject.urls'
@@ -95,7 +116,7 @@ DATABASES = {
         'PORT': '',
     }
 }
-
+REST_USE_JWT = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

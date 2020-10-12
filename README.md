@@ -43,6 +43,7 @@ The explosion of social media project  is to changing the way of communication. 
 │   │   ├── __init__.py<br/>
 │   │   └── __pycache__<br/>
 │   ├── models.py<br/>
+│   ├── permissions.py<br/>
 │   ├── __pycache__<br/>
 │   ├── serializers.py<br/>
 │   ├── tests.py<br/>
