@@ -54,15 +54,15 @@ class Profile(models.Model):
 
 class Post(models.Model):
     caption = models.CharField(max_length=200)
-    post_by = CurrentUserField(related_name='posted_by')
+    post_by = CurrentUserField(related_name='post_by')
     image = models.ImageField(upload_to='post-images', null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
 
     def get_post_belongs_to_authenticated_user(self):
-        return self.posted_by.pk == get_current_authenticated_user().pk
+        return self.post_by.pk == get_current_authenticated_user().pk
 
     def get_user(self):
-        user_dict = vars(self.posted_by)
+        user_dict = vars(self.post_by)
         return {"id": user_dict["id"], "username": user_dict["username"]}
 
     def get_likes_count(self):

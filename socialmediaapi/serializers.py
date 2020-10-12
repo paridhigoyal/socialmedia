@@ -59,10 +59,8 @@ class FollowerSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     post_belongs_to_authenticated_user = serializers.BooleanField(
         source='get_post_belongs_to_authenticated_user', read_only=True)
-    posted_by = serializers.DictField(
+    post_by = serializers.DictField(
         child=serializers.CharField(), source='get_user', read_only=True)
-    pub_date = serializers.CharField(
-        source='get_readable_date', read_only=True)
     likes_count = serializers.IntegerField(
         source='get_likes_count', read_only=True)
     dislikes_count = serializers.IntegerField(
@@ -72,10 +70,11 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'post_belongs_to_authenticated_user', 'posted_by',
-                  'pub_date', 'text', 'image', 'in_reply_to_post',
-                  'likes_count', 'dislikes_count', 'comments_count', 'posted_at']
-        write_only_fields = ['text', 'image', ]
+        fields = ['id', 'post_belongs_to_authenticated_user', 'post_by',
+                  'caption', 'image', 
+                  'likes_count', 'dislikes_count', 
+                  'comments_count', 'posted_at']
+        write_only_fields = ['caption', 'image', ]
         read_only_fields = ('id', 'posted_at',)
 
 
