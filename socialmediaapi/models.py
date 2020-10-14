@@ -76,7 +76,7 @@ class Post(models.Model):
         return comments
 
     def __str__(self):
-        return str(self)
+        return str(self.id)
 
 
 class Follower(models.Model):
@@ -106,20 +106,22 @@ class Follower(models.Model):
         return Follower.objects.filter(user=user).count()
 
     def __str__(self):
-        return str(self)
+        return str(self.id)
 
 
 class Comment(models.Model):
     content = models.TextField()
-    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     commented_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return str(self.id)
 
 class PostRate(models.Model):
     liked = models.BooleanField(null=True)
-    rated_post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    rated_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    rated_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
+    rated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
 
     def __str__(self):
         return str(self.rated_post)

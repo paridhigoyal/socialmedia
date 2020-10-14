@@ -50,7 +50,7 @@ class FollowerSerializer(serializers.ModelSerializer):
         child=serializers.CharField(),
         source='get_is_followed_by_info', read_only=True)
 
-    class Meta:
+    class Meta: 
         model = Follower
         fields = ('user', 'is_followed_by')
         read_only_fields = ('user', 'is_followed_by')
@@ -83,7 +83,7 @@ class PostRateSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostRate
         fields = ['liked', 'rated_post', 'rated_by', ]
-        read_only_fields = ('id')
+        read_only_fields = ('id',)
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -91,4 +91,4 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['content', 'user', 'commented_post', 'commented_at']
-        read_only_fields = ('id', ' commented_at')
+        read_only_fields = ('id', ' commented_at',)
