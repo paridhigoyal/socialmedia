@@ -1,13 +1,19 @@
 from django.conf.urls import url
 from django.urls import include, path
 from rest_framework import routers
-from .views import ProfileViewSet, PostViewSet, CommentViewSet
-from . import views
 
+from . import views
+from .views import CommentViewSet, PostRateViewSet, PostViewSet, ProfileViewSet
+
+# user_post_list = PostViewSet.as_view({
+#     'get': 'list',
+#     'post': 'create'
+# })
 router = routers.DefaultRouter()
 router.register(r'profile', ProfileViewSet, basename='profile')
-router.register(r'post', PostViewSet)
-router.register(r'comment', CommentViewSet)
+router.register(r'post', PostViewSet, basename='posts')
+router.register(r'comment', CommentViewSet, basename='comments')
+router.register(r'postrate', PostRateViewSet, basename='likes')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -16,6 +22,5 @@ urlpatterns = [
     path('following/<int:pk>/', views.Following.as_view(), name='following'),
     path('followers/<int:pk>/', views.Followers.as_view(), name='followers'),
     path('follow/<int:pk>/', views.follow, name='follow'),
-     path('postrate/', views.PostRateViewSet.as_view(), name='rate'),
-    path('postrating/<int:pk>/', views.PostRateViewSet.as_view(), name='rating'),
+
 ]

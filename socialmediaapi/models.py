@@ -32,7 +32,8 @@ class Profile(models.Model):
         return self.user.last_name
 
     def get_followers_count(self):
-        return Follower.objects.filter(user=self.user).exclude(is_followed_by=self.user).count()
+        return Follower.objects.filter(
+            user=self.user).exclude(is_followed_by=self.user).count()
 
     def get_following_count(self):
         return Follower.objects.filter(is_followed_by=self.user).count()
@@ -44,16 +45,8 @@ class Profile(models.Model):
         return str(self.user)
 
 
-# class TimeStampMixin(models.Model):
-#     created_at = models.DateTimeField(auto_now_add=True, null=True, 
-# blank=True)
-#     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
-
-    # class Meta:
-    #     abstract = True
-
 class Post(models.Model):
-    caption = models.CharField(max_length=200)
+    caption = models.CharField(max_length=200, verbose_name='caption')
     post_by = CurrentUserField(related_name='post_by')
     image = models.ImageField(upload_to='post-images', null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
@@ -64,16 +57,6 @@ class Post(models.Model):
     def get_user(self):
         user_dict = vars(self.post_by)
         return {"id": user_dict["id"], "username": user_dict["username"]}
-
-    def get_likes_count(self):
-        return PostRate.objects.filter(liked=True, rated_post=self).count()
-
-    def get_dislikes_count(self):
-        return PostRate.objects.filter(liked=False, rated_post=self).count()
-
-    def comments_count(self):
-        comments = Comment.objects.filter(post=self).count()
-        return comments
 
     def __str__(self):
         return str(self.id)
@@ -111,17 +94,22 @@ class Follower(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    commented_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    commented_post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comments')
     commented_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.id)
 
+
 class PostRate(models.Model):
     liked = models.BooleanField(null=True)
-    rated_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='likes')
-    rated_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='likes')
+    rated_post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='likes')
+    rated_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='likes')
 
     def __str__(self):
         return str(self.rated_post)

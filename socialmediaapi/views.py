@@ -1,29 +1,31 @@
 from django.contrib.auth.models import User
-from requests.models import Response
-from rest_framework import mixins, generics, permissions, status, viewsets
-from rest_framework.decorators import action
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import IsAuthenticated
-from .models import Profile, Post, Follower, PostRate, Comment
-from .permissions import IsInstanceUser, IsPostOwner
-from .serializers import ProfileSerializer, PostSerializer, FollowerSerializer,PostRateSerializer, CommentSerializer
-from django.shortcuts import get_object_or_404, redirect
 from django.core.exceptions import ValidationError
 from django.http import JsonResponse
-from rest_framework.decorators import api_view, permission_classes
+from django.shortcuts import get_object_or_404, redirect
+from requests.models import Response
+from rest_framework import generics, permissions, viewsets
+from rest_framework.decorators import action, permission_classes
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.permissions import IsAuthenticated
+
+from .models import Comment, Follower, Post, PostRate, Profile
+from .paginators import (CommentPagination, FollowerPagination,
+                         FollowingPagination, PostPagination, 
+                         PostRatePagination, ProfilePagination)
+from .permissions import IsInstanceUser, IsPostOwner, IsPostRateOwner
+from .serializers import (CommentSerializer, CommentUpdateSerializer,
+                          FollowerSerializer, PostRateSerializer,
+                          PostRateUpdateSerializer, PostSerializer,
+                          ProfileSerializer)
 
 
-
-
-class ProfileViewSet(mixins.ListModelMixin,  mixins.RetrieveModelMixin,
-                     mixins.UpdateModelMixin, mixins.DestroyModelMixin,
-                     viewsets.GenericViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = [IsAuthenticated, ]
     lookup_fields = ['user', ]
     filter_backends = (SearchFilter,)
-    search_fields = ['user__username',]
+    pagination_class = ProfilePagination
+    search_fields = ['user__username', ]
     permission_classes_by_action = {
         'partial_update': [IsInstanceUser],
         'destroy': [IsInstanceUser],
@@ -33,55 +35,65 @@ class ProfileViewSet(mixins.ListModelMixin,  mixins.RetrieveModelMixin,
 
     def get_permissions(self):
         try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
+            return [
+                permission() for permission in self.permission_classes_by_action[
+                    self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
+
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
+    # @action(detail=True, methods=['GET'], 
+    # url_path="userposts", url_name="user_posts")
+    # def get_user_posts(self , request ,pk = None):
+    #     try:
+    #         post_by = get_object_or_404(User , pk = pk)
+    #         owner_posts = Post.objects.filter(post_by = post_by.id)
+    #         serializer = PostSerializer(owner_posts , many = True)
+    #         return Response(serializer.data)
+    #     except(User.DoesNotExist):
+    #         return Response(
+        # {"error": 'The user does not exist'},
+        #  status=status.HTTP_204_NO_CONTENT)
     # import pdb; pdb.set_trace()
 
-    # @action(detail=False, methods=['GET'], url_path="profile", url_name="profile")
+    # @action(detail=False, methods=['GET'], 
+    # url_path="profile", url_name="profile")
     # def get_user_profile(self, request, pk=None):
-        
+
     #     try:
     #         import pdb; pdb.set_trace()
     #         queryset = self.get_queryset().get(id=request.user.id)
     #         serializer = ProfileSerializer(queryset, many=True)
     #         return Response(serializer.data, status=status.HTTP_200_OK)
     #     except(User.DoesNotExist):
-    #         return Response({"error": 'The user does not exist'}, status=status.HTTP_204_NO_CONTENT)
-        
-    @action(detail=True, methods=['GET'], url_path="posts", url_name="user_posts")
-    def get_user_posts(self, request, pk=None):
-        post=Post.objects.all()
-        try:
-            import pdb; pdb.set_trace();
-            user = self.get_queryset().get(pk=pk)  
-            queryset = Post.objects.filter(post.post_by).order_by('-posted_at')
-            serializer = PostSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except:
-            return Response({'error': "Bad request"}, status=status.HTTP_200_OK)
-
+    #         return Response(
+        # {"error": 'The user does not exist'}, 
+        # status=status.HTTP_204_NO_CONTENT)
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    
-    serializer_class = PostSerializer
     queryset = Post.objects.all()
-    # lookup_fields = ['user', ]
-    filter_backends = (SearchFilter,)
-    search_fields = ['post_by__username',]
+    serializer_class = PostSerializer
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ['post_by__username', ]
+    pagination_class = PostPagination
+    ordering = ['-posted_at']
     permission_classes_by_action = {
         'partial_update': [IsPostOwner],
         'destroy': [IsPostOwner],
         'update': [IsPostOwner],
-        # 'get_user_profile': [IsInstanceUser]
     }
-    
+
     def get_permissions(self):
         try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
+            return [
+                permission() for permission in self.permission_classes_by_action[
+                    self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
+
     # permission_classes = [permissions.IsAuthenticated, IsPostOwner]
     # @action(detail=False, methods=['GET'], name='Get comments')
     # def list_comments(self, request, *args, **kwargs):
@@ -91,108 +103,126 @@ class PostViewSet(viewsets.ModelViewSet):
 
     # def get_queryset(self):
     #     if self.action == 'list':
-    #         return Post.objects.filter(in_reply_to_post = None).order_by('-posted_at')
+    #         return Post.objects.filter(
+        # in_reply_to_post = None).order_by('-posted_at')
     #     return Post.objects.order_by('-posted_at')
-    
-    
-class PostRateViewSet(generics.GenericAPIView): # use mixins instead
+
+
+class PostRateViewSet(viewsets.ModelViewSet):
     queryset = PostRate.objects.all()
     serializer_class = PostRateSerializer
+    pagination_class = PostRatePagination
+    permission_classes_by_action = {
+        'partial_update': [IsPostRateOwner],
+        'destroy': [IsPostRateOwner],
+        'update': [IsPostRateOwner],
+    }
 
-    def get(self, request, pk):
-        post = get_object_or_404(Post, pk = pk)
-        data = {
-            'likes_count': PostRate.objects.filter(liked = True, rated_post = post).count(), 
-            'dislikes_count': PostRate.objects.filter(liked = False, rated_post = post).count()
-        }
-        return JsonResponse(data)
+    def get_permissions(self):
+        try:
+            return [
+                permission() for permission in self.permission_classes_by_action[
+                    self.action]]
+        except KeyError:
+            return (permissions.IsAuthenticated(),)
 
-    def post(self, request, *args, **kwargs):
-        post = get_object_or_404(Post, pk = id)
-        post_rating = PostRate.objects.filter(rated_by = request.user, rated_post = post).first()
-        user_liked_post = request.data["liked"]
+    def perform_create(self, serializer):
+        return serializer.save(rated_by=self.request.user)
 
-        if post_rating:
-            if user_liked_post:
-                if post_rating.liked:
-                    post_rating.liked = None
-                else:
-                    post_rating.liked = True                    
-            elif not user_liked_post:
-                if post_rating.liked == False:
-                    post_rating.liked = None
-                else:
-                    post_rating.liked = False                    
-        else:
-            post_rating = PostRate(liked = user_liked_post, rated_by = request.user, rated_post = post)
+    def update(self, request, pk=None):
+        like = get_object_or_404(PostRate, id=pk)
+        # post = PostRate.rated_post
+        self.check_object_permissions(request, like)
+        serializer = PostRateUpdateSerializer(like, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
-        post_rating.save()
+    def destroy(self, request, pk=None):
+        like = get_object_or_404(PostRate, id=pk)
+        rated_post = like.rated_post
+        self.check_object_permissions(request, like)
+        like.delete()
+        return Response(rated_post.data)
 
-        data = {
-            'total_likes': PostRate.objects.filter(liked = True, rated_post = post).count(), 
-            'total_dislikes': PostRate.objects.filter(liked = False, rated_post = post).count()
-        }
-        return JsonResponse(data)
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+    filter_backends = (SearchFilter, OrderingFilter)
+    search_fields = ['user__username', ]
+    ordering = ['-commented_at']
+    pagination_class = CommentPagination
+    permission_classes_by_action = {
+        'partial_update': [IsInstanceUser],
+        'destroy': [IsInstanceUser],
+        'update': [IsInstanceUser],
+    }
+
+    def get_permissions(self):
+        try:
+            return [
+                permission() for permission in self.permission_classes_by_action[
+                    self.action]]
+        except KeyError:
+            return (permissions.IsAuthenticated(),)
+
+    def perform_create(self, serializer):
+        return serializer.save(user=self.request.user)
+
+    def update(self, request, pk=None):
+        comment = get_object_or_404(Comment, id=pk)
+        self.check_object_permissions(request, comment)
+        serializer = CommentUpdateSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    @action(detail=True)
+    def get_comments(self, request, pk=None):
+        post = get_object_or_404(Post, pk=pk)
+        comments = Comment.objects.filter(
+            commented_post=post).order_by('-commented_at')
+        return Response(CommentSerializer(comments, many=True).data)
 
 
 @permission_classes([IsAuthenticated])
 def follow(request, pk):
-    # user_id = request.user.pk
-    user = get_object_or_404(User, pk= pk)
+    user = get_object_or_404(User, pk=pk)
     if user != request.user:
-        already_followed = Follower.objects.filter(user=user, is_followed_by=request.user).first()
+        already_followed = Follower.objects.filter(
+            user=user, is_followed_by=request.user).first()
         if not already_followed:
             new_follower = Follower(user=user, is_followed_by=request.user)
             new_follower.save()
             follower_count = Follower.objects.filter(user=user).count()
-            return JsonResponse({'status':'Following', 'count':follower_count})
+            return JsonResponse(
+                {'status': 'Following', 'count': follower_count})
         else:
             already_followed.delete()
             follower_count = Follower.objects.filter(user=user).count()
-            return JsonResponse({'status':'Not following', 'count':follower_count})
+            return JsonResponse(
+                {'status': 'Not following', 'count': follower_count})
         return redirect('/')
     raise ValidationError("One Cannot follow themselves")
 
 
 class Following(generics.ListCreateAPIView):
     serializer_class = FollowerSerializer
+    pagination_class = FollowingPagination
     permission_classes = [IsAuthenticated, ]
 
-    # def get_following(self, request, pk=None):
-    #     import pdb; pdb.set_trace()
-    #     user = User.objects.get( pk =  request.user.pk)
-    #     return Follower.objects.filter(is_followed_by = user)
     def get_queryset(self):
-        user = get_object_or_404(User, pk = self.kwargs["pk"])
-        return Follower.objects.filter(user = user).exclude(is_followed_by = user)
+        user = get_object_or_404(User, pk=self.kwargs["pk"])
+        return Follower.objects.filter(user=user).exclude(is_followed_by=user)
 
-class CommentViewSet(viewsets.ModelViewSet):
-    serializer_class = CommentSerializer
-    queryset = Comment.objects.all()
-    # lookup_fields = ['user', ]
-    permission_classes_by_action = {
-        'partial_update': [IsInstanceUser],
-        'destroy': [IsInstanceUser],
-        'update': [IsInstanceUser],
-        # 'get_user_profile': [IsInstanceUser]
-    }
-    
-    def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            return (permissions.IsAuthenticated(),)
 
 class Followers(generics.ListCreateAPIView):
     queryset = Follower.objects.all()
     serializer_class = FollowerSerializer
-    permission_classes = [ IsAuthenticated, ]
-    
+    pagination_class = FollowerPagination
+    permission_classes = [IsAuthenticated, ]
+
     def get_queryset(self):
-        user = get_object_or_404(User, pk = self.kwargs["pk"])
-        return Follower.objects.filter(is_followed_by = user)
-    
-    # def follower(self, request, pk=None):
-        # import pdb; pdb.set_trace()
-        # user = User.objects.get(pk= request.user.pk)
-        # return Follower.objects.filter(user = user).exclude(is_followed_by = user)
+        user = get_object_or_404(User, pk=self.kwargs["pk"])
+        return Follower.objects.filter(is_followed_by=user)
