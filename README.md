@@ -35,6 +35,12 @@ The explosion of social media project  is to changing the way of communication. 
 # Project Structure
 .<br/>
 ├── manage.py<br/>
+├── post-images<br/>
+├── profile-pictures<br/>
+├── README.md<br/>
+├── requirements.txt<br/>
+├── .gitignore<br/>
+├── .env<br/>
 ├── socialmediaapi<br/>
 │   ├── admin.py<br/>
 │   ├── apps.py<br/>
@@ -43,6 +49,7 @@ The explosion of social media project  is to changing the way of communication. 
 │   │   ├── __init__.py<br/>
 │   │   └── __pycache__<br/>
 │   ├── models.py<br/>
+│   ├── paginators.py<br/>
 │   ├── permissions.py<br/>
 │   ├── __pycache__<br/>
 │   ├── serializers.py<br/>
