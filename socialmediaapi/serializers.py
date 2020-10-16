@@ -1,10 +1,8 @@
 # serializers.py
 import datetime
-
 from django.contrib.auth.models import User
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
-
 from .models import Comment, Follower, Post, PostRate, Profile
 
 
@@ -14,7 +12,6 @@ class RegisterUserSerializer(RegisterSerializer):
         model = User
         fields = ('id', 'username', 'email', 'first_name',
                   'last_name')
-        # extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = super(RegisterUserSerializer, self).create(validated_data)

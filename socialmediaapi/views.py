@@ -7,11 +7,8 @@ from rest_framework import generics, mixins, permissions, status, viewsets
 from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
-
 from .models import Comment, Follower, Post, PostRate, Profile
-from .paginators import (CommentPagination, FollowerPagination,
-                         FollowingPagination, PostPagination,
-                         PostRatePagination, ProfilePagination)
+from .paginators import PagePagination
 from .permissions import IsInstanceUser, IsPostOwner, IsPostRateOwner
 from .serializers import (CommentSerializer, CommentUpdateSerializer,
                           FollowerSerializer, PostRateSerializer,
@@ -24,7 +21,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     lookup_fields = ['user', ]
     filter_backends = (SearchFilter,)
-    pagination_class = ProfilePagination
+    pagination_class = PagePagination
     search_fields = ['user__username', ]
     permission_classes_by_action = {
         'partial_update': [IsInstanceUser],
@@ -48,7 +45,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
             url_path="user_profile", url_name="user_profile")
     def get_user_profile(self, request, pk=None):
         try:
-            # import pdb; pdb.set_trace()
             user = get_object_or_404(User, pk=pk)
             profile = Profile.objects.filter(
                 user=user)
@@ -67,7 +63,7 @@ class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ['post_by__username', ]
-    pagination_class = PostPagination
+    pagination_class = PagePagination
     ordering = ['-posted_at']
     permission_classes_by_action = {
         'partial_update': [IsPostOwner],
@@ -87,7 +83,6 @@ class PostViewSet(viewsets.ModelViewSet):
             url_path="user_posts", url_name="user_posts")
     def get_user_posts(self, request, pk=None):
         try:
-            # import pdb; pdb.set_trace()
             user = get_object_or_404(User, pk=pk)
             post = Post.objects.filter(
                 post_by=user)
@@ -104,7 +99,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class PostRateViewSet(viewsets.ModelViewSet):
     queryset = PostRate.objects.all()
     serializer_class = PostRateSerializer
-    pagination_class = PostRatePagination
+    pagination_class = PagePagination
     permission_classes_by_action = {
         'partial_update': [IsPostRateOwner],
         'destroy': [IsPostRateOwner],
@@ -124,7 +119,6 @@ class PostRateViewSet(viewsets.ModelViewSet):
 
     def update(self, request, pk=None):
         like = get_object_or_404(PostRate, id=pk)
-        # post = PostRate.rated_post
         self.check_object_permissions(request, like)
         serializer = PostRateUpdateSerializer(like, data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -142,7 +136,6 @@ class PostRateViewSet(viewsets.ModelViewSet):
             url_path="post_likes", url_name="post_likes")
     def get_likes(self, request, pk=None):
         try:
-            # import pdb; pdb.set_trace()
             post = get_object_or_404(Post, pk=pk)
             postrate = PostRate.objects.filter(
                 rated_post=post)
@@ -162,7 +155,7 @@ class CommentViewSet(generics.ListCreateAPIView):
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ['user__username', ]
     ordering = ['-commented_at']
-    pagination_class = CommentPagination
+    pagination_class = PagePagination
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -178,7 +171,7 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
     filter_backends = (SearchFilter, OrderingFilter)
     search_fields = ['user__username', ]
     ordering = ['-commented_at']
-    pagination_class = CommentPagination
+    pagination_class = PagePagination
     permission_classes_by_action = {
         'partial_update': [IsInstanceUser],
         'destroy': [IsInstanceUser],
@@ -197,7 +190,6 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
             url_path="post_comments", url_name="post_comments")
     def get_comments(self, request, pk=None):
         try:
-            # import pdb; pdb.set_trace()
             post = get_object_or_404(Post, pk=pk)
             comments = Comment.objects.filter(
                 commented_post=post).order_by('-commented_at')
@@ -234,7 +226,7 @@ def follow(request, pk):
 
 class Following(generics.ListCreateAPIView):
     serializer_class = FollowerSerializer
-    pagination_class = FollowingPagination
+    pagination_class = PagePagination
     filter_backends = (SearchFilter,)
     search_fields = ['user__username', ]
     permission_classes = [IsAuthenticated, ]
@@ -249,7 +241,7 @@ class Followers(generics.ListCreateAPIView):
     serializer_class = FollowerSerializer
     filter_backends = (SearchFilter,)
     search_fields = ['user__username', ]
-    pagination_class = FollowerPagination
+    pagination_class = PagePagination
     permission_classes = [IsAuthenticated, ]
 
     def get_queryset(self):
