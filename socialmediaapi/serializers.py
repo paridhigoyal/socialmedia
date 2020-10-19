@@ -1,8 +1,10 @@
 # serializers.py
 import datetime
+
 from django.contrib.auth.models import User
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
+
 from .models import Comment, Follower, Post, PostRate, Profile
 
 

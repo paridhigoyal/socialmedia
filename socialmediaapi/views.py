@@ -7,6 +7,7 @@ from rest_framework import generics, mixins, permissions, status, viewsets
 from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
+
 from .models import Comment, Follower, Post, PostRate, Profile
 from .paginators import PagePagination
 from .permissions import IsInstanceUser, IsPostOwner, IsPostRateOwner
@@ -33,7 +34,8 @@ class ProfileViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         try:
             return [
-                permission() for permission in self.permission_classes_by_action[
+                permission() for permission in
+                self.permission_classes_by_action[
                     self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
@@ -74,7 +76,8 @@ class PostViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         try:
             return [
-                permission() for permission in self.permission_classes_by_action[
+                permission() for permission in
+                self.permission_classes_by_action[
                     self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
@@ -96,9 +99,22 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response({'error': "Bad request"})
 
 
-class PostRateViewSet(viewsets.ModelViewSet):
+class PostRateViewSet(generics.ListCreateAPIView):
     queryset = PostRate.objects.all()
     serializer_class = PostRateSerializer
+    pagination_class = PagePagination
+
+    def perform_create(self, serializer):
+        return serializer.save(rated_by=self.request.user)
+
+
+class PostRateUpdateViewSet(mixins.RetrieveModelMixin,
+                            mixins.ListModelMixin,
+                            mixins.UpdateModelMixin,
+                            mixins.DestroyModelMixin,
+                            viewsets.GenericViewSet):
+    queryset = PostRate.objects.all()
+    serializer_class = PostRateUpdateSerializer
     pagination_class = PagePagination
     permission_classes_by_action = {
         'partial_update': [IsPostRateOwner],
@@ -109,28 +125,11 @@ class PostRateViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         try:
             return [
-                permission() for permission in self.permission_classes_by_action[
+                permission() for permission in
+                self.permission_classes_by_action[
                     self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
-
-    def perform_create(self, serializer):
-        return serializer.save(rated_by=self.request.user)
-
-    def update(self, request, pk=None):
-        like = get_object_or_404(PostRate, id=pk)
-        self.check_object_permissions(request, like)
-        serializer = PostRateUpdateSerializer(like, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
-
-    def destroy(self, request, pk=None):
-        like = get_object_or_404(PostRate, id=pk)
-        rated_post = like.rated_post
-        self.check_object_permissions(request, like)
-        like.delete()
-        return Response(rated_post.data)
 
     @action(detail=True,  methods=['GET'],
             url_path="post_likes", url_name="post_likes")
@@ -181,7 +180,8 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
     def get_permissions(self):
         try:
             return [
-                permission() for permission in self.permission_classes_by_action[
+                permission() for permission in
+                self.permission_classes_by_action[
                     self.action]]
         except KeyError:
             return (permissions.IsAuthenticated(),)
