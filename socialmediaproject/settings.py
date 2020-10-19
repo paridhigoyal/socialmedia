@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    'corsheaders',
 ]
 
 REST_AUTH_REGISTER_SERIALIZERS = {
@@ -55,6 +56,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -84,6 +86,15 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
     'rest_framework.authentication.SessionAuthentication',
 ]
+
+# CORS setting
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    'http://localhost:3000',
+)
+
 
 ROOT_URLCONF = 'socialmediaproject.urls'
 
