@@ -1,25 +1,23 @@
 # serializers.py
 import datetime
-
 from django.contrib.auth.models import User
-from rest_auth.registration.serializers import RegisterSerializer
+# from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
-
 from .models import Comment, Follower, Post, PostRate, Profile
 
 
-class RegisterUserSerializer(RegisterSerializer):
+# class RegisterUserSerializer(RegisterSerializer):
 
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'first_name',
-                  'last_name')
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'email', 'first_name',
+#                   'last_name')
 
-    def create(self, validated_data):
-        user = super(RegisterUserSerializer, self).create(validated_data)
-        user.set_first_name(validated_data['first_name'])
-        user.save()
-        return user
+#     def create(self, validated_data):
+#         user = super(RegisterUserSerializer, self).create(validated_data)
+#         user.set_first_name(validated_data['first_name'])
+#         user.save()
+#         return user
 
 
 class ProfileSerializer(serializers.ModelSerializer):

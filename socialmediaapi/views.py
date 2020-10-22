@@ -28,7 +28,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         'partial_update': [IsInstanceUser],
         'destroy': [IsInstanceUser],
         'update': [IsInstanceUser],
-        'get_user_profile': [IsInstanceUser]
+        'get_user_profile': [IsInstanceUser],
     }
 
     def get_permissions(self):

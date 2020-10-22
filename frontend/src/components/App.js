@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
-//   Route,
+  Route,
   Link,
-  Switch
+  Switch,
+  // Redirect,
 } from "react-router-dom";
+import Login from './Login'
+import Signup from './Signup';
+import Posts from './Posts';
+import AddPost from './AddPost';
 export class App extends Component {
     render() {
       return (
@@ -12,8 +17,10 @@ export class App extends Component {
           <div>
             <nav>
               <ul>
-                <li>
-                  <Link to="/">Home</Link><br /></li>
+                <li><Link to="/">Home</Link><br /></li>
+                <li><Link to ="/login">Login</Link></li>
+                <li><Link to ="/signup">Signup</Link></li>
+                
               </ul>
             </nav>
           </div>
@@ -21,8 +28,11 @@ export class App extends Component {
             {/* <Route path="/">
               < Post />
   
-            </Route>
-            <Route path="/user"> <UserLogin /></Route> */}
+            </Route> */}
+            <Route path="/login"> <Login/></Route>
+            <Route path="/signup"> <Signup/></Route>
+            <Route path="/posts/"><Posts></Posts></Route>
+            <Route path="/addpost"><AddPost/></Route>
   
           </Switch>
         </Router>
