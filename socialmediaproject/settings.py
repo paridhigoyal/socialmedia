@@ -51,9 +51,6 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# REST_AUTH_REGISTER_SERIALIZERS = {
-#     'REGISTER_SERIALIZER': 'socialmediaapi.serializers.RegisterUserSerializer',
-# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -71,11 +68,7 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
-    #     'rest_framework.authentication.BasicAuthentication',
-    #     # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    #     # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        ),
+    ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
@@ -83,9 +76,9 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PAGINATION_CLASS': (
     #     'rest_framework.pagination.PageNumberPagination',
 
-        
+
     # ),
-    
+
 }
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

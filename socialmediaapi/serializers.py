@@ -1,23 +1,9 @@
 # serializers.py
 import datetime
-from django.contrib.auth.models import User
-# from rest_auth.registration.serializers import RegisterSerializer
+
 from rest_framework import serializers
+
 from .models import Comment, Follower, Post, PostRate, Profile
-
-
-# class RegisterUserSerializer(RegisterSerializer):
-
-#     class Meta:
-#         model = User
-#         fields = ('id', 'username', 'email', 'first_name',
-#                   'last_name')
-
-#     def create(self, validated_data):
-#         user = super(RegisterUserSerializer, self).create(validated_data)
-#         user.set_first_name(validated_data['first_name'])
-#         user.save()
-#         return user
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -33,12 +19,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('username', 'followers_count', 'following_count',
+        fields = ('id', 'username', 'followers_count', 'following_count',
                   'profile_belongs_to_authenticated_user',
                   'first_name', 'last_name', 'bio', 'location',
                   'gender', 'date_of_birth',
                   'contact_no',  'profile_picture')
-        read_only_fields = ('username', 'followers_count',
+        read_only_fields = ('id', 'username', 'followers_count',
                             'following_count',
                             'profile_belongs_to_authenticated_user',)
         write_only_fields = ('first_name', 'last_name', 'bio', 'location',
@@ -68,8 +54,8 @@ class FollowerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Follower
-        fields = ('user', 'is_followed_by')
-        read_only_fields = ('user', 'is_followed_by')
+        fields = ('id', 'user', 'is_followed_by')
+        read_only_fields = ('id', 'user', 'is_followed_by')
 
 
 class PostRateSerializer(serializers.ModelSerializer):
@@ -95,7 +81,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['content', 'user', 'commented_post', 'commented_at']
+        fields = ['id', 'content', 'user', 'commented_post', 'commented_at']
         read_only_fields = ('id', ' commented_at', 'user')
 
 
@@ -134,12 +120,12 @@ class PostRateUpdateSerializer(serializers.ModelSerializer):
     class Meta():
         model = PostRate
         fields = '__all__'
-        read_only_fields = ['rated_by', 'rated_post']
+        read_only_fields = ['id', 'rated_by', 'rated_post']
 
 
 class CommentUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['content', 'user', 'commented_post', 'commented_at']
+        fields = ['id', 'content', 'user', 'commented_post', 'commented_at']
         read_only_fields = ('id', ' commented_at', 'user', 'commented_post')
