@@ -7,8 +7,36 @@ export class AddPost extends Component {
         super(props);
         this.state = {
             postData: {
-                caption: '',
-                image: ''
+                id: '',
+                post_belongs_to_authenticated_user: '',
+                post_by: {
+                    id: "",
+                    username: ""
+                },
+                caption: "",
+                image: "",
+                likes_count: '',
+                dislikes_count: '',
+                comments_count: '',
+                posted_at: "",
+                comments: [
+                    {
+                        id: '',
+                        content: "",
+                        user: '',
+                        commented_post: '',
+                        commented_at: ""
+                    }
+                ],
+                likes: [
+                    {
+                        id: '',
+                        liked: '',
+                        rated_post: '',
+                        rated_by: ''
+                    }
+                ]
+
                 // imgarray :[]
             }
         }
@@ -20,7 +48,7 @@ export class AddPost extends Component {
     //       console.log(this.state.imgarray)
     //     }
     // 
-    
+
     onInputChange = (event) => {
         switch (event.target.name) {
             case 'image':

@@ -23,8 +23,8 @@ const renderDisabledField = ({
   label,
   type,
 }) => (
-  <TextField disabled {...input} type={type} label={label} variant="outlined" />
-);
+    <TextField disabled {...input} type={type} label={label} variant="outlined" />
+  );
 
 class User extends React.Component {
   componentDidMount() {
@@ -52,8 +52,8 @@ class User extends React.Component {
             ) : error ? (
               <div>User data loading failed</div>
             ) : (
-              data && null
-            )}
+                  data && null
+                )}
             <form
               onSubmit={handleSubmit((values) => updateUser({ ...values }))}
               className="profile-form"

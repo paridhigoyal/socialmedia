@@ -5,14 +5,14 @@ import { connect } from "react-redux"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
 
-class Login extends Component {
+class Profile extends Component {
     state = {
         bio: "",
         location: "",
-        gender:"",
-        date_of_birth:"",
-        contact_no:"",
-        profile_picture:"",
+        gender: "",
+        date_of_birth: "",
+        contact_no: "",
+        profile_picture: "",
         progress: false
     }
     render() {

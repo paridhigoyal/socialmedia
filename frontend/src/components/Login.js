@@ -12,7 +12,7 @@ class Login extends Component {
         progress: false
     }
     render() {
-        const { isAuthenticated, token} = this.props.authReducer
+        const { isAuthenticated, token } = this.props.authReducer
         console.log(token)
         const { progress } = this.state
         if (isAuthenticated) {
