@@ -1,13 +1,12 @@
 # serializers.py
 import datetime
-
 from rest_framework import serializers
-
 from .models import Comment, Follower, Post, PostRate, Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='get_username', read_only=True)
+    user_id = serializers.IntegerField(source='get_user_id', read_only=True)
     first_name = serializers.CharField(source='get_first_name', read_only=True)
     last_name = serializers.CharField(source='get_last_name', read_only=True)
     followers_count = serializers.IntegerField(
@@ -16,15 +15,18 @@ class ProfileSerializer(serializers.ModelSerializer):
         source='get_following_count', read_only=True)
     profile_belongs_to_authenticated_user = serializers.BooleanField(
         source='get_profile_belongs_to_authenticated_user', read_only=True)
+    follow_status = serializers.CharField(source='get_follow_status',
+                                          read_only=True)
 
     class Meta:
         model = Profile
-        fields = ('id', 'username', 'followers_count', 'following_count',
+        fields = ('id', 'user_id', 'username', 'followers_count',
+                  'following_count',
                   'profile_belongs_to_authenticated_user',
                   'first_name', 'last_name', 'bio', 'location',
                   'gender', 'date_of_birth',
-                  'contact_no',  'profile_picture')
-        read_only_fields = ('id', 'username', 'followers_count',
+                  'contact_no', 'profile_picture', 'follow_status')
+        read_only_fields = ('id', 'user_id', 'username', 'followers_count',
                             'following_count',
                             'profile_belongs_to_authenticated_user',)
         write_only_fields = ('first_name', 'last_name', 'bio', 'location',

@@ -31,6 +31,11 @@ class Profile(models.Model):
     def get_last_name(self):
         return self.user.last_name
 
+    def get_follow_status(self):
+        follow_status = Follower.objects.filter(user=self.user,
+                                                is_followed_by=get_current_authenticated_user())
+        return "Following" if follow_status else "Follow"
+
     def get_followers_count(self):
         return Follower.objects.filter(
             user=self.user).exclude(is_followed_by=self.user).count()

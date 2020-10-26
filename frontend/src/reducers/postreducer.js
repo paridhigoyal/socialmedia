@@ -3,6 +3,8 @@ import {
   POSTS_REQUEST,
   POSTS_SUCCESS,
   DELETE_POST,
+  EDIT_POST,
+  EDIT_POST_FAIL,
 } from "../actions/action_types"
 const initialState = {
   loading: false,
@@ -26,6 +28,7 @@ const postreducer = (state = initialState, action) => {
         error: ''
       }
     case POSTS_FAILURE:
+    case EDIT_POST_FAIL:
       return {
         loading: false,
         posts: [],
@@ -34,6 +37,13 @@ const postreducer = (state = initialState, action) => {
 
     case DELETE_POST:
       return posts.filter((id) => id !== action.id)
+
+    case EDIT_POST:
+      postIndex = posts.findIndex((post) => (post.id === action.payload.id))
+      if (postIndex > -1) {
+        posts.splice(postIndex, 1, action.payload)
+      }
+      return posts
 
     default: return state
   }

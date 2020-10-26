@@ -13,6 +13,9 @@ import Login from './Login'
 import Signup from './Signup';
 import Posts from './Posts';
 import AddPost from './AddPost';
+import Followers from './Followers';
+import Following from './Following';
+import UserProfiles from './UserProfiles';
 function App(props) {
 
   const { isAuthenticated } = props
@@ -42,18 +45,48 @@ function App(props) {
               return <Redirect to="/login" />;
             }
           }}>
-
         </Route>
+        <Route path='/followers/:id/'
+          render={() => {
+            if (isAuthenticated) {
+              return <Followers />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}>
+        </Route>
+        <Route path='/following/:id/'
+          render={() => {
+            if (isAuthenticated) {
+              return <Following {...props} />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }} />
+
+        <Route path='/userprofiles'
+          render={() => {
+            if (isAuthenticated) {
+              return <UserProfiles {...props} />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }} />
+
+
 
       </Switch>
     </Router>
 
   )
 }
+
 const mapStateToProps = (state) => {
   return {
     authReducer: state.authReducer,
     isAuthenticated: state.authReducer.token ? true : false,
+    followerreducer: state.followerreducer,
+
   };
 };
 

@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Redirect, Link } from "react-router-dom";
 import { getPosts } from '../actions/index'
 import { connect } from 'react-redux';
 import { SearchUserPost } from './SearchUserPost';
 import DeletePost from './DeletePost';
 import EditPost from './EditPost';
-// import Navbar from './Navbar';
+
 
 class Posts extends Component {
 
@@ -19,21 +18,16 @@ class Posts extends Component {
 
 
   render() {
-    const { isAuthenticated } = this.props.authReducer
     const { posts } = this.props.postreducer
     console.log(posts)
 
     return (
       <div>
-        <h4>Welcome to Social Life!.</h4>
+
         <SearchUserPost />
         <ul>
 
-          <Link to={`/addpost`}>
-            <button style={{ backgroundColor: '#b92b27', borderColor: '#b92b27' }}>
-              Post Something...
-    </button>
-          </Link>
+          {/* <Nav/> */}
           {posts.map((value, index) => (
 
             <li key={index}>
@@ -47,7 +41,7 @@ class Posts extends Component {
               dislikescount : {value.dislikes_count}
               comments_count: {value.comment_count}
               {value.post_belongs_to_authenticated_user && <DeletePost id={value.id} />}
-              {value.post_belongs_to_authenticated_user && <EditPost id={value.id} />}
+              {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
               {/* <Comment id={value.id}/>
               <PostRate id={value.id}/> */}
               {/* comments:
