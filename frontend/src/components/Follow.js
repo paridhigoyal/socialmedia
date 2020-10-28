@@ -10,7 +10,7 @@ export class Follow extends Component {
   render() {
     return (
       <div>
-        {console.log("", this.props)}
+        {/* {console.log("", this.props)} */}
         <button
           onClick={() => this.props.follow(this.props.id)}>
           Follow

@@ -34,9 +34,9 @@ const renderField = ({
   );
 export class Signup extends Component {
   submit = (values) => {
-    console.log('aa')
+    // console.log('aa')
     alert("Form submitted successfully.....");
-    console.log(values);
+    // console.log(values);
   };
   render() {
     const {
@@ -49,7 +49,7 @@ export class Signup extends Component {
       submitSucceeded,
     } = this.props;
     if (submitSucceeded) {
-      console.log('asa')
+      // console.log('asa')
       history.push("/login");
     }
     return (

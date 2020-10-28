@@ -12,7 +12,7 @@ const initialState = {
 const followerreducer = (state = initialState, action) => {
   //let followers = state.followers
 
-  console.log(action.type)
+  // console.log(action.type)
   switch (action.type) {
     case FOLLOWER_REQUEST:
       return {

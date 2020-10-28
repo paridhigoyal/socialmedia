@@ -14,7 +14,7 @@ const initialState = {
 const postreducer = (state = initialState, action) => {
   let posts = state.posts
 
-  console.log(action.type)
+  // console.log(action.type)
   switch (action.type) {
     case POSTS_REQUEST:
       return {
@@ -39,10 +39,10 @@ const postreducer = (state = initialState, action) => {
       return posts.filter((id) => id !== action.id)
 
     case EDIT_POST:
-      postIndex = posts.findIndex((post) => (post.id === action.payload.id))
-      if (postIndex > -1) {
-        posts.splice(postIndex, 1, action.payload)
-      }
+      // postIndex = posts.findIndex((post) => (post.id === action.payload.id))
+      // if (postIndex > -1) {
+      //   posts.splice(postIndex, 1, action.payload)
+      // }
       return posts
 
     default: return state

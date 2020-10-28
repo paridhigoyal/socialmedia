@@ -14,7 +14,7 @@ class Nav extends Component {
 
                 <ul className="navbar-nav ml-auto">
                     <h2>Welcome to Social Life!....</h2>
-                    {console.log(pk)}
+                    {/* {console.log(pk)} */}
                     <li className="nav-item" style={{ margin: "auto 0" }}>
                         <Link className="btn btn-sm btn-outline-info" to="/user-info">
                             {username}<i className="fa fa-user ml-1"></i>

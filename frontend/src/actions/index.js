@@ -9,7 +9,7 @@ import {
     FOLLOWER_SUCCESS,
     FOLLOWER_FAILURE,
     EDIT_POST_FAIL,
-    EDIT_POST
+    EDIT_POST,ADD_COMMENT,
 } from "./action_types"
 
 export const login = (values, callBack) => {
@@ -36,10 +36,9 @@ export const logout = () => (dispatch) => {
     window.location.reload(true);
 };
 
-
 export const searchuserpost = (posts) => (dispatch, getState) => {
     const config = setConfig(getState)
-    console.log(config)
+    // console.log(config)
     dispatch({ type: POSTS_REQUEST });
     axios
         .get(`${baseURL}/post/?search=${posts}`, config)
@@ -51,18 +50,6 @@ export const searchuserpost = (posts) => (dispatch, getState) => {
             dispatch({ type: POSTS_FAILURE, payload: error.message });
         });
 };
-
-// export const getUser = () => (dispatch) => {
-//     dispatch({ type: PROFILE_REQUEST });
-//     axios
-//       .get(`${baseURL}/api/users/profile`, headers)
-//       .then((response) => {
-//         dispatch({ type: PROFILE_SUCCESS, payload: response.data });
-//       })
-//       .catch((error) => {
-//         dispatch({ type: PROFILE_FAILURE, payload: error.message });
-//       });
-//   };
 
 export const getPosts = () => (dispatch, getState) => {
     const config = setConfig(getState)
@@ -77,6 +64,7 @@ export const getPosts = () => (dispatch, getState) => {
             dispatch({ type: POSTS_FAILURE, payload: error.message });
         });
 };
+
 export const addPost = (postData, callBack) => {
     return (dispatch, getState) => {
         const config = setConfig(getState)
@@ -98,11 +86,11 @@ export const addPost = (postData, callBack) => {
 
 export const deletePost = (id) => (dispatch, getState) => {
     const config = setConfig(getState)
-    console.log('dff')
+    // console.log('dff')
     axios.delete(`${baseURL}/posts/${id}/`, config)
         .then((data) => {
             const posts = data
-            console.log(posts, 'abcd')
+            // console.log(posts, 'abcd')
             dispatch({
                 type: DELETE_POST,
                 payload: posts,
@@ -111,6 +99,7 @@ export const deletePost = (id) => (dispatch, getState) => {
 
         })
 }
+
 export const getProfiles = () => (dispatch, getState) => {
     const config = setConfig(getState)
     // console.log(config)
@@ -133,7 +122,7 @@ export const follow = (id) => (dispatch, getState) => {
         .get(`http://127.0.0.1:8000/follow/${id}/`, config)
         .then((response) => {
             dispatch({ type: GET_FOLLOW_SUCCESS, payload: response.data.results });
-            console.log(response)
+            // console.log(response)
         })
         .catch((error) => {
             dispatch({ type: GET_FOLLOW_FAILURE, payload: error.message });
@@ -142,7 +131,7 @@ export const follow = (id) => (dispatch, getState) => {
 
 export const getFollowers = () => (dispatch, getState) => {
     const config = setConfig(getState)
-    console.log(config, 'fdg')
+    // console.log(config, 'fdg')
     dispatch({ type: FOLLOWER_REQUEST });
     axios
         .get(`${baseURL}/followers/`, config)
@@ -158,7 +147,7 @@ export const getFollowers = () => (dispatch, getState) => {
 export const editPost = (id, postData, callBack) => {
     return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.put(`posts/${id}/`, postData, config).then((res) => {
+        axios.put(`${baseURL}/posts/${id}/`, postData, config).then((res) => {
             dispatch({
                 type: EDIT_POST,
                 payload: res.data
@@ -173,10 +162,24 @@ export const editPost = (id, postData, callBack) => {
         })
     }
 }
+
+export const addComment = (values) => {
+    return (dispatch , getState) => {
+        const config = setConfig(getState)
+        axios.post(`${baseURL}/comment/`, values ,config).then((res) => {
+            dispatch({
+                type: ADD_COMMENT,
+                payload: res.data    
+            })
+          
+        })
+    }
+}
+
 export const setConfig = (getState) => {
     let config = null;
     const token = getState().authReducer.token
-    console.log(token)
+    // console.log(token)
     if (token) {
         config = {
             headers: {

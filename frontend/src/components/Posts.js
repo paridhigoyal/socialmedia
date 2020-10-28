@@ -4,13 +4,14 @@ import { connect } from 'react-redux';
 import { SearchUserPost } from './SearchUserPost';
 import DeletePost from './DeletePost';
 import EditPost from './EditPost';
+import AddComment from './AddComment';
 
 
 class Posts extends Component {
 
   componentDidMount() {
     const { isAuthenticated } = this.props.authReducer
-    console.log(isAuthenticated)
+    // console.log(isAuthenticated)
     if (isAuthenticated) {
       this.props.getPosts()
     }
@@ -19,7 +20,7 @@ class Posts extends Component {
 
   render() {
     const { posts } = this.props.postreducer
-    console.log(posts)
+    const { pk } = this.props.authReducer.user
 
     return (
       <div>
@@ -42,14 +43,19 @@ class Posts extends Component {
               comments_count: {value.comment_count}
               {value.post_belongs_to_authenticated_user && <DeletePost id={value.id} />}
               {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
-              {/* <Comment id={value.id}/>
-              <PostRate id={value.id}/> */}
-              {/* comments:
-              {value.comments.map(value, index)=>(
-                <li key = {index}>
-                  
+              <br /><b>comments.....</b>
+              {value.comments.map((data, index) => (
+                <li key={index}>
+                  {data.content} by {data.user}
+                  {pk === data.user && <EditComment value={data} />}
+                  {pk === data.user && <DeleteComment id={data.id} />}
+
+
                 </li>
-              )} */}
+              ))}
+
+
+              <AddComment id={value.id} />
             </li>
           ))
           }

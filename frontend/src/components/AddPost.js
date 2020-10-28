@@ -10,8 +10,8 @@ export class AddPost extends Component {
                 id: '',
                 post_belongs_to_authenticated_user: '',
                 post_by: {
-                    id: "",
-                    username: ""
+                    id:this.props.authReducer.user.pk,
+                    username: this.props.authReducer.user.username
                 },
                 caption: "",
                 image: "",
@@ -74,7 +74,7 @@ export class AddPost extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         // const {values}=this.state
-        // console.log(this.state.postData)
+        console.log(this.props.authReducer.user.pk,this.state.postData)
         this.props.addPost(this.state.postData)
     }
 
@@ -103,4 +103,10 @@ export class AddPost extends Component {
         )
     }
 }
-export default connect(null, { addPost })(AddPost)
+const mapStateToProps = ({ authReducer }) => {
+    return {
+      authReducer,
+      
+    }
+  }
+export default connect(mapStateToProps, { addPost })(AddPost)

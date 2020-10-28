@@ -47,7 +47,7 @@ export class EditPost extends Component {
     }
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.props.value)
+        // console.log(this.props.value)
         this.props.editPost(this.props.value.id, this.state.postData)
     }
     showForm = () => {

@@ -10,9 +10,9 @@ const initialState = {
   error: ''
 }
 const profilereducer = (state = initialState, action) => {
-  let profiles = state.profiles
+  // let profiles = state.profiles
 
-  console.log(action.type)
+  // console.log(action.type)
   switch (action.type) {
     case PROFILE_REQUEST:
       return {

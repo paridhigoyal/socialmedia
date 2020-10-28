@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux"
-// import AnimatePage from "../../components/AnimatePage" 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
 
@@ -13,14 +12,13 @@ class Login extends Component {
     }
     render() {
         const { isAuthenticated, token } = this.props.authReducer
-        console.log(token)
+        // console.log(token)
         const { progress } = this.state
         if (isAuthenticated) {
             return <Redirect to='/posts/' />
         }
         return (
             <div className="login-page">
-                {/* <AnimatePage /> */}
                 <div className="login-page-content">
                     <div className="login-page-content-inner">
                         <form onSubmit={this.onFormSubmit.bind(this)} >
@@ -63,8 +61,6 @@ class Login extends Component {
         e.preventDefault()
         const { progress, ...values } = this.state
         this.setState({ progress: true })
-
-        // send the request to the server
         this.props.login(values, () => {
             this.setState({
                 progress: false,
