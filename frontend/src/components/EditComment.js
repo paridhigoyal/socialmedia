@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import {editComment, getPosts} from '../actions/index'
 
 export class EditComment extends Component {
     constructor(props) {
@@ -28,10 +30,11 @@ export class EditComment extends Component {
                 break;
         }
     }
-    handleSubmit = (event) => {
+    handleSubmit = async(event) => {
         event.preventDefault();
-        // console.log(this.props.value)
-        // this.props.editComment(this.props.value.id, this.state.commentData)
+        console.log(this.state.commentData,this.props.data.id)
+        await this.props.editComment(this.props.data.id, this.state.commentData)
+        await this.props.getPosts()
     }
     showForm = () => {
 
@@ -60,4 +63,4 @@ export class EditComment extends Component {
     }
 }
 
-export default EditComment
+export default connect(null, {editComment,getPosts})(EditComment)

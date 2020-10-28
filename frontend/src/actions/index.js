@@ -10,7 +10,8 @@ import {
     FOLLOWER_FAILURE,
     EDIT_POST_FAIL,
     EDIT_POST,ADD_COMMENT,
-    DELETE_COMMENT
+    DELETE_COMMENT,
+    EDIT_COMMENT
 } from "./action_types"
 
 export const login = (values, callBack) => {
@@ -173,6 +174,20 @@ export const addComment = (values) => {
                 payload: res.data    
             })
           
+        })
+    }
+}
+
+export const editComment = (id, values) => {
+    return (dispatch , getState) => {
+        const config = setConfig(getState)
+        axios.put(`${baseURL}/commentupdate/${id}/`, values, config).then((res) => {
+            console.log(res)
+            dispatch({
+                type : EDIT_COMMENT,
+                payload : res.data
+            })
+            
         })
     }
 }
