@@ -10,6 +10,7 @@ import {
     FOLLOWER_FAILURE,
     EDIT_POST_FAIL,
     EDIT_POST,ADD_COMMENT,
+    DELETE_COMMENT
 } from "./action_types"
 
 export const login = (values, callBack) => {
@@ -175,6 +176,21 @@ export const addComment = (values) => {
         })
     }
 }
+export const deleteComment = (id) => {
+    return (dispatch, getState) => {
+      const config = setConfig(getState)
+        axios.delete(`${baseURL}/commentupdate/${id}`,config,)
+        .then((res )=>{
+            dispatch({
+                type: DELETE_COMMENT,
+                payload: res.data    
+            })
+        })
+
+        
+    }
+  }
+  
 
 export const setConfig = (getState) => {
     let config = null;

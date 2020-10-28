@@ -52,6 +52,7 @@ export class EditProfile extends Component {
                         date_of_birth: event.target.value
                     }
                 })
+                break;
                 case 'gender':
                 this.setState({
                     profileData: {
@@ -59,7 +60,6 @@ export class EditProfile extends Component {
                         gender: event.target.value
                     }
                 })
-
                 break;
             default:
                 break;

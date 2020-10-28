@@ -5,6 +5,8 @@ import { SearchUserPost } from './SearchUserPost';
 import DeletePost from './DeletePost';
 import EditPost from './EditPost';
 import AddComment from './AddComment';
+import EditComment from './EditComment';
+import DeleteComment from './DeleteComment';
 
 
 class Posts extends Component {
@@ -47,7 +49,7 @@ class Posts extends Component {
               {value.comments.map((data, index) => (
                 <li key={index}>
                   {data.content} by {data.user}
-                  {pk === data.user && <EditComment value={data} />}
+                  {pk === data.user && <EditComment data={data} />}
                   {pk === data.user && <DeleteComment id={data.id} />}
 
 
