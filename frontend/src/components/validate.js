@@ -49,12 +49,14 @@ export const asyncValidate = (values) => {
   axios
     .post(`${baseURL}/rest-auth/registration/`, obj)
     .then((response) => {
+      alert('register successfully')
+      // window.flash('register successfully')
       // console.log(response.data);   
     })
     .catch((error) => {
       const errors = error.response.data;
       // console.log(errors);
-
+      // window.flash(errors)
     });
 };
 

@@ -9,9 +9,11 @@ import {
     FOLLOWER_SUCCESS,
     FOLLOWER_FAILURE,
     EDIT_POST_FAIL,
-    EDIT_POST,ADD_COMMENT,
+    EDIT_POST, ADD_COMMENT,
     DELETE_COMMENT,
-    EDIT_COMMENT
+    EDIT_COMMENT,
+    FORGET_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_SUCCESS
 } from "./action_types"
 
 export const login = (values, callBack) => {
@@ -37,6 +39,41 @@ export const logout = () => (dispatch) => {
     localStorage.removeItem("token");
     window.location.reload(true);
 };
+
+export const forgetPassword = (email) => {
+    return (dispatch) => {
+        axios.post(`${baseURL}/password/reset/`, email, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }).then((res) => {
+            dispatch({
+                type: FORGET_PASSWORD_SUCCESS,
+                payload: res.data
+            })
+        })
+    }
+}
+
+export const changePassword = (input) => {
+
+    return (dispatch, getState) => {
+        const config = setConfig(getState)
+        axios.post("http://127.0.0.1:8000/rest-auth/password/change/", input, config,{
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }}
+        
+        ).then((res) => {
+            console.log("res", input)
+            dispatch({
+                type: CHANGE_PASSWORD_SUCCESS,
+                payload: res.data
+            })
+        }
+        )
+    }
+}
 
 export const searchuserpost = (posts) => (dispatch, getState) => {
     const config = setConfig(getState)
@@ -166,46 +203,46 @@ export const editPost = (id, postData, callBack) => {
 }
 
 export const addComment = (values) => {
-    return (dispatch , getState) => {
+    return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.post(`${baseURL}/comment/`, values ,config).then((res) => {
+        axios.post(`${baseURL}/comment/`, values, config).then((res) => {
             dispatch({
                 type: ADD_COMMENT,
-                payload: res.data    
+                payload: res.data
             })
-          
+
         })
     }
 }
 
 export const editComment = (id, values) => {
-    return (dispatch , getState) => {
+    return (dispatch, getState) => {
         const config = setConfig(getState)
         axios.put(`${baseURL}/commentupdate/${id}/`, values, config).then((res) => {
             console.log(res)
             dispatch({
-                type : EDIT_COMMENT,
-                payload : res.data
+                type: EDIT_COMMENT,
+                payload: res.data
             })
-            
+
         })
     }
 }
 export const deleteComment = (id) => {
     return (dispatch, getState) => {
-      const config = setConfig(getState)
-        axios.delete(`${baseURL}/commentupdate/${id}`,config,)
-        .then((res )=>{
-            dispatch({
-                type: DELETE_COMMENT,
-                payload: res.data    
+        const config = setConfig(getState)
+        axios.delete(`${baseURL}/commentupdate/${id}`, config)
+            .then((res) => {
+                dispatch({
+                    type: DELETE_COMMENT,
+                    payload: res.data
+                })
             })
-        })
 
-        
+
     }
-  }
-  
+}
+
 
 export const setConfig = (getState) => {
     let config = null;

@@ -17,7 +17,7 @@ router.register(r'postrateupdate', PostRateUpdateViewSet,
 
 urlpatterns = [
     path('', include(router.urls)),
-    url(r'^password/reset/$', PasswordResetView.as_view(),
+    url(r'^password/reset/', PasswordResetView.as_view(),
         name='rest_password_reset'),
     re_path(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
             PasswordResetConfirmView.as_view(),

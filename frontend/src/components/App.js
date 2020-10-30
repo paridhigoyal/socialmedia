@@ -16,6 +16,8 @@ import AddPost from './AddPost';
 import Followers from './Followers';
 import Following from './Following';
 import UserProfiles from './UserProfiles';
+import  ForgetPassword  from './ForgetPassword';
+import ChangePassword from './ChangePassword'
 function App(props) {
 
   const { isAuthenticated } = props
@@ -27,7 +29,16 @@ function App(props) {
       <Switch>
         <Route path="/login"> <Login /></Route>
         <Route path="/signup"> <Signup /></Route>
-
+        <Route path="/forgetpassword"><ForgetPassword />
+        </Route>   
+        <Route path="/changepassword"
+          render={() => {
+            if (isAuthenticated) {
+              return <ChangePassword {...props} />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}></Route>
         <Route path="/posts"
           render={() => {
             if (isAuthenticated) {

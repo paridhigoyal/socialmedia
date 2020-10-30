@@ -3,6 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
+import { Button} from 'react-bootstrap';
 
 class Login extends Component {
     state = {
@@ -23,6 +24,7 @@ class Login extends Component {
                     <div className="login-page-content-inner">
                         <form onSubmit={this.onFormSubmit.bind(this)} >
                             <div >
+                                <label>Username</label>
                                 <input
                                     value={this.state.username}
                                     name="username"
@@ -32,6 +34,7 @@ class Login extends Component {
                                 />
                             </div>
                             <div className="form-group">
+                                <label>Password</label>
                                 <input
                                     value={this.state.password}
 
@@ -44,7 +47,10 @@ class Login extends Component {
                             <button style={{ marginRight: "5px" }} > Login </button>
                             <CircularProgress style={progress ? { display: "inline-block" } : { display: "none" }} />
                             <p className="text-helper">
-                                You dont have an account yet Signup from <Link to="/signup">here</Link>
+                                You dont have an account yet Signup from <Link to="/signup">here</Link><br />
+
+                                <Link className="nav-link" to="/forgetpassword">Forget Password</Link>
+
                             </p>
                         </form>
                     </div>
