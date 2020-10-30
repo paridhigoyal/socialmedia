@@ -30,12 +30,12 @@ export class ChangePassword extends Component {
         if (this.validate()) {
             console.log(this.state.input);
             var bodyFormData = new FormData();
-            bodyFormData.append('input', this.state.input);
+            bodyFormData.append('newpassword1', this.state.input.newpassword1);
+            bodyFormData.append('newpassword2', this.state.input.newpassword2);
             this.props.changePassword(bodyFormData)
             let input = {};
             input["newpassword1"] = "";
             input["newpassword2"] = "";
-
             this.setState({ input: input });
             console.log(this.state.input)
             alert('Demo Form is submited');

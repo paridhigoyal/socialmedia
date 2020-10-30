@@ -18,7 +18,7 @@ from decouple import Csv, config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+CSRF_COOKIE_NAME = "csrftoken"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -93,7 +93,14 @@ CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:8000",
     'http://localhost:3000',
 )
+# CORS_ALLOW_HEADERS = (
+#     'xsrfheadername',
+#     'xsrfcookiename',
+#     'content-type',
+#     "X-CSRFTOKEN"
+# )
 
+LOGOUT_ON_PASSWORD_CHANGE = True
 
 ROOT_URLCONF = 'socialmediaproject.urls'
 

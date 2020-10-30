@@ -6,39 +6,42 @@ export class AddPost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postData: {
-                id: '',
-                post_belongs_to_authenticated_user: '',
-                post_by: {
-                    id:this.props.authReducer.user.pk,
-                    username: this.props.authReducer.user.username
-                },
-                caption: "",
-                image: "",
-                likes_count: '',
-                dislikes_count: '',
-                comments_count: '',
-                posted_at: "",
-                comments: [
-                    {
-                        id: '',
-                        content: "",
-                        user: '',
-                        commented_post: '',
-                        commented_at: ""
-                    }
-                ],
-                likes: [
-                    {
-                        id: '',
-                        liked: '',
-                        rated_post: '',
-                        rated_by: ''
-                    }
-                ]
+            caption: "",
+            image: null,
+            //     postData: {
+            //         id: '',
+            //         post_belongs_to_authenticated_user: '',
+            //         post_by: {
+            //             id:this.props.authReducer.user.pk,
+            //             username: this.props.authReducer.user.username
+            //         },
+            //         caption: "",
+            //         image: null,
+            //         likes_count: '',
+            //         dislikes_count: '',
+            //         comments_count: '',
+            //         posted_at: "",
+            //         comments: [
+            //             {
+            //                 id: '',
+            //                 content: "",
+            //                 user: '',
+            //                 commented_post: '',
+            //                 commented_at: ""
+            //             }
+            //         ],
+            //         likes: [
+            //             {
+            //                 id: '',
+            //                 liked: '',
+            //                 rated_post: '',
+            //                 rated_by: ''
+            //             }
+            //         ]
 
-                // imgarray :[]
-            }
+            //         // imgarray :[]
+            //     }
+            // }
         }
         this.onInputChange = this.onInputChange.bind(this);
     }
@@ -53,18 +56,16 @@ export class AddPost extends Component {
         switch (event.target.name) {
             case 'image':
                 this.setState({
-                    postData: {
-                        ...this.state.postData,
-                        image: event.target.value
-                    }
+
+                    image: event.target.files[0]
+
                 })
                 break;
             case 'caption':
                 this.setState({
-                    postData: {
-                        ...this.state.postData,
-                        caption: event.target.value
-                    }
+
+                    caption: event.target.value
+
                 })
                 break;
             default:
@@ -74,8 +75,12 @@ export class AddPost extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         // const {values}=this.state
-        console.log(this.props.authReducer.user.pk,this.state.postData)
-        this.props.addPost(this.state.postData)
+        console.log(this.state.image.name, this.state.caption, this.state.image)
+        let form_data = new FormData();
+        form_data.append('image', this.state.image, this.state.image.name);
+        form_data.append('caption', this.state.caption);
+
+        this.props.addPost(form_data)
     }
 
     render() {
@@ -84,14 +89,14 @@ export class AddPost extends Component {
                 <label>Upload Image:</label>
                 <input type='file'
                     name='image'
-                    value={this.state.postData.image}
-                    //  onChange = {(event) => this.onPostimgChange(file)}
-                    onChange={this.onInputChange}
+                    accept="image/png, image/jpeg"
+                    // value={this.state.postData.image}
+                    onChange={this.onInputChange} required
                 /><br />
                 <label>Caption</label>
                 <input type='text'
                     name='caption'
-                    value={this.state.postData.caption}
+                    value={this.state.caption}
                     onChange={this.onInputChange}
                     placeholder="caption for the image" />
 
@@ -105,8 +110,8 @@ export class AddPost extends Component {
 }
 const mapStateToProps = ({ authReducer }) => {
     return {
-      authReducer,
-      
+        authReducer,
+
     }
-  }
+}
 export default connect(mapStateToProps, { addPost })(AddPost)

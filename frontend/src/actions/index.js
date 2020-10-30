@@ -1,5 +1,9 @@
 import axios from "axios";
 import { baseURL } from '../utility/index';
+import cookie from "react-cookies";
+// axios.defaults.xsrfHeaderName = "X-CSRFToken";
+// axios.defaults.xsrfCookieName = "csrftoken";
+// axios.defaults.withCredentials = true;
 import {
     LOGIN, LOGIN_ERROR, LOGOUT, POSTS_SUCCESS, POSTS_REQUEST,
     POSTS_FAILURE, POST_CREATED, POST_CREATED_FAILED, DELETE_POST,
@@ -56,14 +60,16 @@ export const forgetPassword = (email) => {
 }
 
 export const changePassword = (input) => {
-
+    // var csrftoken = getCookie('csrftoken');
     return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.post("http://127.0.0.1:8000/rest-auth/password/change/", input, config,{
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        }}
-        
+        axios.post("http://127.0.0.1:8000/rest-auth/password/change/", input, config, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                "X-CSRFToken": cookie.load("csrftoken"),
+            }
+        }
+
         ).then((res) => {
             console.log("res", input)
             dispatch({
@@ -104,21 +110,22 @@ export const getPosts = () => (dispatch, getState) => {
         });
 };
 
-export const addPost = (postData, callBack) => {
+
+export const addPost = (values) => {
+    console.log(values)
     return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.post(`${baseURL}/post/`, postData, config).then((res) => {
-            // console.log(res)
+        axios.post(`${baseURL}/post/`, values, config, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }
+        ).then((res) => {
             dispatch({
                 type: POST_CREATED,
                 payload: res.data
             })
-            callBack()
-        }, (err) => {
-            dispatch({
-                type: POST_CREATED_FAILED,
-                payload: err.response.data
-            })
+
         })
     }
 }
@@ -247,7 +254,6 @@ export const deleteComment = (id) => {
 export const setConfig = (getState) => {
     let config = null;
     const token = getState().authReducer.token
-    // console.log(token)
     if (token) {
         config = {
             headers: {

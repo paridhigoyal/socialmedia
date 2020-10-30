@@ -7,6 +7,7 @@ import EditPost from './EditPost';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 import DeleteComment from './DeleteComment';
+// import media from '../../../media';
 
 
 class Posts extends Component {
@@ -37,7 +38,7 @@ class Posts extends Component {
 
               post by : {value.post_by.username}<br />
               <div>
-                <img src={value.image}></img><br />
+                <img  style={{ resizeMode: 'cover', width: 50, height: 50}} src={value.image} alt="abc"></img><br />
                 {value.caption}<br />
               </div>
               likecount : {value.like_count}

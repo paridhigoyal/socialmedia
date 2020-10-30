@@ -15,11 +15,14 @@
     "drf-redux-auth": "^0.2.6",
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.0",
+    "react-cookie": "^4.0.3",
+    "react-cookies": "^0.1.1",
     "react-dom": "^16.14.0",
     "react-paginate": "^6.5.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
+    "redux-csrf": "^1.1.0",
     "redux-form": "^8.3.6",
     "redux-thunk": "^2.3.0"
   },
@@ -43,5 +46,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "file-loader": "^6.2.0",
+    "url-loader": "^4.1.1"
   }
 }
