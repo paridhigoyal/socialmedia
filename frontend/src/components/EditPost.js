@@ -1,24 +1,15 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux';
+import {editPost,getPosts} from '../actions/index'
 export class EditPost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postData: {
-                id: this.props.value.id,
-                post_belongs_to_authenticated_user: this.props.value.post_belongs_to_authenticated_user,
-                post_by: {
-                    id: this.props.value.post_by.id,
-                    username: this.props.value.post_by.username
-                },
+           
                 caption: this.props.value.caption,
                 image: this.props.value.image,
-                likes_count: this.props.value.likes_count,
-                dislikes_count: this.props.value.dislikes_count,
-                comments_count: this.props.value.comments_count,
-                posted_at: this.props.value.posted_at,
-                comments: [],
-                likes: []
-            }
+             
+            
         }
         this.onInputChange = this.onInputChange.bind(this);
     }
@@ -27,28 +18,30 @@ export class EditPost extends Component {
         switch (event.target.name) {
             case 'image':
                 this.setState({
-                    postData: {
-                        ...this.state.postData,
-                        image: event.target.value
-                    }
+                  
+                       
+                        image: event.target.files[0]
+
+                   
                 })
                 break;
             case 'caption':
                 this.setState({
-                    postData: {
-                        ...this.state.postData,
-                        caption: event.target.value
-                    }
+                        caption: event.target.value 
                 })
                 break;
             default:
                 break;
         }
     }
-    handleSubmit = (event) => {
+    handleSubmit = async(event) => {
         event.preventDefault();
-        // console.log(this.props.value)
-        this.props.editPost(this.props.value.id, this.state.postData)
+        console.log(this.state.image.name, this.state.caption, this.state.image)
+        let form_data = new FormData();
+        form_data.append('image', this.state.image, this.state.image.name);
+        form_data.append('caption', this.state.caption);
+        await this.props.editPost(this.props.value.id, form_data)
+        // await this.props.getPosts()
     }
     showForm = () => {
 
@@ -57,13 +50,13 @@ export class EditPost extends Component {
                 <label>Upload Image:</label>
                 <input type='file'
                     name='image'
-                // value={this.state.postData.image}
-                // onChange={this.onInputChange}
+                    accept="image/png, image/jpeg"
+                onChange={this.onInputChange}
                 /><br />
                 <label>Caption</label>
                 <input type='text'
                     name='caption'
-                    value={this.state.postData.caption}
+                    value={this.state.caption}
                     onChange={this.onInputChange}
                     placeholder="caption for the image" /><br />
                 <button>Update Post</button>
@@ -82,4 +75,4 @@ export class EditPost extends Component {
     }
 }
 
-export default EditPost
+export default connect(null,{editPost, getPosts})(EditPost)

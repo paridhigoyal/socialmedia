@@ -162,7 +162,7 @@ export const getProfiles = () => (dispatch, getState) => {
 }
 
 export const follow = (id) => (dispatch, getState) => {
-    dispatch({ type: GET_FOLLOW_REQUEST });
+    // dispatch({ type: GET_FOLLOW_REQUEST });
     const config = setConfig(getState)
     axios
         .get(`http://127.0.0.1:8000/follow/${id}/`, config)
@@ -193,7 +193,7 @@ export const getFollowers = () => (dispatch, getState) => {
 export const editPost = (id, postData, callBack) => {
     return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.put(`${baseURL}/posts/${id}/`, postData, config).then((res) => {
+        axios.put(`${baseURL}/post/${id}/`, postData, config).then((res) => {
             dispatch({
                 type: EDIT_POST,
                 payload: res.data

@@ -30,14 +30,13 @@ class Posts extends Component {
 
         <SearchUserPost />
         <ul>
-
-          {/* <Nav/> */}
           {posts.map((value, index) => (
 
             <li key={index}>
 
               post by : {value.post_by.username}<br />
               <div>
+                {console.log(value.image)}
                 <img  style={{ resizeMode: 'cover', width: 50, height: 50}} src={value.image} alt="abc"></img><br />
                 {value.caption}<br />
               </div>

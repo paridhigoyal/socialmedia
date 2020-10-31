@@ -8,49 +8,11 @@ export class AddPost extends Component {
         this.state = {
             caption: "",
             image: null,
-            //     postData: {
-            //         id: '',
-            //         post_belongs_to_authenticated_user: '',
-            //         post_by: {
-            //             id:this.props.authReducer.user.pk,
-            //             username: this.props.authReducer.user.username
-            //         },
-            //         caption: "",
-            //         image: null,
-            //         likes_count: '',
-            //         dislikes_count: '',
-            //         comments_count: '',
-            //         posted_at: "",
-            //         comments: [
-            //             {
-            //                 id: '',
-            //                 content: "",
-            //                 user: '',
-            //                 commented_post: '',
-            //                 commented_at: ""
-            //             }
-            //         ],
-            //         likes: [
-            //             {
-            //                 id: '',
-            //                 liked: '',
-            //                 rated_post: '',
-            //                 rated_by: ''
-            //             }
-            //         ]
-
-            //         // imgarray :[]
-            //     }
-            // }
+            
         }
         this.onInputChange = this.onInputChange.bind(this);
     }
 
-    // onPostimgChange = (event) =>{
-    //      this.setState({imgarray: event.target.files[0]})
-    //       console.log(this.state.imgarray)
-    //     }
-    // 
 
     onInputChange = (event) => {
         switch (event.target.name) {
