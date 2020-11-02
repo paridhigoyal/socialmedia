@@ -16,7 +16,7 @@ class Profile(models.Model):
     contact_no = models.CharField(max_length=10)
     bio = models.CharField(max_length=100, null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to="profile-pictures",
+    profile_picture = models.ImageField(upload_to="frontend/src/profile-pictures",
                                         null=True, blank=True)
 
     def get_user_id(self):
@@ -53,7 +53,7 @@ class Profile(models.Model):
 class Post(models.Model):
     caption = models.CharField(max_length=200, verbose_name='caption')
     post_by = CurrentUserField(related_name='post_by')
-    image = models.ImageField(upload_to='post-images', null=True)
+    image = models.ImageField(upload_to='frontend/src/post-images', null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
 
     def get_post_belongs_to_authenticated_user(self):

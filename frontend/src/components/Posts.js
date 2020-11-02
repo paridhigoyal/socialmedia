@@ -24,7 +24,7 @@ class Posts extends Component {
   render() {
     const { posts } = this.props.postreducer
     const { pk } = this.props.authReducer.user
-
+    console.log(posts)
     return (
       <div>
 
@@ -37,7 +37,8 @@ class Posts extends Component {
               post by : {value.post_by.username}<br />
               <div>
                 {console.log(value.image)}
-                <img  style={{ resizeMode: 'cover', width: 50, height: 50}} src={value.image} alt="abc"></img><br />
+                <img  style={{ resizeMode: 'cover', width: 50, height: 50}}
+                 src={value.image} alt="abc"></img><br />
                 {value.caption}<br />
               </div>
               likecount : {value.like_count}

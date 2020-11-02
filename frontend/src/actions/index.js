@@ -20,7 +20,7 @@ import {
     CHANGE_PASSWORD_SUCCESS
 } from "./action_types"
 
-export const login = (values, callBack) => {
+export const login = (values,) => {
     return (dispatch) => {
         axios.post(`${baseURL}/rest-auth/login/`, values).then((res) => {
             dispatch({
@@ -30,9 +30,9 @@ export const login = (values, callBack) => {
         }, (err) => {
             dispatch({
                 type: LOGIN_ERROR,
-                payload: err.response.data
+                payload: err.message
             })
-            callBack()
+            // callBack()
         }
         )
     }

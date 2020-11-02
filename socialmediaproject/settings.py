@@ -73,11 +73,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated',
     ),
-    # 'DEFAULT_PAGINATION_CLASS': (
-    #     'rest_framework.pagination.PageNumberPagination',
-
-
-    # ),
 
 }
 AUTHENTICATION_BACKENDS = [
@@ -93,12 +88,7 @@ CORS_ORIGIN_WHITELIST = (
     "http://127.0.0.1:8000",
     'http://localhost:3000',
 )
-# CORS_ALLOW_HEADERS = (
-#     'xsrfheadername',
-#     'xsrfcookiename',
-#     'content-type',
-#     "X-CSRFTOKEN"
-# )
+
 
 LOGOUT_ON_PASSWORD_CHANGE = True
 
@@ -181,11 +171,11 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/' 
 SITE_ID = 3
 
 JWT_AUTH = {
     # Authorization:Token xxx
     'JWT_AUTH_HEADER_PREFIX': 'Token',
 }
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
