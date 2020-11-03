@@ -63,7 +63,7 @@ export const changePassword = (input) => {
     // var csrftoken = getCookie('csrftoken');
     return (dispatch, getState) => {
         const config = setConfig(getState)
-        axios.post("http://127.0.0.1:8000/rest-auth/password/change/", input, config, {
+        axios.post(`${baseURL}/rest-auth/password/change/`, input, config, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 "X-CSRFToken": cookie.load("csrftoken"),
@@ -165,7 +165,7 @@ export const follow = (id) => (dispatch, getState) => {
     // dispatch({ type: GET_FOLLOW_REQUEST });
     const config = setConfig(getState)
     axios
-        .get(`http://127.0.0.1:8000/follow/${id}/`, config)
+        .get(`${baseURL}/follow/${id}/`, config)
         .then((response) => {
             dispatch({ type: GET_FOLLOW_SUCCESS, payload: response.data.results });
             // console.log(response)
