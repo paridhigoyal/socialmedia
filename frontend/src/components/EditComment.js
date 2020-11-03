@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import {editComment, getPosts} from '../actions/index'
+import { editComment, getPosts } from '../actions/index'
 
 export class EditComment extends Component {
     constructor(props) {
@@ -10,7 +10,7 @@ export class EditComment extends Component {
                 id: this.props.data.id,
                 content: this.props.data.content,
                 user: this.props.data.user,
-                commented_post:this.props.data.commented_post ,
+                commented_post: this.props.data.commented_post,
                 commented_at: this.props.data.commented_at
             }
         }
@@ -30,9 +30,9 @@ export class EditComment extends Component {
                 break;
         }
     }
-    handleSubmit = async(event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(this.state.commentData,this.props.data.id)
+        console.log(this.state.commentData, this.props.data.id)
         await this.props.editComment(this.props.data.id, this.state.commentData)
         await this.props.getPosts()
     }
@@ -53,7 +53,7 @@ export class EditComment extends Component {
     }
 
 
-    render() { 
+    render() {
         return (
             <div>
                 <button type="button" onClick={() => this.setState({ showForm: true })}>Edit Comment</button>
@@ -63,4 +63,4 @@ export class EditComment extends Component {
     }
 }
 
-export default connect(null, {editComment,getPosts})(EditComment)
+export default connect(null, { editComment, getPosts })(EditComment)

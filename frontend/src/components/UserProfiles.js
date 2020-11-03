@@ -17,7 +17,7 @@ class Profiles extends Component {
 
     render() {
         const { profiles } = this.props.profilereducer
-         // console.log(profiles)
+        // console.log(profiles)
 
         return (
             <div>

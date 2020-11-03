@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
-import { Button} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 class Login extends Component {
     state = {

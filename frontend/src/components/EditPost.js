@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux';
-import {editPost,getPosts} from '../actions/index'
+import { connect } from 'react-redux';
+import { editPost, getPosts } from '../actions/index'
 export class EditPost extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
-                caption: this.props.value.caption,
-                image: this.props.value.image,
-             
-            
+
+            caption: this.props.value.caption,
+            image: this.props.value.image,
+
+
         }
         this.onInputChange = this.onInputChange.bind(this);
     }
@@ -18,23 +18,23 @@ export class EditPost extends Component {
         switch (event.target.name) {
             case 'image':
                 this.setState({
-                  
-                       
-                        image: event.target.files[0]
 
-                   
+
+                    image: event.target.files[0]
+
+
                 })
                 break;
             case 'caption':
                 this.setState({
-                        caption: event.target.value 
+                    caption: event.target.value
                 })
                 break;
             default:
                 break;
         }
     }
-    handleSubmit = async(event) => {
+    handleSubmit = async (event) => {
         event.preventDefault();
         console.log(this.state.image.name, this.state.caption, this.state.image)
         let form_data = new FormData();
@@ -51,7 +51,7 @@ export class EditPost extends Component {
                 <input type='file'
                     name='image'
                     accept="image/png, image/jpeg"
-                onChange={this.onInputChange}
+                    onChange={this.onInputChange}
                 /><br />
                 <label>Caption</label>
                 <input type='text'
@@ -75,4 +75,4 @@ export class EditPost extends Component {
     }
 }
 
-export default connect(null,{editPost, getPosts})(EditPost)
+export default connect(null, { editPost, getPosts })(EditPost)

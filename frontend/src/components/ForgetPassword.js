@@ -7,7 +7,7 @@ export class ForgetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          
+
             email: ""
         }
     }
@@ -31,7 +31,7 @@ export class ForgetPassword extends Component {
                         value={this.state.email}
                         onChange={this.handleOnChange}
                     />
-                    <br/>
+                    <br />
                     <button> email </button>
                 </form>
             </div>

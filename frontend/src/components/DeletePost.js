@@ -4,7 +4,7 @@ import React from 'react'
 
 const DeletePost = (id) => {
   // console.log(id)
-  return (<button onClick={() => deletePost(id)}>Delete</button>)
+  return (<button onClick={() => deletePost(id)}>Delete Post</button>)
 }
 const mapStateToProps = ({ authReducer, postreducer }) => {
   return {

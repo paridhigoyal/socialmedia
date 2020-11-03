@@ -8,7 +8,7 @@ export class AddPost extends Component {
         this.state = {
             caption: "",
             image: null,
-            
+
         }
         this.onInputChange = this.onInputChange.bind(this);
     }

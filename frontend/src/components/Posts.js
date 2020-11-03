@@ -19,12 +19,10 @@ class Posts extends Component {
       this.props.getPosts()
     }
   }
-
-
   render() {
     const { posts } = this.props.postreducer
     const { pk } = this.props.authReducer.user
-    console.log(posts)
+    // console.log(posts)
     return (
       <div>
 
@@ -36,14 +34,14 @@ class Posts extends Component {
 
               post by : {value.post_by.username}<br />
               <div>
-                {console.log(value.image)}
-                <img  style={{ resizeMode: 'cover', width: 50, height: 50}}
-                 src={value.image} alt="abc"></img><br />
+                {/* {console.log(value.image)} */}
+                <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
+                  src={value.image} alt="abc"></img><br />
                 {value.caption}<br />
               </div>
-              likecount : {value.like_count}
-              dislikescount : {value.dislikes_count}
-              comments_count: {value.comment_count}
+              likes : {value.likes_count} &nbsp;
+              dislikes : {value.dislikes_count} &nbsp;
+              comments: {value.comments_count} <br />
               {value.post_belongs_to_authenticated_user && <DeletePost id={value.id} />}
               {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
               <br /><b>comments.....</b>
@@ -56,12 +54,11 @@ class Posts extends Component {
 
                 </li>
               ))}
-
-
               <AddComment id={value.id} />
             </li>
           ))
           }
+          <br />
         </ul>
       </div>
     )

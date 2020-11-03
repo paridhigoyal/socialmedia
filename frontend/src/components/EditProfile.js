@@ -53,7 +53,7 @@ export class EditProfile extends Component {
                     }
                 })
                 break;
-                case 'gender':
+            case 'gender':
                 this.setState({
                     profileData: {
                         ...this.state.profileData,
@@ -92,11 +92,11 @@ export class EditProfile extends Component {
                     value={this.state.profileData.location}
                     onChange={this.onInputChange}
                     placeholder="location" /><br />
-                <div name='gender'value={this.state.profileData.gender} onChange={this.onInputChange}>
-                <input type="radio" id="male" name="gender" value="male" />
-                <label for="male">Male</label><br />
-                <input type="radio" id="female" name="gender" value="female" />
-                <label for="female">Female</label><br />
+                <div name='gender' value={this.state.profileData.gender} onChange={this.onInputChange}>
+                    <input type="radio" id="male" name="gender" value="male" />
+                    <label for="male">Male</label><br />
+                    <input type="radio" id="female" name="gender" value="female" />
+                    <label for="female">Female</label><br />
                 </div>
                 <label>Contact No</label>
                 <input type='text'

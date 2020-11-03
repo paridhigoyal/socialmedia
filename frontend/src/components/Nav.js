@@ -21,17 +21,20 @@ class Nav extends Component {
                         </Link>
 
                     </li>
+
                     <li className="nav-item" style={{ margin: "auto 0" }}>
                         <button onClick={this.props.logout}
                             className="btn btn-sm btn-outline-danger ml-2" to="/">
                             Logout
                         </button>
                     </li>
+                    <br />
                     <Link to={`/addpost`}>
                         <button style={{ backgroundColor: '#b92b27', borderColor: '#b92b27' }}>
                             Post Something...
     </button>
                     </Link>
+                    <br />
                     <Link to={`/userprofiles`}>
                         <button style={{ backgroundColor: '#b92b27', borderColor: '#b92b27' }}>
                             User Profiles..
@@ -50,7 +53,7 @@ class Nav extends Component {
                     <li className="nav-item">
                         <Link className="nav-link" to="/signup">Register</Link>
                     </li>
-                    
+
                 </ul>
             )
         }

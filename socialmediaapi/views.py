@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from requests.models import Response
-from rest_framework import generics, mixins, permissions, status, viewsets
+from rest_framework import generics, mixins, status, viewsets
 from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
@@ -24,21 +24,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     filter_backends = (SearchFilter,)
     pagination_class = PagePagination
     search_fields = ['user__username', ]
-    permission_classes_by_action = {
-        'partial_update': [IsInstanceUser],
-        'destroy': [IsInstanceUser],
-        'update': [IsInstanceUser],
-        'get_user_profile': [IsInstanceUser],
-    }
-
-    def get_permissions(self):
-        try:
-            return [
-                permission() for permission in
-                self.permission_classes_by_action[
-                    self.action]]
-        except KeyError:
-            return (permissions.IsAuthenticated(),)
+    permission_classes = [IsAuthenticated, IsInstanceUser, ]
 
     def perform_create(self, serializer):
         return serializer.save(user=self.request.user)
@@ -67,20 +53,7 @@ class PostViewSet(viewsets.ModelViewSet):
     search_fields = ['post_by__username', ]
     pagination_class = PagePagination
     ordering = ['-posted_at']
-    permission_classes_by_action = {
-        'partial_update': [IsPostOwner],
-        'destroy': [IsPostOwner],
-        'update': [IsPostOwner],
-    }
-
-    def get_permissions(self):
-        try:
-            return [
-                permission() for permission in
-                self.permission_classes_by_action[
-                    self.action]]
-        except KeyError:
-            return (permissions.IsAuthenticated(),)
+    permission_classes = [IsAuthenticated, IsPostOwner, ]
 
     @action(detail=True,  methods=['GET'],
             url_path="user_posts", url_name="user_posts")
@@ -95,8 +68,8 @@ class PostViewSet(viewsets.ModelViewSet):
                 return self.get_paginated_response(serializer.data)
             serializer = self.get_serializer(post, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception:
-            return Response({'error': "Bad request"})
+        except:
+            return Response({"error": 'The user does not exist'})
 
 
 class PostRateViewSet(generics.ListCreateAPIView):
@@ -116,20 +89,7 @@ class PostRateUpdateViewSet(mixins.RetrieveModelMixin,
     queryset = PostRate.objects.all()
     serializer_class = PostRateUpdateSerializer
     pagination_class = PagePagination
-    permission_classes_by_action = {
-        'partial_update': [IsPostRateOwner],
-        'destroy': [IsPostRateOwner],
-        'update': [IsPostRateOwner],
-    }
-
-    def get_permissions(self):
-        try:
-            return [
-                permission() for permission in
-                self.permission_classes_by_action[
-                    self.action]]
-        except KeyError:
-            return (permissions.IsAuthenticated(),)
+    permission_classes = [IsAuthenticated, IsPostRateOwner, ]
 
     @action(detail=True,  methods=['GET'],
             url_path="post_likes", url_name="post_likes")
@@ -171,20 +131,7 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
     search_fields = ['user__username', ]
     ordering = ['-commented_at']
     pagination_class = PagePagination
-    permission_classes_by_action = {
-        'partial_update': [IsInstanceUser],
-        'destroy': [IsInstanceUser],
-        'update': [IsInstanceUser],
-    }
-
-    def get_permissions(self):
-        try:
-            return [
-                permission() for permission in
-                self.permission_classes_by_action[
-                    self.action]]
-        except KeyError:
-            return (permissions.IsAuthenticated(),)
+    permission_classes = [IsAuthenticated, IsInstanceUser, ]
 
     @action(detail=True,  methods=['GET'],
             url_path="post_comments", url_name="post_comments")

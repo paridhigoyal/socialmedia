@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {addComment} from '../actions/index'
+import { connect } from 'react-redux';
+import { addComment } from '../actions/index'
 
 export class AddComment extends Component {
     constructor(props) {
@@ -63,9 +63,9 @@ export class AddComment extends Component {
 }
 const mapStateToProps = ({ authReducer }) => {
     return {
-      authReducer,
-      
-    }
-  }
+        authReducer,
 
-export default connect(mapStateToProps,{addComment}) (AddComment)
+    }
+}
+
+export default connect(mapStateToProps, { addComment })(AddComment)

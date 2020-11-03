@@ -40,7 +40,7 @@ export class ChangePassword extends Component {
             console.log(this.state.input)
             alert('Demo Form is submited');
         }
-        
+
     }
 
     validate() {
@@ -49,7 +49,7 @@ export class ChangePassword extends Component {
         let isValid = true;
         let strongRegex = new RegExp(
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-          );
+        );
 
         if (!input["newpassword1"]) {
             isValid = false;
@@ -58,7 +58,7 @@ export class ChangePassword extends Component {
         else if (!strongRegex.test(input["newpassword1"])) {
             isValid = false;
             errors["newpassword1"] = "Password should be alphanumeric";
-          }
+        }
 
         if (!input["newpassword2"]) {
             isValid = false;
@@ -67,7 +67,7 @@ export class ChangePassword extends Component {
         else if (!strongRegex.test(input["newpassword2"])) {
             isValid = false;
             errors["newpassword2"] = "Password should be alphanumeric";
-          }
+        }
 
         if (typeof input["newpassword1"] !== "undefined" && typeof input["newpassword2"] !== "undefined") {
 
