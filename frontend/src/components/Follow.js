@@ -10,12 +10,17 @@ export class Follow extends Component {
   render() {
     return (
       <div>
-        {/* {console.log("", this.props)} */}
-        <button
+        {console.log("followstatus", this.props)}
+        {this.props.followStatus === 'Follow' && <button
           onClick={() => this.props.follow(this.props.id)}>
           Follow
         </button>
-
+        }
+        {this.props.followStatus === "Following" && <button
+          onClick={() => this.props.follow(this.props.id)}>
+          UnFollow
+        </button>
+        }
       </div>
     )
   }

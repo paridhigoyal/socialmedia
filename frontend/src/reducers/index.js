@@ -5,9 +5,9 @@ import postreducer from "./postreducer";
 import profilereducer from './profilereducer'
 import followerreducer from './followerreducer'
 export default combineReducers({
-    authReducer,
-    form: formReducer,
-    postreducer,
-    profilereducer,
-    followerreducer,
+  authReducer,
+  form: formReducer,
+  postreducer,
+  profilereducer,
+  followerreducer,
 })

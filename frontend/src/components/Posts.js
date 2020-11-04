@@ -7,6 +7,8 @@ import EditPost from './EditPost';
 import AddComment from './AddComment';
 import EditComment from './EditComment';
 import DeleteComment from './DeleteComment';
+import PostRate from './PostRate';
+
 // import media from '../../../media';
 
 
@@ -54,6 +56,8 @@ class Posts extends Component {
 
                 </li>
               ))}
+
+              <PostRate value={value} pk={pk} />
               <AddComment id={value.id} />
             </li>
           ))
