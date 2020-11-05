@@ -11,13 +11,13 @@ import storage from "redux-persist/lib/storage"
 // import React from 'react'
 import { persistStore, persistReducer } from "redux-persist"
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+// import * as serviceWorker from './serviceWorker';
 import logger from 'redux-logger'
 // const store=createStore(rootReducer);
 const persistConfig = {
-  key: "auth_reducer",
+  key: "authReducer",
   storage: storage,
-  whitelist: ["auth_reducer"]
+  whitelist: ["authReducer"]
 }
 const pReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(pReducer, applyMiddleware(ReduxThunk, logger))
@@ -34,4 +34,4 @@ export { store, persist }
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+

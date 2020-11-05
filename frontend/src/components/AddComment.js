@@ -31,13 +31,12 @@ export class AddComment extends Component {
         break;
     }
   }
-  handleSubmit = (event) => {
+  handleSubmit = async(event) => {
     event.preventDefault();
     console.log(this.state.commentData)
-    this.props.addComment(this.state.commentData)
+    await this.props.addComment(this.state.commentData)
+    
   }
-
-
   showForm = () => {
 
     return (<div>
@@ -61,11 +60,14 @@ export class AddComment extends Component {
     )
   }
 }
-const mapStateToProps = ({ authReducer }) => {
+const mapStateToProps = ({ authReducer, postreducer, commentReducer  }) => {
   return {
     authReducer,
+    postreducer,
+    commentReducer
 
   }
 }
+
 
 export default connect(mapStateToProps, { addComment })(AddComment)

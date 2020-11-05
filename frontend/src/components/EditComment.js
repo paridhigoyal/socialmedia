@@ -57,7 +57,7 @@ export class EditComment extends Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={() => this.setState({ showForm: true })}>Edit Comment</button>
+        <EditIcon onClick={() => this.setState({ showForm: true })} variant="contained" color="secondary" />
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

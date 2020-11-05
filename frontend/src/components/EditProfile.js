@@ -59,6 +59,7 @@ export class EditProfile extends Component {
           gender: event.target.value
 
         })
+        break;
       case 'profile_picture':
         this.setState({
           profile_picture: event.target.files[0]
@@ -70,8 +71,6 @@ export class EditProfile extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    // console.log(this.props.value)
-    // console.log(this.state.image.name, this.state.caption, this.state.image)
     let form_data = new FormData();
     form_data.append('profile_picture', this.state.profile_picture, this.state.profile_picture.name);
     form_data.append('bio', this.state.bio);

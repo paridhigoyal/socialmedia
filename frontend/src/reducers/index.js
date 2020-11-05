@@ -4,10 +4,12 @@ import { reducer as formReducer } from "redux-form";
 import postreducer from "./postreducer";
 import profilereducer from './profilereducer'
 import followerreducer from './followerreducer'
+import commentReducer from './commentReducer'
 export default combineReducers({
   authReducer,
   form: formReducer,
   postreducer,
   profilereducer,
   followerreducer,
+  commentReducer,
 })

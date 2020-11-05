@@ -3,7 +3,7 @@ import { Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
-import { Button } from 'react-bootstrap';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
 class Login extends Component {
   state = {
@@ -12,49 +12,44 @@ class Login extends Component {
     progress: false
   }
   render() {
-    const { isAuthenticated, token } = this.props.authReducer
-    // console.log(token)
+    const { isAuthenticated } = this.props.authReducer
     const { progress } = this.state
     if (isAuthenticated) {
       return <Redirect to='/posts/' />
     }
     return (
-      <div className="login-page">
-        <div className="login-page-content">
-          <div className="login-page-content-inner">
-            <form onSubmit={this.onFormSubmit.bind(this)} >
-              <div >
-                <label>Username</label>
-                <input
-                  value={this.state.username}
-                  name="username"
-                  type="text"
-                  onChange={this.onInputChange.bind(this)}
-                  placeholder="Username"
-                />
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <input
-                  value={this.state.password}
+      <div className="login-page-content-inner">
+        <form onSubmit={this.onFormSubmit.bind(this)} >
+          <FormControl>
+            <InputLabel>Username</InputLabel>
+            <Input type='text'
+              value={this.state.username}
+              name="username"
+              onChange={this.onInputChange.bind(this)}
+              placeholder="Username" />
+          </FormControl>
+          <br />
+          <FormControl>
+            <InputLabel>Password</InputLabel>
+            <Input value={this.state.password}
+              name="password"
+              type="password"
+              onChange={this.onInputChange.bind(this)}
+              placeholder="Password" />
+          </FormControl>
+          <br /><br />
+          <Button type='submit' onClick={this.onFormSubmit.bind(this)}
+            disabled={!this.state.username, !this.state.password}
+            variant="contained" color="secondary">
+            Login
+          </Button>
 
-                  name="password"
-                  type="password"
-                  onChange={this.onInputChange.bind(this)}
-                  placeholder="Password"
-                />
-              </div>
-              <button style={{ marginRight: "5px" }} > Login </button>
-              <CircularProgress style={progress ? { display: "inline-block" } : { display: "none" }} />
-              <p className="text-helper">
-                You dont have an account yet Signup from <Link to="/signup">here</Link><br />
-
-                <Link className="nav-link" to="/forgetpassword">Forget Password</Link>
-
-              </p>
-            </form>
-          </div>
-        </div>
+          <CircularProgress style={progress ? { display: "inline-block" } : { display: "none" }} />
+        </form>
+        <p className="text-helper">
+          You dont have an account yet Signup from <Link to="/signup">here</Link><br />
+          <Link className="nav-link" to="/forgetpassword">Forget Password</Link>
+        </p>
       </div>
     )
   }
@@ -68,7 +63,8 @@ class Login extends Component {
     const { progress, ...values } = this.state
     this.setState({ progress: true })
     this.props.login(values, () => {
-      this.setState({
+      this.setState
+      ({
         progress: false,
         username: "",
         password: ""

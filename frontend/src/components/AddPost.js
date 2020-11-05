@@ -13,7 +13,6 @@ export class AddPost extends Component {
     this.onInputChange = this.onInputChange.bind(this);
   }
 
-
   onInputChange = (event) => {
     switch (event.target.name) {
       case 'image':
@@ -52,7 +51,6 @@ export class AddPost extends Component {
         <input type='file'
           name='image'
           accept="image/png, image/jpeg"
-          // value={this.state.postData.image}
           onChange={this.onInputChange} required
         /><br />
         <label>Caption</label>

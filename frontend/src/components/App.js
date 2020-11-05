@@ -1,10 +1,8 @@
 import React from 'react';
-// import { logout } from '../actions/index';
 import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch,
   Redirect,
 } from "react-router-dom";

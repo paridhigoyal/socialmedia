@@ -9,7 +9,7 @@ class Nav extends Component {
   render() {
     const { isAuthenticated } = this.props.authReducer
     if (isAuthenticated) {
-      const { username, pk } = this.props.authReducer.user
+      const { username} = this.props.authReducer.user
       return (
 
         <ul className="navbar-nav ml-auto">

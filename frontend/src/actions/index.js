@@ -1,13 +1,11 @@
 import axios from "axios";
 import { baseURL } from '../utility/index';
-import cookie from "react-cookies";
-// axios.defaults.xsrfHeaderName = "X-CSRFToken";
-// axios.defaults.xsrfCookieName = "csrftoken";
-// axios.defaults.withCredentials = true;
+import Cookies from 'js-cookie';
+
 import {
   LOGIN, LOGIN_ERROR, LOGOUT, POSTS_SUCCESS, POSTS_REQUEST,
-  POSTS_FAILURE, POST_CREATED, POST_CREATED_FAILED, DELETE_POST,
-  PROFILE_SUCCESS, PROFILE_REQUEST, PROFILE_FAILURE, GET_FOLLOW_REQUEST,
+  POSTS_FAILURE, POST_CREATED,  DELETE_POST,
+  PROFILE_SUCCESS, PROFILE_REQUEST, PROFILE_FAILURE, 
   GET_FOLLOW_SUCCESS, GET_FOLLOW_FAILURE,
   FOLLOWER_REQUEST,
   FOLLOWER_SUCCESS,
@@ -22,7 +20,6 @@ import {
   DELETE_LIKE,
   UPDATE_LIKE
 } from "./action_types"
-import { reset } from "redux-form";
 
 export const login = (values, callBack) => {
   return (dispatch) => {
@@ -174,7 +171,7 @@ export const addPost = (values) => {
 export const deletePost = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   // console.log('dff')
-  axios.delete(`${baseURL}/posts/${id}/`, config)
+  axios.delete(`${baseURL}/post/${id}/`, config)
     .then((data) => {
       const posts = data
       // console.log(posts, 'abcd')
@@ -206,7 +203,11 @@ export const follow = (id) => (dispatch, getState) => {
   // dispatch({ type: GET_FOLLOW_REQUEST });
   const config = setConfig(getState)
   axios
-    .get(`${baseURL}/follow/${id}/`, config)
+    .get(`${baseURL}/follow/${id}/`, config,{
+      headers: {
+      'Authorization': Cookies.get('sessionid'),
+      'X-CSRFToken': Cookies.get('csrftoken')
+    },})
     .then((response) => {
       dispatch({ type: GET_FOLLOW_SUCCESS, payload: response.data.results });
       // console.log(response)

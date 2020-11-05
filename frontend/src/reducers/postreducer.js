@@ -16,7 +16,7 @@ const initialState = {
 }
 const postreducer = (state = initialState, action) => {
   let posts = state.posts;
-  let post;
+  // let post;
   let postIndex;
 
   // console.log(action.type)
@@ -55,10 +55,10 @@ const postreducer = (state = initialState, action) => {
       }
 
     case EDIT_POST:
-      // postIndex = posts.findIndex((post) => (post.id === action.payload.id))
-      // if (postIndex > -1) {
-      //   posts.splice(postIndex, 1, action.payload)
-      // }
+      postIndex = posts.findIndex((post) => (post.id === action.payload.id))
+      if (postIndex > -1) {
+        posts.splice(postIndex, 1, action.payload)
+      }
       return posts
 
     default: return state

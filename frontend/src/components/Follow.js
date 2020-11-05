@@ -3,9 +3,6 @@ import { follow } from '../actions/index'
 import { connect } from 'react-redux'
 
 export class Follow extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

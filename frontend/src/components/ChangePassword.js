@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changePassword } from '../actions/index'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { browserHistory } from 'react-router'
 
 export class ChangePassword extends Component {
   constructor(props) {
@@ -33,11 +34,12 @@ export class ChangePassword extends Component {
       bodyFormData.append('new_password1', this.state.input.new_password1);
       bodyFormData.append('new_password2', this.state.input.new_password2);
       this.props.changePassword(bodyFormData)
+      browserHistory.push('/login')
       let input = {};
       input["new_password1"] = "";
       input["new_password2"] = "";
       this.setState({ input: input });
-      console.log(this.state.input)
+      //console.log(this.state.input)
       alert('Demo Form is submited');
     }
 

@@ -45,18 +45,15 @@ export const asyncValidate = (values) => {
     password1: values.password,
     password2: values.re_password,
   };
-  // console.log(obj);
+
   axios
     .post(`${baseURL}/rest-auth/registration/`, obj)
     .then((response) => {
-      alert('register successfully')
-      // window.flash('register successfully')
-      // console.log(response.data);   
+      alert('register successfully') 
     })
     .catch((error) => {
       const errors = error.response.data;
-      // console.log(errors);
-      // window.flash(errors)
+       console.log(errors);
     });
 };
 
