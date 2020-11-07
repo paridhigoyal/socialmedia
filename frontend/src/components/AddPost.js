@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { addPost } from '../actions/index';
 import { connect } from 'react-redux';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
 export class AddPost extends Component {
   constructor(props) {
@@ -35,7 +36,6 @@ export class AddPost extends Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    // const {values}=this.state
     console.log(this.state.image.name, this.state.caption, this.state.image)
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
@@ -47,21 +47,27 @@ export class AddPost extends Component {
   render() {
     return (<div className="container">
       <form onSubmit={this.handleSubmit}>
-        <label>Upload Image:</label>
-        <input type='file'
+      <FormControl>
+            <InputLabel>Upload Image:</InputLabel>
+            <Input type='file'
           name='image'
           accept="image/png, image/jpeg"
-          onChange={this.onInputChange} required
-        /><br />
-        <label>Caption</label>
-        <input type='text'
+          onChange={this.onInputChange} required /><br />
+          </FormControl><br />
+          <FormControl>
+            <InputLabel>Caption</InputLabel>
+            <Input type='text'
           name='caption'
           value={this.state.caption}
           onChange={this.onInputChange}
-          placeholder="caption for the image" />
-
-        <button type="submit"  >Post</button>
-
+          placeholder="caption for the image" /><br />
+          </FormControl>
+          <br /><br />
+          <Button type='submit' onClick={this.handleSubmit}
+            disabled={!this.state.image, !this.state.caption}
+            variant="contained" color="secondary">
+           Post
+          </Button>
       </form>
 
     </div>

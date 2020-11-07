@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getPosts, deleteComment, deletePost } from '../actions/index'
 import { connect } from 'react-redux';
-import { SearchUserPost } from './SearchUserPost';
+import SearchUserPost from './SearchUserPost';
 import EditPost from './EditPost';
 import AddComment from './AddComment';
 import EditComment from './EditComment';

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { editProfile } from '../actions/index';
 import { connect } from 'react-redux';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 export class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -23,105 +24,115 @@ export class EditProfile extends Component {
       follow_status: this.props.value.follow_status
 
     }
-
     this.onInputChange = this.onInputChange.bind(this);
-
   }
+
   onInputChange = (event) => {
     switch (event.target.name) {
+
       case 'bio':
         this.setState({
-
-
           bio: event.target.value
-
         })
         break;
+
       case 'location':
         this.setState({
-
-
           location: event.target.value
-
         })
-
         break;
+
       case 'date_of_birth':
         this.setState({
-
           date_of_birth: event.target.value
-
         })
         break;
-      case 'gender':
+
+      case 'contact_no':
         this.setState({
-
-          gender: event.target.value
-
+          contact_no: event.target.value
         })
         break;
+
       case 'profile_picture':
         this.setState({
           profile_picture: event.target.files[0]
         })
         break;
+
       default:
         break;
     }
   }
+
   handleSubmit = (event) => {
     event.preventDefault();
     let form_data = new FormData();
     form_data.append('profile_picture', this.state.profile_picture, this.state.profile_picture.name);
     form_data.append('bio', this.state.bio);
+    form_data.append('contact_no', this.state.contact_no);
+    form_data.append('gender', this.state.gender)
     form_data.append('location', this.state.location);
     form_data.append('date_of_birth', this.state.date_of_birth);
-    // await this.props.editPost(this.props.value.id, form_data)
     this.props.editProfile(this.props.value.id, form_data)
   }
+  
   showForm = () => {
-
     return (<div>
       <form onSubmit={this.handleSubmit} >
-        <label>Profile Image:</label>
-        <input type='file'
-          accept="image/png, image/jpeg"
-          name='profile_picture'
-          onChange={this.onInputChange}
+        <FormControl>
+          <InputLabel>Profile Image</InputLabel>
+          <Input
+            type='file'
+            accept="image/png, image/jpeg"
+            name='profile_picture'
+            onChange={this.onInputChange} /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel>Bio</InputLabel>
+          <Input
+            type='text'
+            name='bio'
+            value={this.state.bio}
+            onChange={this.onInputChange}
+            placeholder="bio" /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel>Location</InputLabel>
+          <Input
+            type='text'
+            name='location'
+            value={this.state.location}
+            onChange={this.onInputChange}
+            placeholder="location" /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel>Contact No</InputLabel>
+          <Input
+            type='text'
+            name='contact_no'
+            value={this.state.contact_no}
+            onChange={this.onInputChange}
+            placeholder="contact no" /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel>Date Of Birth</InputLabel>
+          <Input
+            type='date'
+            name='date_of_birth'
+            value={this.state.date_of_birth}
+            onChange={this.onInputChange}
+            placeholder="date_of_birth" /><br />
+        </FormControl>
+        <br />
+        <Button type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
+          Update Profile
+    </Button>
 
-        /><br />
-
-        <label>Bio</label>
-        <input type='text'
-          name='bio'
-          value={this.state.bio}
-          onChange={this.onInputChange}
-          placeholder="bio" /><br />
-        <label>Location</label>
-        <input type='text'
-          name='location'
-          value={this.state.location}
-          onChange={this.onInputChange}
-          placeholder="location" /><br />
-        <div name='gender' value={this.state.gender} onChange={this.onInputChange}>
-          <input type="radio" id="male" name="gender" value="male" />
-          <label for="male">Male</label><br />
-          <input type="radio" id="female" name="gender" value="female" />
-          <label for="female">Female</label><br />
-        </div>
-        <label>Contact No</label>
-        <input type='text'
-          name='contact_no'
-          value={this.state.contact_no}
-          onChange={this.onInputChange}
-          placeholder="contact no" /><br />
-        <label>Date Of Birth</label>
-        <input type='date'
-          name='date_of_birth'
-          value={this.state.date_of_birth}
-          onChange={this.onInputChange}
-          placeholder="date_of_birth" /><br />
-        <button>Update Profile</button>
       </form>
     </div>
     );
@@ -131,7 +142,7 @@ export class EditProfile extends Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={() => this.setState({ showForm: true })}>Edit Profile</button>
+        <Button type="button" variant="contained" color="secondary" onClick={() => this.setState({ showForm: true })}>Edit Profile</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editComment, getPosts } from '../actions/index'
 import EditIcon from '@material-ui/icons/Edit';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 export class EditComment extends Component {
   constructor(props) {
     super(props);
@@ -40,13 +41,23 @@ export class EditComment extends Component {
 
     return (<div>
       <form onSubmit={this.handleSubmit} >
-        <label>Comment</label>
+      <FormControl>
+            <InputLabel>Comment</InputLabel>
+            <Input type='text'
+          name='content'
+          value={this.state.commentData.content}
+          onChange={this.onInputChange}
+          placeholder="comment......." />
+          </FormControl>
+          <br /><br />
+          <EditIcon onClick={this.handleSubmit} variant="contained" color="secondary" />
+        {/* <label>Comment</label>
         <input type='text'
           name='content'
           value={this.state.commentData.content}
           onChange={this.onInputChange}
           placeholder="comment......." />
-        <EditIcon onClick={this.handleSubmit} variant="contained" color="secondary" />
+         */}
         {/* <button>Update Comment</button> */}
       </form>
     </div>

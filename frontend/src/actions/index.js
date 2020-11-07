@@ -84,12 +84,13 @@ export const changePassword = (input) => {
 }
 export const makeLike = (values) => {
   return (dispatch, getState) => {
+    dispatch({
+      type: MAKE_LIKE,
+      payload: values
+    })
     const config = setConfig(getState)
     axios.post(`${baseURL}/postrate/`, values, config).then((res) => {
-      dispatch({
-        type: MAKE_LIKE,
-        payload: res.data
-      })
+      
     })
   }
 }
@@ -118,12 +119,27 @@ export const deleteLike = (id) => {
   }
 }
 
-export const searchuserpost = (posts) => (dispatch, getState) => {
+export const searchUserPost = (username) => {
+  return (dispatch, getState) => {
   const config = setConfig(getState)
   // console.log(config)
   dispatch({ type: POSTS_REQUEST });
   axios
-    .get(`${baseURL}/post/?search=${posts}`, config)
+    .get(`${baseURL}/post/?search=${username}`, config)
+    .then((response) => {
+      dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
+      // console.log(response)
+    })
+    .catch((error) => {
+      dispatch({ type: POSTS_FAILURE, payload: error.message });
+    });
+};}
+export const searchuserprofile = (username) => (dispatch, getState) => {
+  const config = setConfig(getState)
+  // console.log(config)
+  dispatch({ type: PROFILE_REQUEST });
+  axios
+    .get(`${baseURL}/profile/?search=${username}`, config)
     .then((response) => {
       dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
       // console.log(response)
@@ -249,7 +265,7 @@ export const editPost = (id, postData) => {
     })
   }
 }
-export const editProfile = (id, profileData, callBack) => {
+export const editProfile = (id, profileData) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.put(`${baseURL}/profile/${id}/`, profileData, config).then((res) => {
@@ -257,7 +273,7 @@ export const editProfile = (id, profileData, callBack) => {
         type: EDIT_PROFILE,
         payload: res.data
       })
-      callBack()
+     
     })
   }
 }

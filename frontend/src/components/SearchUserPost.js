@@ -1,41 +1,67 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { searchuserpost } from '../actions'
+// import SearchBar from "material-ui-search-bar";
+import SearchIcon from '@material-ui/icons/Search';
+import { Button, FormControl,  InputAdornment } from '@material-ui/core';
+import InputBase from '@material-ui/core/InputBase';
+import { searchUserPost } from '../actions/index'
 
-export class SearchUserPost extends Component {
+ class SearchUserPost extends Component {
   constructor(props) {
     super(props)
     this.state = {
       username: '',
     }
+    this.onInputChange = this.onInputChange.bind(this);
   }
   onInputChange = event => this.setState({ username: event.target.value })
 
   onFormSubmit = event => {
     event.preventDefault();
-    this.props.searchuserpost(this.state.username)
+
+    console.log(this.props)
+    this.props.searchUserPost(this.state.username)
     this.setState({ username: '' })
   }
 
   render() {
     return (
-      <div>
+      <div >
+        {/* <SearchBar
+    value={this.state.username}
+    // onChange={this.onInputChange}
+    onChange={(newValue) => this.setState({ value: newValue })}
+    onRequestSearch={() => this.props.searchUserPost(this.state.username)}
+  /> */}
         <form onSubmit={this.onFormSubmit} >
-          <input
+        <FormControl>
+          <InputBase
+          placeholder='.....search'
             type='text'
             value={this.state.username}
             onChange={this.onInputChange}
-          />
-          <button> search </button>
+            startAdornment={
+            <InputAdornment position='start'>
+          <SearchIcon />
+        </InputAdornment>
+            }
+            />
+            </FormControl>
+          <Button type="submit" variant="contained" color="primary" onClick={this.onFormSubmit}> search.... </Button>
         </form>
       </div>
     )
   }
 }
-const mapStateToProps = ({ authReducer, postreducer }) => {
+const mapDispatchToProps = dispatch => {
   return {
-    authReducer,
-    postreducer
+    searchUserPost: (username) => dispatch(searchUserPost(username))
+
   }
 }
-export default connect(mapStateToProps, { searchuserpost })(SearchUserPost)
+const mapStateToProps = state => {
+  return {
+    posts: state.posts
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(SearchUserPost)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Icon from '@material-ui/core/Icon';
-// import { makeStyles } from '@material-ui/core/styles';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import { makeLike, updateLike, deleteLike } from '../actions/index'
 
 export class PostRate extends Component {
@@ -12,7 +11,6 @@ export class PostRate extends Component {
 
     const like = this.props.value.likes.find((liked) => this.props.pk === liked.rated_by)
     const makeLike2 = (like) => {
-      // console.log('abc')
       const values = {
         rated_post: this.props.value.id,
         rated_by: this.props.pk,
@@ -38,29 +36,29 @@ export class PostRate extends Component {
             {like.liked &&
               <div>
 
-                <button onClick={() => this.props.deleteLike(like.id)} >
+                <Button onClick={() => this.props.deleteLike(like.id)}variant="contained" color="primary" >
                   Unlike
-                  </button>
-                <button onClick={() => updateLike2(false)} >
+                  </Button>&nbsp;
+                <Button onClick={() => updateLike2(false)}variant="contained" color="primary" >
                   Dislike
-                    </button>
+                    </Button>
               </div>}
 
             {!like.liked &&
               <div>
-                <button onClick={() => updateLike2(true)} >
+                <Button onClick={() => updateLike2(true)} variant="contained" color="primary">
                   Like
-                    </button>
-                <button onClick={() => this.props.deleteLike(like.id)}  >
+                    </Button>
+                <Button onClick={() => this.props.deleteLike(like.id)} variant="contained" color="primary" >
                   UnDislike
-                    </button>
+                    </Button>
               </div>}
           </div>
         }
 
         {!like && <div>
-          <button onClick={() => makeLike2(true)}> Like Button </button>
-          <button onClick={() => makeLike2(false)}>Dislike Button </button>
+          <Button onClick={() => makeLike2(true)}variant="contained" color="primary"> Like </Button> &nbsp;
+          <Button onClick={() => makeLike2(false)}variant="contained" color="primary">Dislike </Button>
         </div>}
       </div>
     )

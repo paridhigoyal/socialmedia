@@ -41,25 +41,50 @@ const postreducer = (state = initialState, action) => {
       }
 
     case DELETE_POST:
-      return posts.filter((id) => id !== action.id)
-
-    case MAKE_LIKE:
-    case UPDATE_LIKE:
-    case DELETE_LIKE:
-      postIndex = posts.findIndex((post) => (post.id === action.payload.id))
-      if (postIndex !== -1) {
-        posts.splice(postIndex, 1, action.payload)
-      }
+      posts.filter((id) => id !== action.id)
       return {
+        ...state,
         posts
       }
+
+    case MAKE_LIKE:
+      postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
+      if (postIndex !== -1) {
+        state.posts.splice(postIndex, 1, action.payload)
+      }
+      return {
+        ...state,
+        posts
+      }
+    case UPDATE_LIKE:
+      postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
+      if (postIndex !== -1) {
+        state.posts.splice(postIndex, 1, action.payload)
+      }
+      return {
+        ...state,
+        posts
+      }
+    case DELETE_LIKE:
+      postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
+      if (postIndex !== -1) {
+        state.posts.splice(postIndex, 1, action.payload)
+      }
+      return {
+        ...state,
+        posts
+      }
+      
 
     case EDIT_POST:
       postIndex = posts.findIndex((post) => (post.id === action.payload.id))
       if (postIndex > -1) {
         posts.splice(postIndex, 1, action.payload)
       }
-      return posts
+      return {
+        ...state,
+        posts
+      }
 
     default: return state
   }

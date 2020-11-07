@@ -3,7 +3,7 @@ import { getProfiles } from '../actions/index'
 import { connect } from 'react-redux';
 import EditProfile from './EditProfile';
 import Follow from './Follow'
-
+import Avatar from '@material-ui/core/Avatar';
 class Profiles extends Component {
 
   componentDidMount() {
@@ -13,28 +13,22 @@ class Profiles extends Component {
       this.props.getProfiles()
     }
   }
-
-
   render() {
     const { profiles } = this.props.profilereducer
-    // console.log(profiles)
-
     return (
       <div>
-
         <ul>
-
-
           {profiles.map((value, index) => (
 
             <li key={index}>
-              username: {value.username}<br />
+              <Avatar alt="No profileimage" src={value.profile_pic} />
+              <b> {value.username}</b><br />
               {value.first_name} {value.last_name}<br />
               {value.location}<br />
 
               <div>
                 following: <a href={`/following/${value.user_id}`} id="following">
-                  {value.following_count}</a>
+                  {value.following_count}</a>&nbsp;
                 followers: <a href={`/followers/${value.user_id}`} id="followers">
                   {value.followers_count}</a>
               </div>
@@ -44,7 +38,6 @@ class Profiles extends Component {
                   <p>...</p>
                 }
               </div>
-
               <div >
                 {
                   (!value.profile_belongs_to_authenticated_user)

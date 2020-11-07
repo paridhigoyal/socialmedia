@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forgetPassword } from '../actions/index';
-// import { Button} from 'react-bootstrap';
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+
 
 export class ForgetPassword extends Component {
   constructor(props) {
@@ -24,15 +25,19 @@ export class ForgetPassword extends Component {
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>
-          <label>Email</label>
-          <input
-            type="text"
+        <FormControl>
+            <InputLabel>Email</InputLabel>
+            <Input type="text"
             name="email"
             value={this.state.email}
-            onChange={this.handleOnChange}
-          />
-          <br />
-          <button> email </button>
+            onChange={this.handleOnChange} />
+          </FormControl>
+
+          <Button disabled={!this.state.email} type='submit' onClick={this.handleOnSubmit} 
+          variant="contained" color="secondary">
+           Send email 
+    </Button>
+
         </form>
       </div>
     )

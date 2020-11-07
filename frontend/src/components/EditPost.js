@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editPost } from '../actions/index'
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 export class EditPost extends Component {
   constructor(props) {
     super(props);
@@ -38,8 +39,8 @@ export class EditPost extends Component {
     event.preventDefault();
     console.log(this.state.image.name, this.state.caption, this.state.image)
     let form_data = new FormData();
-    form_data.append('image', this.state.image, this.state.image.name);
-    form_data.append('caption', this.state.caption);
+    form_data.append('image', this.state.image, this.state.image.name)
+    form_data.append('caption', this.state.caption)
     await this.props.editPost(this.props.value.id, form_data)
     // await this.props.getPosts()
   }
@@ -47,19 +48,28 @@ export class EditPost extends Component {
 
     return (<div>
       <form onSubmit={this.handleSubmit} >
-        <label>Upload Image:</label>
-        <input type='file'
-          name='image'
-          accept="image/png, image/jpeg"
-          onChange={this.onInputChange}
-        /><br />
-        <label>Caption</label>
-        <input type='text'
-          name='caption'
-          value={this.state.caption}
-          onChange={this.onInputChange}
-          placeholder="caption for the image" /><br />
-        <button>Update Post</button>
+        <FormControl>
+          <InputLabel>Upload Image:</InputLabel>
+          <Input type='file'
+            name='image'
+            accept="image/png, image/jpeg"
+            onChange={this.onInputChange} /><br />
+        </FormControl>
+        <br />
+        <FormControl>
+          <InputLabel>Caption:</InputLabel>
+          <Input
+            type='text'
+            name='caption'
+            value={this.state.caption}
+            onChange={this.onInputChange}
+            placeholder="caption for the image" /><br />
+        </FormControl>
+        <br />
+        <Button disabled={!this.state.image, !this.state.caption}
+          type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
+          Update Post
+    </Button>
       </form>
     </div>
     );
@@ -68,7 +78,8 @@ export class EditPost extends Component {
   render() {
     return (
       <div>
-        <button type="button" onClick={() => this.setState({ showForm: true })}>Edit Post</button>
+        <Button type="button" variant="contained" color="secondary"
+          onClick={() => this.setState({ showForm: true })}>Edit Post</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )
