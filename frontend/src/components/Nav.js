@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
 import { logout } from '../actions/index'
+import { change } from "redux-form"
 
 
 class Nav extends Component {
@@ -9,15 +10,14 @@ class Nav extends Component {
   render() {
     const { isAuthenticated } = this.props.authReducer
     if (isAuthenticated) {
-      const { username} = this.props.authReducer.user
+      const { user } = this.props.authReducer
       return (
 
         <ul className="navbar-nav ml-auto">
           <h2>Welcome to Social Life!....</h2>
-          {/* {console.log(pk)} */}
           <li className="nav-item" style={{ margin: "auto 0" }}>
             <Link className="btn btn-sm btn-outline-info" to="/user-info">
-              {username}<i className="fa fa-user ml-1"></i>
+              {user && user.username}<i className="fa fa-user ml-1"></i>
             </Link>
 
           </li>
@@ -27,6 +27,18 @@ class Nav extends Component {
               className="btn btn-sm btn-outline-danger ml-2" to="/">
               Logout
                         </button>
+          </li>
+          <li className="nav-item" style={{ margin: "auto 0" }}>
+            <Link className="btn btn-sm btn-outline-info" to="/changepassword">
+              changepassword<i className="fa fa-user ml-1"></i>
+            </Link>
+
+          </li>
+          <li className="nav-item" style={{ margin: "auto 0" }}>
+            <Link className="btn btn-sm btn-outline-info" to="/posts">
+              posts<i className="fa fa-user ml-1"></i>
+            </Link>
+
           </li>
           <br />
           <Link to={`/addpost`}>

@@ -18,13 +18,15 @@ class Posts extends Component {
   }
   render() {
     const { posts } = this.props.postreducer
-    const { pk } = this.props.authReducer.user
+    const { user } = this.props.authReducer;
+
     return (
-      <div>
+      <>
+      {(user !== undefined && user.pk) && <div>
 
         <SearchUserPost />
         <ul>
-          {posts.map((value, index) => (
+          {posts !== undefined && posts.map((value, index) => (
             <li key={index}>
              <h5> <b>{value.post_by.username} </b></h5>
               <div>
@@ -37,17 +39,17 @@ class Posts extends Component {
               {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
               likes : {value.likes_count} &nbsp;
               dislikes : {value.dislikes_count} &nbsp;
-              <PostRate value={value} pk={pk} />
+              <PostRate value={value} pk={user.pk} />
               comments: {value.comments_count} <br />
               <AddComment id={value.id} />
               <br /><b>comments.....</b>
               {value.comments.map((data, index) => (
                 <li key={index}>
                   {data.content} by {data.user}
-                  {pk === data.user && <DeleteForeverRoundedIcon
+                  {user.pk === data.user && <DeleteForeverRoundedIcon
                     onClick={() => { this.props.deleteComment(data.id) }}
                     variant="contained" color="secondary" />}
-                  {pk === data.user && <EditComment data={data} />}
+                  {user.pk === data.user && <EditComment data={data} />}
                 </li>
               ))}
             </li>
@@ -55,7 +57,8 @@ class Posts extends Component {
           }
           <br />
         </ul>
-      </div>
+      </div>}
+      </>
     )
   }
 }

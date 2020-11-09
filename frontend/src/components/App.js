@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
+import {setConfig} from '../actions/index'
 import {
   BrowserRouter as Router,
   Route,
@@ -16,9 +17,30 @@ import Following from './Following';
 import UserProfiles from './UserProfiles';
 import ForgetPassword from './ForgetPassword';
 import ChangePassword from './ChangePassword'
+import { baseURL } from '../utility';
 function App(props) {
 
   const { isAuthenticated } = props
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   console.log(token)
+  //   if (token) {
+  //     // const config = setConfig(getState, resetParameter)
+  //     const requestConfig = {
+  //       method: 'GET',
+  //       headers: {
+  //         Authorization: token ? `token ${token}` : 'Authorization failed',
+  //         'Content-Type': 'application/json',
+  //       }
+  //     };
+
+  //     fetch(`${baseURL}/rest-auth/user`, requestConfig).then(response => {
+  //       console.log(response);
+  //     })
+  //   }
+  // }, []);
+
   return (
     <Router>
       <div>
@@ -93,7 +115,7 @@ function App(props) {
 const mapStateToProps = (state) => {
   return {
     authReducer: state.authReducer,
-    isAuthenticated: state.authReducer.token ? true : false,
+    isAuthenticated: state.authReducer.isAuthenticated,
     followerreducer: state.followerreducer,
 
   };

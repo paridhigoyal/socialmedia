@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { makeLike, updateLike, deleteLike } from '../actions/index'
 
 export class PostRate extends Component {

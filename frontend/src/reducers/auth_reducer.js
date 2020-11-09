@@ -9,25 +9,21 @@ const init = {
   isLoading: false,
 }
 
-export default function (state = init, action) {
+export default function authReduer (state = init, action) {
   switch (action.type) {
     case LOGIN:
-      localStorage.setItem("token", action.payload.token)
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        token: localStorage.getItem("token"),
-        isAuthenticated: true,
+        token: action.payload.token,
+        isAuthenticated: action.payload.token ? true : false,
         user: action.payload.user,
       }
     case LOGOUT:
-      localStorage.setItem("token", null)
-      return {
-        ...state,
-        token: localStorage.getItem("token"),
-        isAuthenticated: false,
-        user: null,
-        isLoading: false,
-      }
+      // localStorage.setItem("user", null);
+      localStorage.removeItem("token");
+      return {};
+
     default:
       return state
   }

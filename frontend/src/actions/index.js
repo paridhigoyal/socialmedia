@@ -43,8 +43,6 @@ export const login = (values, callBack) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
-  localStorage.removeItem("token");
-  window.location.reload(true);
 };
 
 export const forgetPassword = (email) => {
