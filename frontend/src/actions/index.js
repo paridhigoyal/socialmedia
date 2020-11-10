@@ -18,7 +18,8 @@ import {
   CHANGE_PASSWORD_SUCCESS,
   MAKE_LIKE,
   DELETE_LIKE,
-  UPDATE_LIKE
+  UPDATE_LIKE,
+  CREATE_PROFILE
 } from "./action_types"
 
 export const login = (values, callBack) => {
@@ -69,7 +70,7 @@ export const changePassword = (input) => {
       Accept: 'application/json',
     };
     const config = setConfig(getState, resetParameter)
-    console.log(config)
+    // console.log(config)
     axios.post(`${baseURL}/rest-auth/password/change/`, input, config).then((res) => {
       console.log(res)
       dispatch({
@@ -80,6 +81,19 @@ export const changePassword = (input) => {
     )
   }
 }
+export const createProfile = (values) => {
+  console.log(values)
+  return (dispatch , getState) => {
+    const config = setConfig(getState)
+    axios.post(`${baseURL}/profile/`, values ,config).then((res) => {
+      dispatch({
+        type: CREATE_PROFILE,
+        payload: res.data    
+      })
+    })
+  }
+}
+
 export const makeLike = (values) => {
   return (dispatch, getState) => {
     dispatch({
@@ -163,7 +177,7 @@ export const getPosts = () => (dispatch, getState) => {
 
 
 export const addPost = (values) => {
-  console.log(values)
+  // console.log(values)
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.post(`${baseURL}/post/`, values, config, {

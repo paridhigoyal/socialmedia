@@ -44,7 +44,7 @@ const postreducer = (state = initialState, action) => {
       posts.filter((id) => id !== action.id)
       return {
         ...state,
-        posts
+        posts :action.payload
       }
 
     case MAKE_LIKE:

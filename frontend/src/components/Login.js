@@ -15,7 +15,7 @@ class Login extends Component {
     const { isAuthenticated } = this.props.authReducer
     const { progress } = this.state
     if (isAuthenticated) {
-      return <Redirect to='/posts/' />
+      return <Redirect to='/posts' />
     }
     return (
       <div className="login-page-content-inner">

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
-import {setConfig} from '../actions/index'
+// import {setConfig} from '../actions/index'
 import {
   BrowserRouter as Router,
   Route,
@@ -17,7 +17,8 @@ import Following from './Following';
 import UserProfiles from './UserProfiles';
 import ForgetPassword from './ForgetPassword';
 import ChangePassword from './ChangePassword'
-import { baseURL } from '../utility';
+// import { baseURL } from '../utility';
+import UserProfile from './UserProfile';
 function App(props) {
 
   const { isAuthenticated } = props
@@ -59,6 +60,15 @@ function App(props) {
               return <Redirect to="/login" />;
             }
           }}></Route>
+           <Route path="/user-info"
+          render={() => {
+            if (isAuthenticated) {
+              return <UserProfile {...props} />;
+            } else {
+              return <Redirect to="/login" />;
+            }
+          }}>
+        </Route>
         <Route path="/posts"
           render={() => {
             if (isAuthenticated) {

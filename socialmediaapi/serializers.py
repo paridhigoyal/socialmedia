@@ -39,12 +39,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         contact_no = data['contact_no']
         if data['date_of_birth'] > today:
             raise serializers.ValidationError("Birth Date can't be in future")
-        if not contact_no.isdigit():
+        # if not contact_no.isdigit():
+        #     raise serializers.ValidationError(
+        #         'Phone number can only contains digits')
+        if len(contact_no) != 13:
             raise serializers.ValidationError(
-                'Phone number can only contains digits')
-        elif len(contact_no) != 10:
-            raise serializers.ValidationError(
-                'Length of phone number must be 10 digits')
+                'Length of phone number must be 13 digits')
         return data
 
 

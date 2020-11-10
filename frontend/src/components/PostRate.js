@@ -16,23 +16,23 @@ export class PostRate extends Component {
         rated_by: this.props.pk,
         liked: like
       }
-      console.log(values)
+      // console.log(values)
       this.props.makeLike(values)
     }
     const updateLike2 = (likeType) => {
       const values = {
         liked: likeType,
       }
-      console.log(values)
+      // console.log(values)
       this.props.updateLike(values, like.id)
     }
 
-    console.log("likes", like)
+    // console.log("likes", like)
     return (
       <div>
         {like &&
           <div>
-            {console.log(like.liked)}
+            {/* {console.log(like.liked)} */}
             {like.liked &&
               <div>
 

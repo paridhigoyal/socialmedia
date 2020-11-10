@@ -13,7 +13,7 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1,
                               choices=GENDER_CHOICES,)
     date_of_birth = models.DateField()
-    contact_no = models.CharField(max_length=10)
+    contact_no = models.CharField(max_length=13)
     bio = models.CharField(max_length=100, null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     profile_picture = models.ImageField(upload_to="frontend/src/profile-pictures",
