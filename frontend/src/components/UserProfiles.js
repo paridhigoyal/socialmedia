@@ -8,7 +8,6 @@ class Profiles extends Component {
 
   componentDidMount() {
     const { isAuthenticated } = this.props.authReducer
-    // console.log(isAuthenticated)
     if (isAuthenticated) {
       this.props.getProfiles()
     }
@@ -21,7 +20,7 @@ class Profiles extends Component {
           {profiles.map((value, index) => (
 
             <li key={index}>
-              <Avatar alt="No profileimage" src={value.profile_pic} />
+              <Avatar alt="No profileimage" src={value.profile_picture} />
               <b> {value.username}</b><br />
               {value.first_name} {value.last_name}<br />
               {value.location}<br />

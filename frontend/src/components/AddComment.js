@@ -31,29 +31,29 @@ export class AddComment extends Component {
         break;
     }
   }
-  handleSubmit = async(event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     console.log(this.state.commentData)
     await this.props.addComment(this.state.commentData)
-    
+
   }
   showForm = () => {
 
     return (<div>
       <form onSubmit={this.handleSubmit} >
-      <FormControl>
-            <InputLabel>Comment</InputLabel>
-            <Input type='text'
-          name='content'
-          value={this.state.commentData.content}
-          onChange={this.onInputChange}
-          placeholder="comment here..." /><br />
-          </FormControl>
-          <br /><br />
-          <Button type='submit' onClick={this.handleSubmit}
-            disabled={!this.state.commentData.content}
-            variant="contained" color="secondary">
-           Comment
+        <FormControl>
+          <InputLabel>Comment</InputLabel>
+          <Input type='text'
+            name='content'
+            value={this.state.commentData.content}
+            onChange={this.onInputChange}
+            placeholder="comment here..." /><br />
+        </FormControl>
+        <br /><br />
+        <Button type='submit' onClick={this.handleSubmit}
+          disabled={!this.state.commentData.content}
+          variant="contained" color="secondary">
+          Comment
           </Button>
       </form>
     </div>
@@ -62,13 +62,13 @@ export class AddComment extends Component {
   render() {
     return (
       <div>
-        <Button type="button"variant="contained" color="secondary" onClick={() => this.setState({ showForm: true })}>Add Comment</Button>
+        <Button type="button" variant="contained" color="secondary" onClick={() => this.setState({ showForm: true })}>Add Comment</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )
   }
 }
-const mapStateToProps = ({ authReducer, postreducer, commentReducer  }) => {
+const mapStateToProps = ({ authReducer, postreducer, commentReducer }) => {
   return {
     authReducer,
     postreducer,

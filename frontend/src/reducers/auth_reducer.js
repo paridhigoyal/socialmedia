@@ -3,27 +3,28 @@ import {
 }
   from "../actions/action_types"
 const init = {
-  token: localStorage.getItem("token"),
+  token: null,
   isAuthenticated: false,
   user: null,
   isLoading: false,
 }
 
-export default function authReduer (state = init, action) {
+export default function authReducer (state = init, action) {
   switch (action.type) {
     case LOGIN:
-      localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("user" , action.payload.user);
+      console.log(action.payload)
       return {
         ...state,
         token: action.payload.token,
+        error: null,
         isAuthenticated: action.payload.token ? true : false,
         user: action.payload.user,
       }
     case LOGOUT:
-      localStorage.setItem("user", null);
-      localStorage.removeItem("token");
-      return {};
+
+      return { isLoading: false,
+        token: null,
+        error: null,};
 
     default:
       return state

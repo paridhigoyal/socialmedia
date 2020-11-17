@@ -1,14 +1,11 @@
-import { GET_COMMENTS, ADD_COMMENT, DELETE_COMMENT, EDIT_COMMENT } from "../actions/action_types";
+import {  ADD_COMMENT, DELETE_COMMENT, EDIT_COMMENT } from "../actions/action_types";
 
 export default function (state = [], action) {
 
   let comments
   let commentIndex
   switch (action.type) {
-    case GET_COMMENTS:
-      return [
-        ...action.payload,
-      ]
+  
 
     case ADD_COMMENT:
       return [

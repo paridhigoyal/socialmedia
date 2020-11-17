@@ -64,11 +64,11 @@ class Login extends Component {
     this.setState({ progress: true })
     this.props.login(values, () => {
       this.setState
-      ({
-        progress: false,
-        username: "",
-        password: ""
-      })
+        ({
+          progress: false,
+          username: "",
+          password: ""
+        })
     })
   }
 }

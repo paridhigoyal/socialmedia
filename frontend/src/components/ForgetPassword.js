@@ -25,17 +25,17 @@ export class ForgetPassword extends Component {
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>
-        <FormControl>
+          <FormControl>
             <InputLabel>Email</InputLabel>
             <Input type="text"
-            name="email"
-            value={this.state.email}
-            onChange={this.handleOnChange} />
+              name="email"
+              value={this.state.email}
+              onChange={this.handleOnChange} />
           </FormControl>
 
-          <Button disabled={!this.state.email} type='submit' onClick={this.handleOnSubmit} 
-          variant="contained" color="secondary">
-           Send email 
+          <Button disabled={!this.state.email} type='submit' onClick={this.handleOnSubmit}
+            variant="contained" color="secondary">
+            Send email
     </Button>
 
         </form>

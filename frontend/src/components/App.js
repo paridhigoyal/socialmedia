@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
-// import {setConfig} from '../actions/index'
 import {
   BrowserRouter as Router,
   Route,
@@ -16,31 +15,29 @@ import Followers from './Followers';
 import Following from './Following';
 import UserProfiles from './UserProfiles';
 import ForgetPassword from './ForgetPassword';
-import ChangePassword from './ChangePassword'
-// import { baseURL } from '../utility';
+import ChangePassword from './ChangePassword';
 import UserProfile from './UserProfile';
+import {
+  tyrAutoSignIn,
+  getPosts,
+  getProfiles, addPost,
+  createProfile, changePassword, login
+} from '../actions/index'
 function App(props) {
 
-  const { isAuthenticated } = props
+  const { isAuthenticated, tyrAutoSignIn } = props
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   console.log(token)
-  //   if (token) {
-  //     // const config = setConfig(getState, resetParameter)
-  //     const requestConfig = {
-  //       method: 'GET',
-  //       headers: {
-  //         Authorization: token ? `token ${token}` : 'Authorization failed',
-  //         'Content-Type': 'application/json',
-  //       }
-  //     };
+  useEffect(() => {
+    tyrAutoSignIn();
+    if (isAuthenticated) {
+      getPosts();
+      changePassword();
+      createProfile();
+      getProfiles();
+      addPost();
+    }
+  },[isAuthenticated]);
 
-  //     fetch(`${baseURL}/rest-auth/user`, requestConfig).then(response => {
-  //       console.log(response);
-  //     })
-  //   }
-  // }, []);
 
   return (
     <Router>
@@ -60,7 +57,7 @@ function App(props) {
               return <Redirect to="/login" />;
             }
           }}></Route>
-           <Route path="/user-info"
+        <Route path="/user-info"
           render={() => {
             if (isAuthenticated) {
               return <UserProfile {...props} />;
@@ -114,8 +111,6 @@ function App(props) {
             }
           }} />
 
-
-
       </Switch>
     </Router>
 
@@ -125,13 +120,39 @@ function App(props) {
 const mapStateToProps = (state) => {
   return {
     authReducer: state.authReducer,
-    isAuthenticated: state.authReducer.isAuthenticated,
+    isAuthenticated: state.authReducer.token ? true : false,
     followerreducer: state.followerreducer,
 
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (values) => {
+      dispatch(login(values));
+    },
+    getPosts: () => {
+      dispatch(getPosts());
+    },
+    tyrAutoSignIn: () => {
+      dispatch(tyrAutoSignIn());
+    },
+    changePassword: () => {
+      dispatch(changePassword());
+    },
+    createProfile: (values) => {
+      dispatch(createProfile(values));
+    },
+    getProfiles: () => {
+      dispatch(getProfiles());
+    },
+    addPost: (values) => {
+      dispatch(addPost(values));
+    },
+
+
+  }
+}
 
 
 
-
-export default connect(mapStateToProps, null)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

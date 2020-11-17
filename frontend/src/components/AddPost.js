@@ -47,26 +47,26 @@ export class AddPost extends Component {
   render() {
     return (<div className="container">
       <form onSubmit={this.handleSubmit}>
-      <FormControl>
-            <InputLabel>Upload Image:</InputLabel>
-            <Input type='file'
-          name='image'
-          accept="image/png, image/jpeg"
-          onChange={this.onInputChange} required /><br />
-          </FormControl><br />
-          <FormControl>
-            <InputLabel>Caption</InputLabel>
-            <Input type='text'
-          name='caption'
-          value={this.state.caption}
-          onChange={this.onInputChange}
-          placeholder="caption for the image" /><br />
-          </FormControl>
-          <br /><br />
-          <Button type='submit' onClick={this.handleSubmit}
-            disabled={!this.state.image, !this.state.caption}
-            variant="contained" color="secondary">
-           Post
+        <FormControl>
+          <InputLabel>Upload Image:</InputLabel>
+          <Input type='file'
+            name='image'
+            accept="image/png, image/jpeg"
+            onChange={this.onInputChange} required /><br />
+        </FormControl><br />
+        <FormControl>
+          <InputLabel>Caption</InputLabel>
+          <Input type='text'
+            name='caption'
+            value={this.state.caption}
+            onChange={this.onInputChange}
+            placeholder="caption for the image" /><br />
+        </FormControl>
+        <br /><br />
+        <Button type='submit' onClick={this.handleSubmit}
+          disabled={!this.state.image, !this.state.caption}
+          variant="contained" color="secondary">
+          Post
           </Button>
       </form>
 

@@ -34,9 +34,8 @@ const renderField = ({
   );
 export class Signup extends Component {
   submit = (values) => {
-    // console.log('aa')
+
     alert("Form submitted successfully.....");
-    // console.log(values);
   };
   render() {
     const {
@@ -49,7 +48,6 @@ export class Signup extends Component {
       submitSucceeded,
     } = this.props;
     if (submitSucceeded) {
-      // console.log('asa')
       history.push("/login");
     }
     return (
@@ -115,8 +113,6 @@ export class Signup extends Component {
 
 Signup = reduxForm({
   form: "signup-form",
-  // destroyOnUnmount: false,
-  // forceUnregisterOnUnmount: true,
   validate,
   asyncValidate,
   asyncBlurFields: ['username', 'email']

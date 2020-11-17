@@ -10,7 +10,6 @@ The explosion of social media project  is to changing the way of communication. 
 - User Profile
 - Comment
 - Like
-- Follow
 - Post
 
 
@@ -34,9 +33,63 @@ The explosion of social media project  is to changing the way of communication. 
 
 # Project Structure
 .<br/>
+├── frontend<br/>
+│   ├── node_modules<br/>
+│   ├── public<br/>
+│   ├── README.md<br/>
+│   ├── package.json<br/>
+│   ├── package-lock.json<br/>
+│   ├── README.md<br/>
+│   ├── src<br/>
+│   │   ├── actions<br/>
+│   │   │   ├── action_types.js<br/>
+│   │   │   ├── index.js<br/>
+│   │   │   └── setState.js<br/>
+│   │   ├── app<br/>
+│   │   │   └── store.js<br/>
+│   │   ├── App.css<br/>
+│   │   ├── App.test.js<br/>
+│   │   ├── components<br/>
+│   │   │   ├── AddComment.js<br/>
+│   │   │   ├── AddPost.js<br/>
+│   │   │   ├── App.js<br/>
+│   │   │   ├── ChangePassword.js<br/>
+│   │   │   ├── EditComment.js<br/>
+│   │   │   ├── EditPost.js<br/>
+│   │   │   ├── EditProfile.js<br/>
+│   │   │   ├── Followers.js<br/>
+│   │   │   ├── Following.js<br/>
+│   │   │   ├── Follow.js<br/>
+│   │   │   ├── ForgetPassword.js<br/>
+│   │   │   ├── Login.js<br/>
+│   │   │   ├── Nav.js<br/>
+│   │   │   ├── PostRate.js<br/>
+│   │   │   ├── Posts.js<br/>
+│   │   │   ├── SearchUserPost.js<br/>
+│   │   │   ├── Signup.js<br/>
+│   │   │   ├── UserProfile.js<br/>
+│   │   │   ├── UserProfiles.js<br/>
+│   │   │   └── validate.js<br/>
+│   │   ├── index.css<br/>
+│   │   ├── index.js<br/>
+│   │   ├── reducers<br/>
+│   │   │   ├── auth_reducer.js<br/>
+│   │   │   ├── commentReducer.js<br/>
+│   │   │   ├── followerreducer.js<br/>
+│   │   │   ├── index.js<br/>
+│   │   │   ├── postreducer.js<br/>
+│   │   │   └── profilereducer.js<br/>
+│   │   ├── serviceWorker.js<br/>
+│   │   ├── setupTests.js<br/>
+│   │   └── utility<br/>
+│   │       └── index.js<br/>
+│   └── yarn.lock<br/>
 ├── manage.py<br/>
-├── post-images<br/>
-├── profile-pictures<br/>
+|── media<br/>
+│   └── frontend<br/>
+│       └── src<br/>
+│           ├── post-images<br/>
+│           └── profile-pictures<br/>
 ├── README.md<br/>
 ├── requirements.txt<br/>
 ├── .gitignore<br/>
@@ -72,7 +125,10 @@ The explosion of social media project  is to changing the way of communication. 
 5.__Create admin :__  python manage.py createsuperuser<br/>
 6.__Run project :__  python manage.py runserver.<br/>
 
-
+# To run frontend locally
+1.Clone this repo
+2.npm install to install all req'd dependencies(material-UI, react-redux,  router-dom, PhoneInput)
+3.npm start to start the local server (this project uses create-react-app)
 
 # Future scope of the Project:
 In future the chatting application , group can be created,  conference call, video calling,  calling , within the group post something,  make admin member of particular group to maintain group activities,  event management,  pages , save post, notification  .

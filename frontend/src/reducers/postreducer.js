@@ -5,9 +5,9 @@ import {
   DELETE_POST,
   EDIT_POST,
   EDIT_POST_FAIL,
-  MAKE_LIKE,
   UPDATE_LIKE,
   DELETE_LIKE,
+  SET_LIKE,
 } from "../actions/action_types"
 const initialState = {
   loading: false,
@@ -16,10 +16,8 @@ const initialState = {
 }
 const postreducer = (state = initialState, action) => {
   let posts = state.posts;
-  // let post;
   let postIndex;
 
-  // console.log(action.type)
   switch (action.type) {
     case POSTS_REQUEST:
       return {
@@ -46,8 +44,7 @@ const postreducer = (state = initialState, action) => {
         ...state,
         posts :action.payload
       }
-
-    case MAKE_LIKE:
+    case SET_LIKE:
       postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
       if (postIndex !== -1) {
         state.posts.splice(postIndex, 1, action.payload)
@@ -56,6 +53,7 @@ const postreducer = (state = initialState, action) => {
         ...state,
         posts
       }
+
     case UPDATE_LIKE:
       postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
       if (postIndex !== -1) {

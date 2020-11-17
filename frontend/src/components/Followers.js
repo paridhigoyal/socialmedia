@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 export class Followers extends Component {
 
   componentDidMount() {
-    // const { match: { params } } = this.props;
-    // const id = parseInt(this.props.match.params.id);
     console.log(this.props)
 
     this.props.getFollowers()

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { editProfile } from '../actions/index';
 import { connect } from 'react-redux';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import PhoneInput from 'react-phone-number-input'
 export class EditProfile extends Component {
   constructor(props) {
     super(props);
@@ -48,12 +49,6 @@ export class EditProfile extends Component {
         })
         break;
 
-      case 'contact_no':
-        this.setState({
-          contact_no: event.target.value
-        })
-        break;
-
       case 'profile_picture':
         this.setState({
           profile_picture: event.target.files[0]
@@ -76,7 +71,7 @@ export class EditProfile extends Component {
     form_data.append('date_of_birth', this.state.date_of_birth);
     this.props.editProfile(this.props.value.id, form_data)
   }
-  
+
   showForm = () => {
     return (<div>
       <form onSubmit={this.handleSubmit} >
@@ -111,11 +106,11 @@ export class EditProfile extends Component {
         <br />
         <FormControl>
           <InputLabel>Contact No</InputLabel>
-          <Input
+          <PhoneInput
             type='text'
-            name='contact_no'
+            country={"in"}
             value={this.state.contact_no}
-            onChange={this.onInputChange}
+            onChange={contact_no => this.setState({ contact_no })}
             placeholder="contact no" /><br />
         </FormControl>
         <br />

@@ -3,33 +3,69 @@ import { baseURL } from '../utility/index';
 import Cookies from 'js-cookie';
 
 import {
-  LOGIN, LOGIN_ERROR, LOGOUT, POSTS_SUCCESS, POSTS_REQUEST,
-  POSTS_FAILURE, POST_CREATED,  DELETE_POST,
-  PROFILE_SUCCESS, PROFILE_REQUEST, PROFILE_FAILURE, 
-  GET_FOLLOW_SUCCESS, GET_FOLLOW_FAILURE,
+  LOGIN, 
+  LOGIN_ERROR,  
+  LOGOUT, 
+  POSTS_SUCCESS, 
+  POSTS_REQUEST,
+  POSTS_FAILURE, 
+  POST_CREATED,  
+  DELETE_POST,
+  PROFILE_SUCCESS, 
+  PROFILE_REQUEST, 
+  PROFILE_FAILURE, 
+  GET_FOLLOW_SUCCESS, 
+  GET_FOLLOW_FAILURE,
   FOLLOWER_REQUEST,
   FOLLOWER_SUCCESS,
   FOLLOWER_FAILURE,
   EDIT_POST_FAIL,
-  EDIT_POST, ADD_COMMENT,
+  EDIT_POST, 
+  ADD_COMMENT,
   DELETE_COMMENT,
-  EDIT_COMMENT, EDIT_PROFILE,
+  EDIT_COMMENT, 
+  EDIT_PROFILE,
   FORGET_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_SUCCESS,
-  MAKE_LIKE,
   DELETE_LIKE,
   UPDATE_LIKE,
   CREATE_PROFILE
 } from "./action_types"
 
+export const tyrAutoSignIn = () =>(dispatch)=>{
+  const token = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('user'));
+  if(token){
+    dispatch({
+      type: LOGIN,
+      payload: {token:token,
+        user:user}
+    })
+  }
+  else {
+    dispatch({ type: LOGIN_ERROR, 
+      payload: "Authentication failed" });
+  }
+}
+
 export const login = (values, callBack) => {
   return (dispatch) => {
-    axios.post(`${baseURL}/rest-auth/login/`, values).then((res) => {
+    axios.post(`${baseURL}/rest-auth/login/`, values).then((res) =>
+     {
+       console.log(res)
+       const token = res.data.token
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      const user = JSON.parse(localStorage.getItem('user'));
+       console.log(  user)
       dispatch({
         type: LOGIN,
-        payload: res.data
+        payload:{token:token,
+         user:user}
+        
       })
-      // window.location.reload(true);
+       console.log(res.data)
+      localStorage.setItem('token', res.data.token)
+
     }, (err) => {
       dispatch({
         type: LOGIN_ERROR,
@@ -44,6 +80,8 @@ export const login = (values, callBack) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
+  localStorage.removeItem("token");
+  window.location.reload(true);
 };
 
 export const forgetPassword = (email) => {
@@ -62,15 +100,11 @@ export const forgetPassword = (email) => {
 }
 
 export const changePassword = (input) => {
-  // var csrftoken = getCookie('csrftoken');
-
   return (dispatch, getState) => {
-
     const resetParameter = {
       Accept: 'application/json',
     };
     const config = setConfig(getState, resetParameter)
-    // console.log(config)
     axios.post(`${baseURL}/rest-auth/password/change/`, input, config).then((res) => {
       console.log(res)
       dispatch({
@@ -96,10 +130,7 @@ export const createProfile = (values) => {
 
 export const makeLike = (values) => {
   return (dispatch, getState) => {
-    dispatch({
-      type: MAKE_LIKE,
-      payload: values
-    })
+    console.log(getState(),values)
     const config = setConfig(getState)
     axios.post(`${baseURL}/postrate/`, values, config).then((res) => {
       
@@ -134,13 +165,12 @@ export const deleteLike = (id) => {
 export const searchUserPost = (username) => {
   return (dispatch, getState) => {
   const config = setConfig(getState)
-  // console.log(config)
   dispatch({ type: POSTS_REQUEST });
   axios
     .get(`${baseURL}/post/?search=${username}`, config)
     .then((response) => {
       dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
-      // console.log(response)
+  
     })
     .catch((error) => {
       dispatch({ type: POSTS_FAILURE, payload: error.message });
@@ -148,13 +178,11 @@ export const searchUserPost = (username) => {
 };}
 export const searchuserprofile = (username) => (dispatch, getState) => {
   const config = setConfig(getState)
-  // console.log(config)
   dispatch({ type: PROFILE_REQUEST });
   axios
     .get(`${baseURL}/profile/?search=${username}`, config)
     .then((response) => {
       dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
-      // console.log(response)
     })
     .catch((error) => {
       dispatch({ type: POSTS_FAILURE, payload: error.message });
@@ -168,7 +196,6 @@ export const getPosts = () => (dispatch, getState) => {
     .get(`${baseURL}/post/`, config)
     .then((response) => {
       dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
-      // console.log(response)
     })
     .catch((error) => {
       dispatch({ type: POSTS_FAILURE, payload: error.message });
@@ -177,7 +204,6 @@ export const getPosts = () => (dispatch, getState) => {
 
 
 export const addPost = (values) => {
-  // console.log(values)
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.post(`${baseURL}/post/`, values, config, {
@@ -198,11 +224,9 @@ export const addPost = (values) => {
 
 export const deletePost = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
-  // console.log('dff')
   axios.delete(`${baseURL}/post/${id}/`, config)
     .then((data) => {
       const posts = data
-      // console.log(posts, 'abcd')
       dispatch({
         type: DELETE_POST,
         payload: posts,
@@ -214,13 +238,12 @@ export const deletePost = (id) => (dispatch, getState) => {
 
 export const getProfiles = () => (dispatch, getState) => {
   const config = setConfig(getState)
-  // console.log(config)
   dispatch({ type: PROFILE_REQUEST });
   axios
     .get(`${baseURL}/profile/`, config)
     .then((response) => {
       dispatch({ type: PROFILE_SUCCESS, payload: response.data.results });
-      // console.log(response)
+
     })
     .catch((error) => {
       dispatch({ type: PROFILE_FAILURE, payload: error.message });
@@ -228,7 +251,6 @@ export const getProfiles = () => (dispatch, getState) => {
 }
 
 export const follow = (id) => (dispatch, getState) => {
-  // dispatch({ type: GET_FOLLOW_REQUEST });
   const config = setConfig(getState)
   axios
     .get(`${baseURL}/follow/${id}/`, config,{
@@ -238,7 +260,6 @@ export const follow = (id) => (dispatch, getState) => {
     },})
     .then((response) => {
       dispatch({ type: GET_FOLLOW_SUCCESS, payload: response.data.results });
-      // console.log(response)
     })
     .catch((error) => {
       dispatch({ type: GET_FOLLOW_FAILURE, payload: error.message });
@@ -247,7 +268,6 @@ export const follow = (id) => (dispatch, getState) => {
 
 export const getFollowers = () => (dispatch, getState) => {
   const config = setConfig(getState)
-  // console.log(config, 'fdg')
   dispatch({ type: FOLLOWER_REQUEST });
   axios
     .get(`${baseURL}/followers/`, config)
@@ -273,7 +293,6 @@ export const editPost = (id, postData) => {
         type: EDIT_POST_FAIL,
         payload: err.response.data
       })
-      // callBack()
     })
   }
 }
@@ -326,8 +345,6 @@ export const deleteComment = (id) => {
           payload: res.data
         })
       })
-
-
   }
 }
 

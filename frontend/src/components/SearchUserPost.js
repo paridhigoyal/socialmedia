@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-// import SearchBar from "material-ui-search-bar";
 import SearchIcon from '@material-ui/icons/Search';
-import { Button, FormControl,  InputAdornment } from '@material-ui/core';
+import { Button, FormControl, InputAdornment } from '@material-ui/core';
 import InputBase from '@material-ui/core/InputBase';
 import { searchUserPost } from '../actions/index'
 
- class SearchUserPost extends Component {
+class SearchUserPost extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -27,26 +26,20 @@ import { searchUserPost } from '../actions/index'
   render() {
     return (
       <div >
-        {/* <SearchBar
-    value={this.state.username}
-    // onChange={this.onInputChange}
-    onChange={(newValue) => this.setState({ value: newValue })}
-    onRequestSearch={() => this.props.searchUserPost(this.state.username)}
-  /> */}
         <form onSubmit={this.onFormSubmit} >
-        <FormControl>
-          <InputBase
-          placeholder='.....search'
-            type='text'
-            value={this.state.username}
-            onChange={this.onInputChange}
-            startAdornment={
-            <InputAdornment position='start'>
-          <SearchIcon />
-        </InputAdornment>
-            }
+          <FormControl>
+            <InputBase
+              placeholder='.....search'
+              type='text'
+              value={this.state.username}
+              onChange={this.onInputChange}
+              startAdornment={
+                <InputAdornment position='start'>
+                  <SearchIcon />
+                </InputAdornment>
+              }
             />
-            </FormControl>
+          </FormControl>
           <Button type="submit" variant="contained" color="primary" onClick={this.onFormSubmit}> search.... </Button>
         </form>
       </div>

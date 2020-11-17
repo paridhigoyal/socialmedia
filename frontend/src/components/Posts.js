@@ -22,42 +22,42 @@ class Posts extends Component {
 
     return (
       <>
-      {(user !== undefined && user.pk) && <div>
+        {(user !== undefined && user.pk) && <div>
 
-        <SearchUserPost />
-        <ul>
-          {posts !== undefined && posts.map((value, index) => (
-            <li key={index}>
-             <h5> <b>{value.post_by.username} </b></h5>
-              <div>
-                <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
-                  src={value.image} alt="abc"></img><br />
-               <b>{value.post_by.username} </b> {value.caption}<br />
-              </div>
-              {value.post_belongs_to_authenticated_user && <DeleteForeverRoundedIcon
-                onClick={() => { this.props.deletePost(value.id) }} />}
-              {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
-              likes : {value.likes_count} &nbsp;
+          <SearchUserPost />
+          <ul>
+            {posts !== undefined && posts.map((value, index) => (
+              <li key={index}>
+                <h5> <b>{value.post_by.username} </b></h5>
+                <div>
+                  <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
+                    src={value.image} alt="abc"></img><br />
+                  <b>{value.post_by !== undefined && value.post_by.username} </b> {value.caption}<br />
+                </div>
+                {value.post_belongs_to_authenticated_user && <DeleteForeverRoundedIcon
+                  onClick={() => { this.props.deletePost(value.id) }} />}
+                {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
+                likes : {value.likes_count} &nbsp;
               dislikes : {value.dislikes_count} &nbsp;
               <PostRate value={value} pk={user.pk} />
-              comments: {value.comments_count} <br />
-              <AddComment id={value.id} />
-              <br /><b>comments.....</b>
-              {value.comments.map((data, index) => (
-                <li key={index}>
-                  {data.content} by {data.user}
-                  {user.pk === data.user && <DeleteForeverRoundedIcon
-                    onClick={() => { this.props.deleteComment(data.id) }}
-                    variant="contained" color="secondary" />}
-                  {user.pk === data.user && <EditComment data={data} />}
-                </li>
-              ))}
-            </li>
-          ))
-          }
-          <br />
-        </ul>
-      </div>}
+                comments: {value.comments_count} <br />
+                <AddComment id={value.id} />
+                <br /><b>comments.....</b>
+                {value.comments.map((data, index) => (
+                  <li key={index}>
+                    {data.content} by {data.user}
+                    {user.pk === data.user && <DeleteForeverRoundedIcon
+                      onClick={() => { this.props.deleteComment(data.id) }}
+                      variant="contained" color="secondary" />}
+                    {user.pk === data.user && <EditComment data={data} />}
+                  </li>
+                ))}
+              </li>
+            ))
+            }
+            <br />
+          </ul>
+        </div>}
       </>
     )
   }

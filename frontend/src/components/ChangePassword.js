@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { changePassword } from '../actions/index'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { browserHistory } from 'react-router'
+import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
 export class ChangePassword extends Component {
   constructor(props) {
@@ -39,10 +40,8 @@ export class ChangePassword extends Component {
       input["new_password1"] = "";
       input["new_password2"] = "";
       this.setState({ input: input });
-      //console.log(this.state.input)
       alert('Demo Form is submited');
     }
-
   }
 
   validate() {
@@ -88,26 +87,32 @@ export class ChangePassword extends Component {
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>
-          <label>New Password</label>
-          <input
-            type="password"
-            name="new_password1"
-            value={this.state.input.new_password1}
-            onChange={this.handleOnChange}
-            placeholder="new_password"
-          />
+          <FormControl>
+            <InputLabel>New Password</InputLabel>
+            <Input
+              type="password"
+              name="new_password1"
+              value={this.state.input.new_password1}
+              onChange={this.handleOnChange}
+              placeholder="new_password"
+            />
+          </FormControl>
           <div className="text-danger">{this.state.errors.new_password1}</div>
-
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="new_password2"
-            value={this.state.input.new_password2}
-            onChange={this.handleOnChange}
-            placeholder="re-enter new password"
-          />
+          <FormControl>
+            <InputLabel>Confirm Password</InputLabel>
+            <Input
+              type="password"
+              name="new_password2"
+              value={this.state.input.new_password2}
+              onChange={this.handleOnChange}
+              placeholder="re-enter new password"
+            />
+          </FormControl>
           <div className="text-danger">{this.state.errors.new_password2}</div>
-          <button> change password</button>
+          <br />
+          <Button type='submit' onClick={this.handleOnSubmit.bind(this)}
+            disabled={!this.state.input.new_password1, !this.state.input.new_password2}
+            variant="contained" color="secondary"> change password</Button>
         </form>
       </div>
     )
