@@ -35,8 +35,6 @@ export const validate = (values) => {
   return errors;
 };
 
-
-
 export const asyncValidate = (values) => {
 
   const obj = {

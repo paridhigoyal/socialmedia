@@ -41,7 +41,7 @@ export class PostRate extends Component {
             {like.liked &&
               <div>
 
-                <Button onClick={(event) =>  this.props.deleteLike(like.id)} variant="contained" color="primary" >
+                <Button onClick={(event) => this.props.deleteLike(like.id)} variant="contained" color="primary" >
                   Unlike
                   </Button>&nbsp;
                 <Button onClick={(event) => this.updateLike2(false, like.id)} variant="contained" color="primary" >
@@ -53,10 +53,10 @@ export class PostRate extends Component {
               <div>
                 <Button onClick={(event) => this.updateLike2(true, like.id)} variant="contained" color="primary">
                   Like
-                    </Button>
+                </Button>
                 <Button onClick={() => this.props.deleteLike(like.id)} variant="contained" color="primary" >
                   UnDislike
-                    </Button>
+                </Button>
               </div>}
           </div>
         }

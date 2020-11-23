@@ -22,6 +22,4 @@ export class Follow extends Component {
   }
 }
 
-
-
 export default connect(null, { follow })(Follow);

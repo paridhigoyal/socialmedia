@@ -18,13 +18,11 @@ class Profiles extends Component {
       <div>
         <ul>
           {profiles.map((value, index) => (
-
             <li key={index}>
               <Avatar alt="No profileimage" src={value.profile_picture} />
               <b> {value.username}</b><br />
               {value.first_name} {value.last_name}<br />
               {value.location}<br />
-
               <div>
                 following: <a href={`/following/${value.user_id}`} id="following">
                   {value.following_count}</a>&nbsp;
@@ -44,7 +42,6 @@ class Profiles extends Component {
                     : <b> Can't follow yourself </b>
                 }
               </div>
-
             </li>
           ))
           }

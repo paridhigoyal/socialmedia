@@ -59,7 +59,6 @@ export class UserProfile extends Component {
     }
   }
 
-
   handleSubmit = (e) => {
     e.preventDefault();
     let form_data = new FormData();

@@ -56,7 +56,6 @@ export class EditComment extends Component {
     );
   }
 
-
   render() {
     return (
       <div>

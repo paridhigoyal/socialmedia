@@ -9,6 +9,7 @@ import {
   DELETE_LIKE,
   SET_LIKE,
 } from "../actions/action_types"
+
 const initialState = {
   loading: false,
   posts: [],
@@ -42,7 +43,7 @@ const postreducer = (state = initialState, action) => {
       posts.filter((id) => id !== action.id)
       return {
         ...state,
-        posts :action.payload
+        posts: action.payload
       }
     case SET_LIKE:
       postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
@@ -72,7 +73,7 @@ const postreducer = (state = initialState, action) => {
         ...state,
         posts
       }
-      
+
 
     case EDIT_POST:
       postIndex = posts.findIndex((post) => (post.id === action.payload.id))

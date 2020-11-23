@@ -49,7 +49,6 @@ class SearchUserPost extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     searchUserPost: (username) => dispatch(searchUserPost(username))
-
   }
 }
 const mapStateToProps = state => {

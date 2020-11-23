@@ -4,7 +4,6 @@ export class Following extends Component {
     render() {
         return (
             <div>
-
             </div>
         )
     }

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { forgetPassword } from '../actions/index';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
-
 export class ForgetPassword extends Component {
   constructor(props) {
     super(props);

@@ -3,7 +3,12 @@ import { connect } from 'react-redux'
 import { changePassword } from '../actions/index'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { browserHistory } from 'react-router'
-import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  Input
+} from '@material-ui/core';
 
 export class ChangePassword extends Component {
   constructor(props) {

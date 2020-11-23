@@ -6,11 +6,8 @@ export class EditPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       caption: this.props.value.caption,
       image: this.props.value.image,
-
-
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
@@ -19,11 +16,7 @@ export class EditPost extends Component {
     switch (event.target.name) {
       case 'image':
         this.setState({
-
-
           image: event.target.files[0]
-
-
         })
         break;
       case 'caption':
@@ -45,7 +38,6 @@ export class EditPost extends Component {
     await this.props.getPosts()
   }
   showForm = () => {
-
     return (<div>
       <form onSubmit={this.handleSubmit} >
         <FormControl>
@@ -66,7 +58,7 @@ export class EditPost extends Component {
             placeholder="caption for the image" /><br />
         </FormControl>
         <br />
-        <Button disabled={!this.state.image, !this.state.caption}
+        <Button disabled={!this.state.image}
           type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
           Update Post
     </Button>
@@ -74,7 +66,6 @@ export class EditPost extends Component {
     </div>
     );
   }
-
   render() {
     return (
       <div>

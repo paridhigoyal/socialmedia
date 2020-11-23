@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
 import { logout } from '../actions/index'
 
-
 class Nav extends Component {
 
   render() {
@@ -18,14 +17,13 @@ class Nav extends Component {
             <Link className="btn btn-sm btn-outline-info" to="/user-info">
               {user && user.username}<i className="fa fa-user ml-1"></i>
             </Link>
-
           </li>
 
           <li className="nav-item" style={{ margin: "auto 0" }}>
             <button onClick={this.props.logout}
               className="btn btn-sm btn-outline-danger ml-2" to="/">
               Logout
-                        </button>
+               </button>
           </li>
           <li className="nav-item" style={{ margin: "auto 0" }}>
             <Link className="btn btn-sm btn-outline-info" to="/changepassword">

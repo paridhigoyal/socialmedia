@@ -1,5 +1,6 @@
 import {
-  LOGIN, LOGOUT
+  LOGIN,
+  LOGOUT
 }
   from "../actions/action_types"
 const init = {
@@ -9,7 +10,7 @@ const init = {
   isLoading: false,
 }
 
-export default function authReducer (state = init, action) {
+export default function authReducer(state = init, action) {
   switch (action.type) {
     case LOGIN:
       console.log(action.payload)
@@ -22,9 +23,11 @@ export default function authReducer (state = init, action) {
       }
     case LOGOUT:
 
-      return { isLoading: false,
+      return {
+        isLoading: false,
         token: null,
-        error: null,};
+        error: null,
+      };
 
     default:
       return state

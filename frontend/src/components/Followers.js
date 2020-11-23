@@ -6,15 +6,12 @@ export class Followers extends Component {
 
   componentDidMount() {
     console.log(this.props)
-
     this.props.getFollowers()
-
   }
   render() {
     return (
       <div>
         {console.log("ghgj", this.props)}
-
       </div>
     )
   }

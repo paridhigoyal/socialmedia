@@ -20,8 +20,11 @@ import UserProfile from './UserProfile';
 import {
   tyrAutoSignIn,
   getPosts,
-  getProfiles, addPost,
-  createProfile, changePassword, login
+  getProfiles,
+  addPost,
+  createProfile,
+  changePassword,
+  login
 } from '../actions/index'
 function App(props) {
 
@@ -36,8 +39,7 @@ function App(props) {
       getProfiles();
       addPost();
     }
-  },[isAuthenticated]);
-
+  }, [isAuthenticated]);
 
   return (
     <Router>
@@ -148,11 +150,7 @@ const mapDispatchToProps = (dispatch) => {
     addPost: (values) => {
       dispatch(addPost(values));
     },
-
-
   }
 }
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
