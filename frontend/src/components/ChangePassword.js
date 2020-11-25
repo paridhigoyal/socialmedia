@@ -14,7 +14,8 @@ export class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: {},
+      input: {new_password1:"",
+      new_password2:""},
       errors: {}
     };
 

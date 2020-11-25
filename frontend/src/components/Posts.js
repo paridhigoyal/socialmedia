@@ -43,6 +43,7 @@ class Posts extends Component {
                 comments: {value.comments_count} <br />
                 <AddComment id={value.id} />
                 <br /><b>comments.....</b>
+                <ul>
                 {value.comments.map((data, index) => (
                   <li key={index}>
                     {data.content} by {data.user}
@@ -52,6 +53,7 @@ class Posts extends Component {
                     {user.pk === data.user && <EditComment data={data} />}
                   </li>
                 ))}
+                </ul>
               </li>
             ))
             }

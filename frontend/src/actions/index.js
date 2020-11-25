@@ -32,7 +32,7 @@ import {
   CREATE_PROFILE
 } from "./action_types"
 
-export const tyrAutoSignIn = () => (dispatch) => {
+export const tryAutoSignIn = () => (dispatch) => {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
   if (token) {

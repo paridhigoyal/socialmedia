@@ -18,7 +18,7 @@ import ForgetPassword from './ForgetPassword';
 import ChangePassword from './ChangePassword';
 import UserProfile from './UserProfile';
 import {
-  tyrAutoSignIn,
+  tryAutoSignIn,
   getPosts,
   getProfiles,
   addPost,
@@ -27,11 +27,11 @@ import {
   login
 } from '../actions/index'
 function App(props) {
-
-  const { isAuthenticated, tyrAutoSignIn } = props
+  // const [ isAuthenticated, tyrAutoSignIn ] = useState(props)
+   const {isAuthenticated, tryAutoSignIn} = props
 
   useEffect(() => {
-    tyrAutoSignIn();
+    tryAutoSignIn()
     if (isAuthenticated) {
       getPosts();
       changePassword();
@@ -39,7 +39,7 @@ function App(props) {
       getProfiles();
       addPost();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated,tryAutoSignIn]);
 
   return (
     <Router>
@@ -135,8 +135,8 @@ const mapDispatchToProps = (dispatch) => {
     getPosts: () => {
       dispatch(getPosts());
     },
-    tyrAutoSignIn: () => {
-      dispatch(tyrAutoSignIn());
+    tryAutoSignIn: () => {
+      dispatch(tryAutoSignIn());
     },
     changePassword: () => {
       dispatch(changePassword());

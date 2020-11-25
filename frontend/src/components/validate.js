@@ -44,8 +44,7 @@ export const asyncValidate = (values) => {
     password2: values.re_password,
   };
 
-  axios
-    .post(`${baseURL}/rest-auth/registration/`, obj)
+  axios.post(`${baseURL}/rest-auth/registration/`, obj)
     .then((response) => {
       alert('register successfully')
     })
