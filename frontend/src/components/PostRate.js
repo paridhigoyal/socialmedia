@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button } from '@material-ui/core';
-import { makeLike, updateLike, deleteLike } from '../actions/index'
+import { makeLike, updateLike, deleteLike,getPosts } from '../actions/index'
 
 export class PostRate extends Component {
   constructor(props) {
@@ -22,13 +22,19 @@ export class PostRate extends Component {
       liked: like
     }
     this.props.makeLike(values)
+    this.props.getPosts()
   }
+
   updateLike2 = (likeType, id) => {
     const values = {
       liked: likeType,
-
     }
     this.props.updateLike(values, id)
+    this.props.getPosts()
+  }
+  deleteLike=(id)=>{
+    this.props.deleteLike(id)
+    this.props.getPosts()
   }
 
   render() {
@@ -40,7 +46,7 @@ export class PostRate extends Component {
         {like &&
           <div>
             {like.liked && <div>
-                <Button onClick={() => this.props.deleteLike(like.id)}
+                <Button onClick={() => this.deleteLike(like.id)}
                   variant="contained" color="primary" >
                   Unlike
                   </Button>&nbsp;
@@ -55,7 +61,7 @@ export class PostRate extends Component {
                   variant="contained" color="primary">
                   Like
                 </Button>
-                <Button onClick={() => this.props.deleteLike(like.id)}
+                <Button onClick={() => this.deleteLike(like.id)}
                   variant="contained" color="primary" >
                   UnDislike
                 </Button>
@@ -74,4 +80,4 @@ export class PostRate extends Component {
   }
 }
 
-export default connect(null, { makeLike, updateLike, deleteLike })(PostRate)
+export default connect(null, { makeLike, updateLike, deleteLike, getPosts })(PostRate)

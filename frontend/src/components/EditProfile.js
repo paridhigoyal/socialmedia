@@ -2,7 +2,7 @@
  * consist of profile fields */
 
 import React, { Component } from 'react'
-import { editProfile } from '../actions/index';
+import { editProfile, getProfiles } from '../actions/index';
 import { connect } from 'react-redux';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import PhoneInput from 'react-phone-number-input'
@@ -29,6 +29,9 @@ export class EditProfile extends Component {
 
     }
     this.onInputChange = this.onInputChange.bind(this);
+  }
+  componentDidMount(){
+    this.props.getProfiles()
   }
 
   onInputChange = (event) => {
@@ -148,4 +151,4 @@ export class EditProfile extends Component {
   }
 }
 
-export default connect(null, { editProfile })(EditProfile) 
+export default connect(null, { editProfile, getProfiles })(EditProfile) 

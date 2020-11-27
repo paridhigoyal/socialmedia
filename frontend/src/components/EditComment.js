@@ -55,7 +55,7 @@ export class EditComment extends Component {
             onChange={this.onInputChange}
             placeholder="comment......." />
         </FormControl>
-        <br /><br />
+      
         <EditIcon onClick={this.handleSubmit} variant="contained" color="secondary" />
       </form>
     </div>

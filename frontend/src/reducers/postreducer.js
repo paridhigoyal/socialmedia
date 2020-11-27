@@ -42,11 +42,12 @@ const postreducer = (state = initialState, action) => {
       }
 
     case DELETE_POST:
-      posts.filter((id) => id !== action.id)
+     
       return {
         ...state,
         posts: action.payload
       }
+
     case SET_LIKE:
       postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
       if (postIndex !== -1) {

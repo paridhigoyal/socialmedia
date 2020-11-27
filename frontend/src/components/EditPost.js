@@ -15,6 +15,9 @@ export class EditPost extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
+  componentDidMount(){
+    this.props.getPosts()
+  }
 
   onInputChange = (event) => {
     switch (event.target.name) {
@@ -39,6 +42,7 @@ export class EditPost extends Component {
     form_data.append('caption', this.state.caption)
     await this.props.editPost(this.props.value.id, form_data)
     await this.props.getPosts()
+    
   }
 
   showForm = () => {

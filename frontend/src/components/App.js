@@ -22,12 +22,7 @@ import ChangePassword from './ChangePassword';
 import UserProfile from './UserProfile';
 import {
   tryAutoSignIn,
-  getPosts,
-  getProfiles,
-  addPost,
-  createProfile,
-  changePassword,
-  login
+
 } from '../actions/index'
 
 function App(props) {
@@ -35,14 +30,9 @@ function App(props) {
 
   useEffect(() => {
     tryAutoSignIn()
-    if (isAuthenticated) {
-      getPosts();
-      changePassword();
-      createProfile();
-      getProfiles();
-      addPost();
-    }
-  }, [isAuthenticated,tryAutoSignIn]);
+  
+    
+  }, [tryAutoSignIn]);
 
   return (
     <Router>
@@ -133,27 +123,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (values) => {
-      dispatch(login(values));
-    },
-    getPosts: () => {
-      dispatch(getPosts());
-    },
+  
     tryAutoSignIn: () => {
       dispatch(tryAutoSignIn());
     },
-    changePassword: () => {
-      dispatch(changePassword());
-    },
-    createProfile: (values) => {
-      dispatch(createProfile(values));
-    },
-    getProfiles: () => {
-      dispatch(getProfiles());
-    },
-    addPost: (values) => {
-      dispatch(addPost(values));
-    },
+    
   }
 }
 

@@ -4,7 +4,7 @@
  *  giving some good captions....*/
 
 import React, { Component } from 'react';
-import { addPost } from '../actions/index';
+import { addPost, getPosts } from '../actions/index';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
@@ -19,6 +19,7 @@ export class AddPost extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
+
 
   onInputChange = (event) => {
     switch (event.target.name) {
@@ -43,7 +44,7 @@ export class AddPost extends Component {
     form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('caption', this.state.caption);
     this.props.addPost(form_data)
-    this.props.history.push('/posts')
+    this.props.getPosts()
   }
 
   render() {
@@ -77,11 +78,12 @@ export class AddPost extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer }) => {
+const mapStateToProps = ({ authReducer, postreducer }) => {
   return {
     authReducer,
+    postreducer
 
   }
 }
 
-export default connect(mapStateToProps, { addPost })(withRouter(AddPost));
+export default connect(mapStateToProps, { addPost, getPosts })(withRouter(AddPost));

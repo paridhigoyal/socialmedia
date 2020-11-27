@@ -150,7 +150,7 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
             return Response({'error': "Bad request"})
 
 
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def follow(request, pk):
     user = get_object_or_404(User, pk=pk)
     if user != request.user:

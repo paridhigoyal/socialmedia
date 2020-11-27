@@ -15,11 +15,18 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 class Posts extends Component {
 
   componentDidMount() {
-    const { isAuthenticated } = this.props.authReducer
-    if (isAuthenticated) {
       this.props.getPosts()
-    }
+    
   }
+deleteComment=(id)=>{
+  this.props.deleteComment(id)
+  this.props.getPosts()
+}
+deletePost=(id)=>{
+  this.props.deletePost(id)
+  this.props.getPosts()
+}
+
 
   render() {
     const { posts } = this.props.postreducer
@@ -31,7 +38,7 @@ class Posts extends Component {
 
           <SearchUserPost />
           <ul>
-
+            {posts.length === 0 && <h2>No posts available for this user</h2>}
             {posts !== undefined && posts.map((value, index) => (
 
               <li key={index}>
@@ -41,11 +48,12 @@ class Posts extends Component {
                 <div>
                   <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
                     src={value.image} alt="abc"></img><br />
-                  <b>{value.post_by !== undefined && value.post_by.username} </b> {value.caption}<br />
+                  <b>{value.post_by !== undefined && value.post_by.username} </b> 
+                  {value.caption}<br />
                 </div>
 
                 {value.post_belongs_to_authenticated_user && <DeleteForeverRoundedIcon
-                  onClick={() => { this.props.deletePost(value.id) }} />}
+                  onClick={() => { this.deletePost(value.id) }} />}
 
                 {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
 
@@ -69,9 +77,9 @@ class Posts extends Component {
 
                       <li key={index}>
 
-                        {data.content} by {data.user}
+                        {data.content} 
                         {user.pk === data.user && <DeleteForeverRoundedIcon
-                          onClick={() => { this.props.deleteComment(data.id) }}
+                          onClick={() => { this.deleteComment(data.id) }}
                           variant="contained" color="secondary" />}
                         {user.pk === data.user && <EditComment data={data} />}
                         <h6 style={{ color: 'darkgray' }}>{data.commented_at}</h6>

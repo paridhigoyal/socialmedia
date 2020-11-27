@@ -3,7 +3,7 @@
  
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addComment } from '../actions/index'
+import { addComment, getPosts } from '../actions/index'
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
 export class AddComment extends Component {
@@ -22,6 +22,7 @@ export class AddComment extends Component {
     this.onInputChange = this.onInputChange.bind(this);
   }
 
+
   onInputChange = (event) => {
     switch (event.target.name) {
       case 'content':
@@ -37,9 +38,10 @@ export class AddComment extends Component {
     }
   }
 
-  handleSubmit = async (event) => {
+  handleSubmit =  (event) => {
     event.preventDefault();
-    await this.props.addComment(this.state.commentData)
+   this.props.addComment(this.state.commentData)
+   this.props.getPosts()
 
   }
 
@@ -85,4 +87,4 @@ const mapStateToProps = ({ authReducer, postreducer, commentReducer }) => {
 }
 
 
-export default connect(mapStateToProps, { addComment })(AddComment)
+export default connect(mapStateToProps, { addComment, getPosts })(AddComment)
