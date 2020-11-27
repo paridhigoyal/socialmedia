@@ -1,14 +1,18 @@
+/**profilereducer consists of  PROFILE_FAILURE, PROFILE_REQUEST, PROFILE_SUCCESS, */
+
 import {
   PROFILE_FAILURE,
   PROFILE_REQUEST,
   PROFILE_SUCCESS,
 
 } from "../actions/action_types"
+
 const initialState = {
   loading: false,
   profiles: [],
   error: ''
 }
+
 const profilereducer = (state = initialState, action) => {
   switch (action.type) {
     case PROFILE_REQUEST:
@@ -33,4 +37,5 @@ const profilereducer = (state = initialState, action) => {
     default: return state
   }
 }
+
 export default profilereducer;

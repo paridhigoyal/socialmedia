@@ -1,8 +1,12 @@
+/** EditComment component is for editing comment consist of content
+ *  field which is for commenting */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editComment, getPosts } from '../actions/index'
 import EditIcon from '@material-ui/icons/Edit';
 import { FormControl, InputLabel, Input } from '@material-ui/core';
+
 export class EditComment extends Component {
   constructor(props) {
     super(props);
@@ -17,6 +21,7 @@ export class EditComment extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
+
   onInputChange = (event) => {
     switch (event.target.name) {
       case 'content':
@@ -31,12 +36,13 @@ export class EditComment extends Component {
         break;
     }
   }
+
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state.commentData, this.props.data.id)
     await this.props.editComment(this.props.data.id, this.state.commentData)
     await this.props.getPosts()
   }
+
   showForm = () => {
 
     return (<div>
@@ -59,8 +65,8 @@ export class EditComment extends Component {
   render() {
     return (
       <div>
-        <EditIcon onClick={() => this.setState({ showForm: true })} variant="contained" color="secondary" />
-        {this.state.showForm ? this.showForm() : null}
+        <EditIcon onClick={() => this.setState({ showForm: true })} variant="contained"
+          color="secondary" /> {this.state.showForm ? this.showForm() : null}
       </div>
     )
   }

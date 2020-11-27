@@ -1,8 +1,10 @@
+/** Posrrate component consists of like and dislike functionality. 
+ * one can like , dislike and undo like and dislike the post */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button } from '@material-ui/core';
 import { makeLike, updateLike, deleteLike } from '../actions/index'
-import { setLike } from '../actions/setState'
 
 export class PostRate extends Component {
   constructor(props) {
@@ -19,7 +21,6 @@ export class PostRate extends Component {
       rated_by: this.props.pk,
       liked: like
     }
-    this.props.setLike(values)
     this.props.makeLike(values)
   }
   updateLike2 = (likeType, id) => {
@@ -38,23 +39,24 @@ export class PostRate extends Component {
       <div>
         {like &&
           <div>
-            {like.liked &&
-              <div>
-
-                <Button onClick={(event) => this.props.deleteLike(like.id)} variant="contained" color="primary" >
+            {like.liked && <div>
+                <Button onClick={() => this.props.deleteLike(like.id)}
+                  variant="contained" color="primary" >
                   Unlike
                   </Button>&nbsp;
-                <Button onClick={(event) => this.updateLike2(false, like.id)} variant="contained" color="primary" >
+                <Button onClick={() => this.updateLike2(false, like.id)}
+                  variant="contained" color="primary" >
                   Dislike
                     </Button>
               </div>}
 
-            {!like.liked &&
-              <div>
-                <Button onClick={(event) => this.updateLike2(true, like.id)} variant="contained" color="primary">
+            {!like.liked && <div>
+                <Button onClick={() => this.updateLike2(true, like.id)}
+                  variant="contained" color="primary">
                   Like
                 </Button>
-                <Button onClick={() => this.props.deleteLike(like.id)} variant="contained" color="primary" >
+                <Button onClick={() => this.props.deleteLike(like.id)}
+                  variant="contained" color="primary" >
                   UnDislike
                 </Button>
               </div>}
@@ -62,12 +64,14 @@ export class PostRate extends Component {
         }
 
         {!like && <div>
-          <Button onClick={() => this.makeLike2(true)} variant="contained" color="primary"> Like </Button> &nbsp;
-          <Button onClick={() => this.makeLike2(false)} variant="contained" color="primary">Dislike </Button>
+          <Button onClick={() => this.makeLike2(true)}
+            variant="contained" color="primary"> Like </Button> &nbsp;
+          <Button onClick={() => this.makeLike2(false)} 
+            variant="contained" color="primary">Dislike </Button>
         </div>}
       </div>
     )
   }
 }
 
-export default connect(null, { makeLike, updateLike, deleteLike, setLike })(PostRate)
+export default connect(null, { makeLike, updateLike, deleteLike })(PostRate)

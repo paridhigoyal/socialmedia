@@ -1,3 +1,7 @@
+/** ChangePassword component is for change password of logined user consists
+ *  of form having field newpassword1 and newpassword2 both must be same
+ * alphanumeric */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changePassword } from '../actions/index'
@@ -14,8 +18,10 @@ export class ChangePassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: {new_password1:"",
-      new_password2:""},
+      input: {
+        new_password1: "",
+        new_password2: ""
+      },
       errors: {}
     };
 
@@ -36,7 +42,6 @@ export class ChangePassword extends Component {
 
     event.preventDefault();
     if (this.validate()) {
-      console.log(this.state.input);
       var bodyFormData = new FormData();
       bodyFormData.append('new_password1', this.state.input.new_password1);
       bodyFormData.append('new_password2', this.state.input.new_password2);
@@ -117,7 +122,7 @@ export class ChangePassword extends Component {
           <div className="text-danger">{this.state.errors.new_password2}</div>
           <br />
           <Button type='submit' onClick={this.handleOnSubmit.bind(this)}
-            disabled={!this.state.input.new_password1, !this.state.input.new_password2}
+            disabled={!this.state.input.new_password2}
             variant="contained" color="secondary"> change password</Button>
         </form>
       </div>

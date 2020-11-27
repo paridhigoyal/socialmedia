@@ -1,3 +1,5 @@
+/** SearchUserPost is for searching user posts */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
@@ -17,8 +19,6 @@ class SearchUserPost extends Component {
 
   onFormSubmit = event => {
     event.preventDefault();
-
-    console.log(this.props)
     this.props.searchUserPost(this.state.username)
     this.setState({ username: '' })
   }

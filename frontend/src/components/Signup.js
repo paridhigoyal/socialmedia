@@ -1,3 +1,7 @@
+/**Signup component is for non registered user consists of 
+ * username, email, pasword, confirm password fields and having some validations all fileds are 
+ * required */
+
 import React, { Component, } from 'react';
 import Grid from "@material-ui/core/Grid/Grid";
 import TextField from "@material-ui/core/TextField/TextField";

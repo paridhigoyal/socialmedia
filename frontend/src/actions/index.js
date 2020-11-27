@@ -1,3 +1,5 @@
+/**index.js file consists of actions dispatched by components */
+
 import axios from "axios";
 import { baseURL } from '../utility/index';
 import Cookies from 'js-cookie';
@@ -27,11 +29,14 @@ import {
   EDIT_PROFILE,
   FORGET_PASSWORD_SUCCESS,
   CHANGE_PASSWORD_SUCCESS,
+  SET_LIKE,
   DELETE_LIKE,
   UPDATE_LIKE,
   CREATE_PROFILE
 } from "./action_types"
 
+/**tryAutoSignIn function is for taking value of login credentials even after
+ *  refreshing the page*/
 export const tryAutoSignIn = () => (dispatch) => {
   const token = localStorage.getItem('token');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -52,14 +57,13 @@ export const tryAutoSignIn = () => (dispatch) => {
   }
 }
 
+/**login function is for calling login api  */
 export const login = (values, callBack) => {
   return (dispatch) => {
     axios.post(`${baseURL}/rest-auth/login/`, values).then((res) => {
-      console.log(res)
       const token = res.data.token
       localStorage.setItem('user', JSON.stringify(res.data.user));
       const user = JSON.parse(localStorage.getItem('user'));
-      console.log(user)
       dispatch({
         type: LOGIN,
         payload: {
@@ -81,12 +85,15 @@ export const login = (values, callBack) => {
   }
 }
 
+/**logout function is for logged out from site  */
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
   localStorage.removeItem("token");
   window.location.reload(true);
 };
 
+/**forgetPassword is for calling forgetpassword api and dispatching
+ *  action type and values as payload called from api */
 export const forgetPassword = (email) => {
   return (dispatch) => {
     axios.post(`${baseURL}/password/reset/`, email, {
@@ -102,6 +109,8 @@ export const forgetPassword = (email) => {
   }
 }
 
+/**changePassword is for calling change password api and dispatching 
+ * values from api call and type */
 export const changePassword = (input) => {
   return (dispatch, getState) => {
     const resetParameter = {
@@ -109,7 +118,6 @@ export const changePassword = (input) => {
     };
     const config = setConfig(getState, resetParameter)
     axios.post(`${baseURL}/rest-auth/password/change/`, input, config).then((res) => {
-      console.log(res)
       dispatch({
         type: CHANGE_PASSWORD_SUCCESS,
         payload: res.data
@@ -118,8 +126,10 @@ export const changePassword = (input) => {
     )
   }
 }
+
+/**createProfile is for calling create profile api and dispatching 
+ * action and values from api */
 export const createProfile = (values) => {
-  console.log(values)
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.post(`${baseURL}/profile/`, values, config).then((res) => {
@@ -131,16 +141,21 @@ export const createProfile = (values) => {
   }
 }
 
+/**makeLike is for calling ratingpost api  */
 export const makeLike = (values) => {
   return (dispatch, getState) => {
-    console.log(getState(), values)
     const config = setConfig(getState)
     axios.post(`${baseURL}/postrate/`, values, config).then((res) => {
+     dispatch({
+        type: SET_LIKE,
+        payload: res.data
+    })
 
     })
   }
 }
 
+/**update like is for updating postrate */
 export const updateLike = (values, id) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -153,6 +168,7 @@ export const updateLike = (values, id) => {
   }
 }
 
+/**deleteLike is for deleting previous postrate */
 export const deleteLike = (id) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -165,6 +181,7 @@ export const deleteLike = (id) => {
   }
 }
 
+/**searchuserPost is for searching userposts */
 export const searchUserPost = (username) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -180,6 +197,8 @@ export const searchUserPost = (username) => {
       });
   };
 }
+
+/**searchuserprofile is for searching userprofile */
 export const searchuserprofile = (username) => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: PROFILE_REQUEST });
@@ -193,6 +212,7 @@ export const searchuserprofile = (username) => (dispatch, getState) => {
     });
 };
 
+/**getPosts is for calling gettingposts api for getting all posts and dispatching values */
 export const getPosts = () => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: POSTS_REQUEST });
@@ -206,7 +226,7 @@ export const getPosts = () => (dispatch, getState) => {
     });
 };
 
-
+/**addPost is for calling adding post api and dispatching data to postreducer */
 export const addPost = (values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -216,7 +236,6 @@ export const addPost = (values) => {
       }
     }
     ).then((res) => {
-      console.log(res.data)
       dispatch({
         type: POST_CREATED,
         payload: res.data
@@ -226,6 +245,8 @@ export const addPost = (values) => {
   }
 }
 
+/**deletePost is for calling deleting post api for particular post and 
+ * dispatching values to post reducer */
 export const deletePost = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   axios.delete(`${baseURL}/post/${id}/`, config)
@@ -240,6 +261,8 @@ export const deletePost = (id) => (dispatch, getState) => {
     })
 }
 
+/**getProfiles is for calling api of getprofiles of all user and dispatching values 
+ * to profilereducer */
 export const getProfiles = () => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: PROFILE_REQUEST });
@@ -254,6 +277,7 @@ export const getProfiles = () => (dispatch, getState) => {
     })
 }
 
+/**follow is for calling follow api  */
 export const follow = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   axios
@@ -271,6 +295,7 @@ export const follow = (id) => (dispatch, getState) => {
     });
 };
 
+/**getFollowers is for calling api of getfollowers for particular user  */
 export const getFollowers = () => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: FOLLOWER_REQUEST });
@@ -278,13 +303,13 @@ export const getFollowers = () => (dispatch, getState) => {
     .get(`${baseURL}/followers/`, config)
     .then((response) => {
       dispatch({ type: FOLLOWER_SUCCESS, payload: response.data.results });
-      console.log(response)
     })
     .catch((error) => {
       dispatch({ type: FOLLOWER_FAILURE, payload: error.message });
     })
 }
 
+/**editPost is for calling edit post api and dispatching values to postreducer */
 export const editPost = (id, postData) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -301,6 +326,8 @@ export const editPost = (id, postData) => {
     })
   }
 }
+
+/**editProfile is for calling edit user profile of logged in user */
 export const editProfile = (id, profileData) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -314,6 +341,7 @@ export const editProfile = (id, profileData) => {
   }
 }
 
+/**addComment is for calling add comment api and dispatching values to commentReducer */
 export const addComment = (values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -327,11 +355,11 @@ export const addComment = (values) => {
   }
 }
 
+/**editComment is for calling edit comment api and dispatching values to commentReducer */
 export const editComment = (id, values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.put(`${baseURL}/commentupdate/${id}/`, values, config).then((res) => {
-      console.log(res)
       dispatch({
         type: EDIT_COMMENT,
         payload: res.data
@@ -340,6 +368,8 @@ export const editComment = (id, values) => {
     })
   }
 }
+
+/**deleteComment is for calling delete comment api and dispatching values to commentReducer */
 export const deleteComment = (id) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -353,7 +383,8 @@ export const deleteComment = (id) => {
   }
 }
 
-
+/**setConfig is for setting configuration such as authorization token from api and
+ *  used it in other  api calling */
 export const setConfig = (getState, restParamter) => {
   let config = null;
   const token = getState().authReducer.token

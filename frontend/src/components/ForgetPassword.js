@@ -1,3 +1,6 @@
+/** ForgetPassword component consists of forget passdword functionality which takes email 
+ * as an input field helps to send an email to reset password  */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forgetPassword } from '../actions/index';

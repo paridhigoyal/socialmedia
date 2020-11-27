@@ -1,3 +1,5 @@
+/** Follow component is for follow other users profile */
+
 import React, { Component } from 'react'
 import { follow } from '../actions/index'
 import { connect } from 'react-redux'

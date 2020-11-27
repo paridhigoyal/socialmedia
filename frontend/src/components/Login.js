@@ -1,3 +1,6 @@
+/** Login Component is for login page having fields username and password if user
+ * forgets credentials than click on forget poassword */
+
 import React, { Component } from "react"
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from "react-redux"
@@ -11,12 +14,14 @@ class Login extends Component {
     password: "",
     progress: false
   }
+
   render() {
     const { isAuthenticated } = this.props.authReducer
     const { progress } = this.state
     if (isAuthenticated) {
       return <Redirect to='/posts' />
     }
+
     return (
       <div className="login-page-content-inner">
         <form onSubmit={this.onFormSubmit.bind(this)} >
@@ -39,7 +44,7 @@ class Login extends Component {
           </FormControl>
           <br /><br />
           <Button type='submit' onClick={this.onFormSubmit.bind(this)}
-            disabled={!this.state.username, !this.state.password}
+            disabled={(!this.state.password)}
             variant="contained" color="secondary">
             Login
           </Button>

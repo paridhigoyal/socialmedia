@@ -1,7 +1,11 @@
+/** EditPost component is for editing post consist of 
+ * image and caption field  */
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editPost, getPosts } from '../actions/index'
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+
 export class EditPost extends Component {
   constructor(props) {
     super(props);
@@ -30,13 +34,13 @@ export class EditPost extends Component {
   }
   handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(this.state.image.name, this.state.caption, this.state.image)
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name)
     form_data.append('caption', this.state.caption)
     await this.props.editPost(this.props.value.id, form_data)
     await this.props.getPosts()
   }
+
   showForm = () => {
     return (<div>
       <form onSubmit={this.handleSubmit} >
@@ -66,6 +70,7 @@ export class EditPost extends Component {
     </div>
     );
   }
+
   render() {
     return (
       <div>

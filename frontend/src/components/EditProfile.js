@@ -1,13 +1,16 @@
+/** EditProfile component is for editing userprofile 
+ * consist of profile fields */
+
 import React, { Component } from 'react'
 import { editProfile } from '../actions/index';
 import { connect } from 'react-redux';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import PhoneInput from 'react-phone-number-input'
+
 export class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       id: this.props.value.id,
       user_id: this.props.value.user_id,
       username: this.props.value.username,
@@ -137,7 +140,8 @@ export class EditProfile extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" color="secondary" onClick={() => this.setState({ showForm: true })}>Edit Profile</Button>
+        <Button type="button" variant="contained" color="secondary" 
+        onClick={() => this.setState({ showForm: true })}>Edit Profile</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

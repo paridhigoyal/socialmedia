@@ -1,3 +1,5 @@
+/** Nav component is common component for all pages */
+
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
@@ -9,8 +11,8 @@ class Nav extends Component {
     const { isAuthenticated } = this.props.authReducer
     if (isAuthenticated) {
       const { user } = this.props.authReducer
-      return (
 
+      return (
         <ul className="navbar-nav ml-auto">
           <h2>Welcome to Social Life!....</h2>
           <li className="nav-item" style={{ margin: "auto 0" }}>
@@ -41,7 +43,7 @@ class Nav extends Component {
           <Link to={`/addpost`}>
             <button style={{ backgroundColor: '#b92b27', borderColor: '#b92b27' }}>
               Post Something...
-    </button>
+            </button>
           </Link>
           <br />
           <Link to={`/userprofiles`}>
@@ -72,4 +74,5 @@ class Nav extends Component {
 const mapStateToProps = ({ authReducer }) => {
   return { authReducer }
 }
+
 export default connect(mapStateToProps, { logout })(Nav)

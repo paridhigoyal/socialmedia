@@ -1,3 +1,5 @@
+/**action_types file consists of action type files  */
+
 export const LOGIN = 'LOGIN'
 export const LOGOUT = 'LOGOUT'
 export const LOGIN_ERROR = 'LOGIN_ERROR'

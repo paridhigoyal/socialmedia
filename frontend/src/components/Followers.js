@@ -1,3 +1,5 @@
+/** Followers component is to get followers of particular user */
+
 import React, { Component } from 'react';
 import { getFollowers } from '../actions/index';
 import { connect } from 'react-redux'
@@ -11,7 +13,7 @@ export class Followers extends Component {
   render() {
     return (
       <div>
-        {console.log("ghgj", this.props)}
+        {/* {console.log("ghgj", this.props)} */}
       </div>
     )
   }

@@ -1,6 +1,12 @@
+/** AddPost component consist of fields image and caption having image as file 
+ * type which is used to upload a file and caption is for giving captions related to image..
+ * For adding post one should click on add post button after uploading image and
+ *  giving some good captions....*/
+
 import React, { Component } from 'react';
 import { addPost } from '../actions/index';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 
 export class AddPost extends Component {
@@ -18,30 +24,26 @@ export class AddPost extends Component {
     switch (event.target.name) {
       case 'image':
         this.setState({
-
           image: event.target.files[0]
-
         })
         break;
       case 'caption':
         this.setState({
-
           caption: event.target.value
-
         })
         break;
       default:
         break;
     }
   }
+
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.image.name, this.state.caption, this.state.image)
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('caption', this.state.caption);
-
     this.props.addPost(form_data)
+    this.props.history.push('/posts')
   }
 
   render() {
@@ -64,7 +66,7 @@ export class AddPost extends Component {
         </FormControl>
         <br /><br />
         <Button type='submit' onClick={this.handleSubmit}
-          disabled={!this.state.image, !this.state.caption}
+          disabled={!this.state.image}
           variant="contained" color="secondary">
           Post
           </Button>
@@ -74,10 +76,12 @@ export class AddPost extends Component {
     )
   }
 }
+
 const mapStateToProps = ({ authReducer }) => {
   return {
     authReducer,
 
   }
 }
-export default connect(mapStateToProps, { addPost })(AddPost)
+
+export default connect(mapStateToProps, { addPost })(withRouter(AddPost));

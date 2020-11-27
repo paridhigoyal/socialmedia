@@ -1,4 +1,7 @@
-import React, { useEffect } from 'react';
+/**  App component is main component which is called first from index.js, contains routing
+ * functionality to route different paths  */
+
+ import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
@@ -26,8 +29,8 @@ import {
   changePassword,
   login
 } from '../actions/index'
+
 function App(props) {
-  // const [ isAuthenticated, tyrAutoSignIn ] = useState(props)
    const {isAuthenticated, tryAutoSignIn} = props
 
   useEffect(() => {
@@ -127,6 +130,7 @@ const mapStateToProps = (state) => {
 
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (values) => {

@@ -1,3 +1,5 @@
+/**commentReducer consists ADD_COMMENT, DELETE_COMMENT, EDIT_COMMENT */
+
 import { ADD_COMMENT, DELETE_COMMENT, EDIT_COMMENT } from "../actions/action_types";
 
 export default function (state = [], action) {

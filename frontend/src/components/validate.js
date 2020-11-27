@@ -1,3 +1,6 @@
+/**validate component and async validate consists of signup page
+ *  validation functions and api call for signup */
+
 import axios from "axios"
 import { baseURL } from "../utility"
 export const validate = (values) => {
@@ -50,7 +53,7 @@ export const asyncValidate = (values) => {
     })
     .catch((error) => {
       const errors = error.response.data;
-      console.log(errors);
+      console.log(errors)
     });
 };
 

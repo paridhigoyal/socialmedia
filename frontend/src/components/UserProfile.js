@@ -1,10 +1,11 @@
+/**UserProfile component is for creating user profile */
+
 import React, { Component } from 'react'
 import { Button, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createProfile } from '../actions/index'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-
 
 export class UserProfile extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export class UserProfile extends Component {
 
     this.onInputChange = this.onInputChange.bind(this);
   }
+
   onInputChange = (event) => {
     switch (event.target.name) {
 

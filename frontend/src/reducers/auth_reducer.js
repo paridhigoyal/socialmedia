@@ -1,3 +1,5 @@
+/**auth_reducer is for LOGIN, LOGOUT action types i.e.  for authentication credentials */
+
 import {
   LOGIN,
   LOGOUT

@@ -1,3 +1,6 @@
+/**UserProfiles component is for user profiles having user details and 
+ * follow button and number of followers and followings of particular user  */
+
 import React, { Component } from 'react'
 import { getProfiles } from '../actions/index'
 import { connect } from 'react-redux';
@@ -50,7 +53,6 @@ class Profiles extends Component {
     )
   }
 }
-
 
 const mapStateToProps = ({ authReducer, profilereducer }) => {
   return {
