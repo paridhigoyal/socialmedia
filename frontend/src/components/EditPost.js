@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { editPost, getPosts } from '../actions/index'
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 export class EditPost extends Component {
   constructor(props) {
@@ -67,7 +68,8 @@ export class EditPost extends Component {
         </FormControl>
         <br />
         <Button disabled={!this.state.image}
-          type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
+          type='submit' onClick={this.handleSubmit} 
+          variant="contained" color="primary">
           Update Post
     </Button>
       </form>
@@ -78,8 +80,9 @@ export class EditPost extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" color="secondary"
-          onClick={() => this.setState({ showForm: true })}>Edit Post</Button>
+        <Button type="button" variant="contained" startIcon={< EditIcon/>}
+          onClick={() => this.setState({ showForm: true })}>
+            Edit Post</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

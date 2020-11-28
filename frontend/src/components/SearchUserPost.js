@@ -4,8 +4,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import SearchIcon from '@material-ui/icons/Search';
 import { Button, FormControl, InputAdornment } from '@material-ui/core';
+import styled from 'styled-components';
+ import {  Form} from 'react-bootstrap';
 import InputBase from '@material-ui/core/InputBase';
 import { searchUserPost } from '../actions/index'
+
+const Styles = styled.div`
+
+  .form-center {
+    position: absolute !important;
+    left: 5%;
+    right: 25%;
+  }
+`;
 
 class SearchUserPost extends Component {
   constructor(props) {
@@ -25,10 +36,12 @@ class SearchUserPost extends Component {
 
   render() {
     return (
-      <div >
+      <Styles> 
         <form onSubmit={this.onFormSubmit} >
-          <FormControl>
-            <InputBase
+         <Form className="form-center">
+            <FormControl type="text" placeholder="Search"
+            className="fa fa-user ml-1" >  
+            <InputBase style={{color:'white'}}
               placeholder='.....search'
               type='text'
               value={this.state.username}
@@ -40,9 +53,10 @@ class SearchUserPost extends Component {
               }
             />
           </FormControl>
-          <Button type="submit" variant="contained" color="primary" onClick={this.onFormSubmit}> search.... </Button>
+          </Form> 
+          {/* <Button type="submit" variant="contained" color="primary" onClick={this.onFormSubmit}> search.... </Button> */}
         </form>
-      </div>
+        </Styles>
     )
   }
 }

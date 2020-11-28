@@ -5,6 +5,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button } from '@material-ui/core';
 import { makeLike, updateLike, deleteLike,getPosts } from '../actions/index'
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 
 export class PostRate extends Component {
   constructor(props) {
@@ -47,22 +49,22 @@ export class PostRate extends Component {
           <div>
             {like.liked && <div>
                 <Button onClick={() => this.deleteLike(like.id)}
-                  variant="contained" color="primary" >
+                  variant="contained"  >
                   Unlike
                   </Button>&nbsp;
                 <Button onClick={() => this.updateLike2(false, like.id)}
-                  variant="contained" color="primary" >
+                  variant="contained" startIcon={<ThumbDownAltOutlinedIcon/>}  >
                   Dislike
                     </Button>
               </div>}
 
             {!like.liked && <div>
                 <Button onClick={() => this.updateLike2(true, like.id)}
-                  variant="contained" color="primary">
+                  variant="contained"  startIcon={<ThumbUpAltOutlinedIcon/>} >
                   Like
                 </Button>
                 <Button onClick={() => this.deleteLike(like.id)}
-                  variant="contained" color="primary" >
+                  variant="contained"  >
                   UnDislike
                 </Button>
               </div>}
@@ -71,9 +73,9 @@ export class PostRate extends Component {
 
         {!like && <div>
           <Button onClick={() => this.makeLike2(true)}
-            variant="contained" color="primary"> Like </Button> &nbsp;
+            variant="contained" startIcon={<ThumbUpAltOutlinedIcon/>}> Like </Button> &nbsp;
           <Button onClick={() => this.makeLike2(false)} 
-            variant="contained" color="primary">Dislike </Button>
+            variant="contained" startIcon={<ThumbDownAltOutlinedIcon/>}>Dislike </Button>
         </div>}
       </div>
     )

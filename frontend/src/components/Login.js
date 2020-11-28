@@ -23,7 +23,7 @@ class Login extends Component {
     }
 
     return (
-      <div className="login-page-content-inner">
+      <div className='Div'>
         <form onSubmit={this.onFormSubmit.bind(this)} >
           <FormControl>
             <InputLabel>Username</InputLabel>

@@ -56,7 +56,8 @@ export class EditComment extends Component {
             placeholder="comment......." />
         </FormControl>
       
-        <EditIcon onClick={this.handleSubmit} variant="contained" color="secondary" />
+        <EditIcon onClick={this.handleSubmit} variant="contained" 
+        color="primary" />
       </form>
     </div>
     );
@@ -66,7 +67,7 @@ export class EditComment extends Component {
     return (
       <div>
         <EditIcon onClick={() => this.setState({ showForm: true })} variant="contained"
-          color="secondary" /> {this.state.showForm ? this.showForm() : null}
+         /> {this.state.showForm ? this.showForm() : null}
       </div>
     )
   }

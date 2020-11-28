@@ -32,7 +32,10 @@ import {
   SET_LIKE,
   DELETE_LIKE,
   UPDATE_LIKE,
-  CREATE_PROFILE
+  CREATE_PROFILE,
+  USER_INFO_FAILURE,
+  USER_INFO_REQUEST,
+  USER_INFO_SUCCESS
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -258,6 +261,20 @@ export const deletePost = (id) => (dispatch, getState) => {
         id
       })
 
+    })
+}
+
+export const getUserInfo = () => (dispatch, getState) => {
+  const config = setConfig(getState)
+  dispatch({ type: USER_INFO_REQUEST });
+  axios
+    .get(`${baseURL}/rest-auth/user/`, config)
+    .then((response) => {
+      dispatch({ type: USER_INFO_SUCCESS, payload: response.data });
+     
+    })
+    .catch((error) => {
+      dispatch({ type: USER_INFO_FAILURE, payload: error.message });
     })
 }
 

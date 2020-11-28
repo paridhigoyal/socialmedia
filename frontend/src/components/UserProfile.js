@@ -3,9 +3,16 @@
 import React, { Component } from 'react'
 import { Button, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createProfile } from '../actions/index'
+import { createProfile, getProfiles,getUserInfo } from '../actions/index'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import Avatar from '@material-ui/core/Avatar';
+import EditProfile from './EditProfile';
+import CakeIcon from '@material-ui/icons/Cake';
+import WcIcon from '@material-ui/icons/Wc';
+import '../App.css'
+import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 export class UserProfile extends Component {
   constructor(props) {
@@ -60,6 +67,10 @@ export class UserProfile extends Component {
         break;
     }
   }
+  componentDidMount(){
+    // this.props.getUserInfo();
+    this.props.getProfiles();
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -76,11 +87,8 @@ export class UserProfile extends Component {
     form_data.append('date_of_birth', this.state.date_of_birth);
     this.props.createProfile(form_data)
   }
-
   validate() {
-
   }
-
   showForm = () => {
     return (
       <div>
@@ -152,26 +160,69 @@ export class UserProfile extends Component {
   }
 
   render() {
+    const { profiles } = this.props.profilereducer   
+    const { pk } = this.props.authReducer.user 
+ 
 
     return (
       <div>
-        <button
+         <div>
+        <ul >
+          {profiles && profiles.map((value, index) => (
+            <li key={index} className='Div'>
+              {pk=== value.user_id?<div>
+              <Avatar alt="No profileimage" src={value.profile_picture} />
+              <b> <h3>{value.username}</h3></b>
+              {value.first_name.toUpperCase()} {value.last_name.toUpperCase()}<br /><br />
+             < LocationOnIcon/> {value.location}<br /><br />
+             <b> {value.bio}</b><br/><br />
+             <b> {value.gender==='F'&& <p> <WcIcon />Female</p>}</b>
+             <CakeIcon />{value.date_of_birth}<br/><br />
+             <ContactPhoneIcon/>{value.contact_no}<br /><br/>
+              <div>
+                following: <a href={`/following/${value.user_id}`} id="following">
+                  {value.following_count}</a>&nbsp;
+                followers: <a href={`/followers/${value.user_id}`} id="followers">
+                  {value.followers_count}</a>
+              </div>
+              <br/>
+              <div>
+                {(value.profile_belongs_to_authenticated_user) ?
+                  <EditProfile value={value} /> :
+                  <button
           type="button"
           onClick={() => this.setState({ showForm: true })}
         >
           Create Profile
         </button>
+                }
+              </div>
+          
+              </div>:<p></p>}
+            </li>
+          ))
+          }
+        </ul>
+      </div>
+
+        {/* <button
+          type="button"
+          onClick={() => this.setState({ showForm: true })}
+        >
+          Create Profile
+        </button> */}
         {this.state.showForm ? this.showForm() : null}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ authReducer }) => {
+const mapStateToProps = ({ authReducer, profilereducer }) => {
   return {
-    authReducer
+    authReducer,
+    profilereducer
 
   }
 }
 
-export default connect(mapStateToProps, { createProfile })(UserProfile)
+export default connect(mapStateToProps, { createProfile,getProfiles})(UserProfile)

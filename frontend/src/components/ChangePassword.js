@@ -81,7 +81,8 @@ export class ChangePassword extends Component {
       errors["new_password2"] = "Password should be alphanumeric";
     }
 
-    if (typeof input["new_password1"] !== "undefined" && typeof input["new_password2"] !== "undefined") {
+    if (typeof input["new_password1"] !== "undefined" && typeof input["new_password2"] !== "undefined") 
+    {
 
       if (input["new_password1"] !== input["new_password2"]) {
         isValid = false;

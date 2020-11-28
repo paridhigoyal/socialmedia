@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import EditProfile from './EditProfile';
 import Follow from './Follow'
 import Avatar from '@material-ui/core/Avatar';
+
 class Profiles extends Component {
 
   componentDidMount() {
@@ -16,7 +17,8 @@ class Profiles extends Component {
     }
   }
   render() {
-    const { profiles } = this.props.profilereducer
+    const { profiles} = this.props.profilereducer
+    
     return (
       <div>
         <ul>
@@ -35,14 +37,14 @@ class Profiles extends Component {
               <div>
                 {(value.profile_belongs_to_authenticated_user) ?
                   <EditProfile value={value} /> :
-                  <p>...</p>
+                  <p></p>
                 }
               </div>
               <div >
                 {
                   (!value.profile_belongs_to_authenticated_user)
                     ? <Follow followStatus={value.follow_status} id={value.user_id} />
-                    : <b> Can't follow yourself </b>
+                    : <b>  </b>
                 }
               </div>
             </li>

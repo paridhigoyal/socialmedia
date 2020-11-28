@@ -9,7 +9,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Nav from './Nav'
+import NavigationBar from './NavigationBar'
 import Login from './Login'
 import Signup from './Signup';
 import Posts from './Posts';
@@ -24,6 +24,7 @@ import {
   tryAutoSignIn,
 
 } from '../actions/index'
+import '../App.css'
 
 function App(props) {
    const {isAuthenticated, tryAutoSignIn} = props
@@ -35,11 +36,13 @@ function App(props) {
   }, [tryAutoSignIn]);
 
   return (
+    <div className='App'>
     <Router>
       <div>
-        <Nav />
+        <NavigationBar />
       </div>
       <Switch>
+        
         <Route path="/login"> <Login /></Route>
         <Route path="/signup"> <Signup /></Route>
         <Route path="/forgetpassword"><ForgetPassword />
@@ -61,7 +64,7 @@ function App(props) {
             }
           }}>
         </Route>
-        <Route path="/posts"
+        <Route exact path="/posts"
           render={() => {
             if (isAuthenticated) {
               return <Posts {...props} />;
@@ -108,6 +111,7 @@ function App(props) {
 
       </Switch>
     </Router>
+    </div>
 
   )
 }

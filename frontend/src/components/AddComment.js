@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addComment, getPosts } from '../actions/index'
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 
 export class AddComment extends Component {
   constructor(props) {
@@ -69,7 +70,8 @@ export class AddComment extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" color="secondary" onClick={() =>
+        <Button type="button" variant="contained" 
+        startIcon={<AddCommentOutlinedIcon  />} onClick={() =>
           this.setState({ showForm: true })}>Add Comment</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
