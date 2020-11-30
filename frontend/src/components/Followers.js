@@ -13,7 +13,7 @@ export class Followers extends Component {
   render() {
     return (
       <div>
-        {/* {console.log("ghgj", this.props)} */}
+
       </div>
     )
   }

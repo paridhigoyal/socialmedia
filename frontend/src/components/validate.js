@@ -38,7 +38,7 @@ export const validate = (values) => {
   return errors;
 };
 
-export  const asyncValidate = (values) => {
+export const asyncValidate = (values) => {
 
   const obj = {
     username: values.username,
@@ -53,7 +53,7 @@ export  const asyncValidate = (values) => {
     })
     .catch((error) => {
       const errors = error.response.data;
-      // alert(errors.email, errors.username)
+      console.log(errors)
     });
 };
 

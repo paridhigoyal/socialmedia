@@ -1,11 +1,12 @@
 /** AddComment consist of form having fields named label as comment which is used
  * to give comment on a post, Add Comment button will open form for doing comment*/
- 
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addComment, getPosts } from '../actions/index'
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
+import CommentIcon from '@material-ui/icons/Comment';
 
 export class AddComment extends Component {
   constructor(props) {
@@ -39,10 +40,10 @@ export class AddComment extends Component {
     }
   }
 
-  handleSubmit =  (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
-   this.props.addComment(this.state.commentData)
-   this.props.getPosts()
+    this.props.addComment(this.state.commentData)
+    this.props.getPosts()
 
   }
 
@@ -60,8 +61,8 @@ export class AddComment extends Component {
         <br /><br />
         <Button type='submit' onClick={this.handleSubmit}
           disabled={!this.state.commentData.content}
-          variant="contained" color="secondary">
-          Comment
+          variant="contained" color="primary">
+          <CommentIcon />Comment
           </Button>
       </form>
     </div>
@@ -70,9 +71,9 @@ export class AddComment extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" 
-        startIcon={<AddCommentOutlinedIcon  />} onClick={() =>
-          this.setState({ showForm: true })}>Add Comment</Button>
+        <Button type="button" variant="contained"
+          startIcon={<AddCommentOutlinedIcon />} onClick={() =>
+            this.setState({ showForm: true })}> Comment</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

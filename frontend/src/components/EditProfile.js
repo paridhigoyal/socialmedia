@@ -6,6 +6,7 @@ import { editProfile, getProfiles } from '../actions/index';
 import { connect } from 'react-redux';
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
 import PhoneInput from 'react-phone-number-input'
+import EditIcon from '@material-ui/icons/Edit';
 
 export class EditProfile extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export class EditProfile extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.props.getProfiles()
   }
 
@@ -76,6 +77,7 @@ export class EditProfile extends Component {
     form_data.append('location', this.state.location);
     form_data.append('date_of_birth', this.state.date_of_birth);
     this.props.editProfile(this.props.value.id, form_data)
+    this.props.getProfiles()
   }
 
   showForm = () => {
@@ -130,7 +132,8 @@ export class EditProfile extends Component {
             placeholder="date_of_birth" /><br />
         </FormControl>
         <br />
-        <Button type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
+        <Button type='submit' startIcon={<EditIcon />} onClick={this.handleSubmit}
+          variant="contained" color="primary">
           Update Profile
     </Button>
 
@@ -143,8 +146,8 @@ export class EditProfile extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" color="secondary" 
-        onClick={() => this.setState({ showForm: true })}>Edit Profile</Button>
+        <Button type="button" variant="contained" color="primary" startIcon={<EditIcon />}
+          onClick={() => this.setState({ showForm: true })}>Edit Profile</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

@@ -79,10 +79,13 @@ class PostRateSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    comment_by = serializers.DictField(
+        child=serializers.CharField(), source='get_user', read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'user', 'commented_post', 'commented_at']
+        fields = ['id', 'content', 'user', 'comment_by',
+                  'commented_post', 'commented_at']
         read_only_fields = ('id', ' commented_at', 'user')
 
 

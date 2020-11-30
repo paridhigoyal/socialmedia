@@ -48,7 +48,8 @@ export class AddPost extends Component {
   }
 
   render() {
-    return (<div className="container">
+    return (<div className="Div">
+      <h2>Post Something......</h2>
       <form onSubmit={this.handleSubmit}>
         <FormControl>
           <InputLabel>Upload Image:</InputLabel>
@@ -68,7 +69,7 @@ export class AddPost extends Component {
         <br /><br />
         <Button type='submit' onClick={this.handleSubmit}
           disabled={!this.state.image}
-          variant="contained" color="secondary">
+          variant="contained" color="primary">
           Post
           </Button>
       </form>

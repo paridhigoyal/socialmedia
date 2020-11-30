@@ -1,14 +1,20 @@
 /** Nav component is common component for all pages */
 
 import React, { Component } from "react"
-import { Navbar, Nav, Form,FormControl} from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import { Link } from "react-router-dom"
 import { Button } from '@material-ui/core';
 import SearchUserPost from './SearchUserPost';
 import { connect } from 'react-redux'
 import { logout } from '../actions/index'
 import styled from 'styled-components';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import PersonIcon from '@material-ui/icons/Person';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import HomeIcon from '@material-ui/icons/Home';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 const Styles = styled.div`
   .navbar { background-color: #222; }
@@ -34,44 +40,38 @@ class NavigationBar extends Component {
       return (
         <Styles>
         <Navbar expand="lg">
-          <Navbar.Brand href="/posts">Social Life!....</Navbar.Brand>
+          <Navbar.Brand href="/posts"><InstagramIcon/>Social Life!....</Navbar.Brand>
          
           <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-          <Form className="form-center">
+         
           <SearchUserPost />
-            {/* <FormControl type="text" placeholder="Search" className="" /> */}
-           
-          </Form>
-        
+      
           <Navbar.Collapse id="basic-navbar-nav">
           
             <Nav className="ml-auto">
-           
+            <Link className="btn btn-sm btn-outline-info" to="/posts">
+             <HomeIcon /> Home<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp;&nbsp;&nbsp;
             <Link className="btn btn-sm btn-outline-info" to="/user-info">
-               {user && user.username}<i className="fa fa-user ml-1"></i>
-             </Link> &nbsp; 
+           < PersonIcon/> {user && user.username}<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp; &nbsp;&nbsp;
+             <Link className="btn btn-sm btn-outline-info" to="/addpost"><PostAddIcon/>
+            Post Something..<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp;&nbsp;&nbsp;
+             
              <Link className="btn btn-sm btn-outline-info" to="/changepassword">
                changepassword<i className="fa fa-user ml-1"></i>
-             </Link> &nbsp; 
+             </Link> &nbsp; &nbsp;&nbsp;
              <Link className="btn btn-sm btn-outline-info" to="/userprofiles">
-             User Profiles..<i className="fa fa-user ml-1"></i>
-             </Link> &nbsp;
-             <Link className="btn btn-sm btn-outline-info" to="/addpost">
-             Post Something...<i className="fa fa-user ml-1"></i>
-             </Link> &nbsp;
-             <Link className="btn btn-sm btn-outline-info" to="/posts">
-             posts<i className="fa fa-user ml-1"></i>
-             </Link>
+              Profiles..<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp;&nbsp;&nbsp;
+            
+           
             </Nav>
-            <Button type='submit' style={{color:'White'}} onClick={this.props.logout} startIcon={<ExitToAppIcon  />}
+          <Button type='submit' style={{color:'white'}} onClick={this.props.logout}
             to="/">
-          Logout
+          <PowerSettingsNewIcon/>Logout
           </Button>
-            {/* <button onClick={this.props.logout}
-              className="btn btn-sm btn-outline-info" to="/">
-              Logout
-               </button> */}
-
           </Navbar.Collapse>
         </Navbar>
       </Styles>
@@ -79,15 +79,27 @@ class NavigationBar extends Component {
     }
     else {
       return (
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">Login</Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/signup">Register</Link>
-          </li>
+        <Styles>
+        <Navbar expand="lg">
+          <Navbar.Brand href="/login"><InstagramIcon/>Social Life!....</Navbar.Brand>
+         
+          <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+          <Navbar.Collapse id="basic-navbar-nav">
+          
+            <Nav className="ml-auto">
+           
+            <Link className="btn btn-sm btn-outline-info" to="/login">
+            <LockOpenIcon /> Login<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp; 
+             <Link className="btn btn-sm btn-outline-info" to="/signup">
+             <PersonAddIcon />SignUp<i className="fa fa-user ml-1"></i>
+             </Link> &nbsp;
+            
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      </Styles>
 
-        </ul>
       )
     }
   }

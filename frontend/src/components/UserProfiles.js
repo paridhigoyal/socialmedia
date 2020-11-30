@@ -17,15 +17,15 @@ class Profiles extends Component {
     }
   }
   render() {
-    const { profiles} = this.props.profilereducer
-    
+    const { profiles } = this.props.profilereducer
+
     return (
-      <div>
+      <div className='Div'>
         <ul>
           {profiles.map((value, index) => (
             <li key={index}>
               <Avatar alt="No profileimage" src={value.profile_picture} />
-              <b> {value.username}</b><br />
+              <b> <h4>{value.username}</h4></b>
               {value.first_name} {value.last_name}<br />
               {value.location}<br />
               <div>

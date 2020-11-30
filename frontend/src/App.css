@@ -16,6 +16,22 @@ ul{   list-style: none;   list-style-type: none; }
   background-color:#F0F0F0;
   
 }
+.form {
+  justify-content: center;
+}
+
+.form-heading {
+  text-align: center;
+  color:black;
+}
+
+.form-field {
+  margin-bottom: 10px;
+}
+
+.form-error {
+  color:seagreen;
+}
 
 
 

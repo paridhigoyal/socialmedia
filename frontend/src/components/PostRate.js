@@ -4,7 +4,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button } from '@material-ui/core';
-import { makeLike, updateLike, deleteLike,getPosts } from '../actions/index'
+import { makeLike, updateLike, deleteLike, getPosts } from '../actions/index'
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 
@@ -34,7 +34,7 @@ export class PostRate extends Component {
     this.props.updateLike(values, id)
     this.props.getPosts()
   }
-  deleteLike=(id)=>{
+  deleteLike = (id) => {
     this.props.deleteLike(id)
     this.props.getPosts()
   }
@@ -48,34 +48,34 @@ export class PostRate extends Component {
         {like &&
           <div>
             {like.liked && <div>
-                <Button onClick={() => this.deleteLike(like.id)}
-                  variant="contained"  >
-                  Unlike
+              <Button onClick={() => this.deleteLike(like.id)}
+                variant="contained"  >
+                Unlike
                   </Button>&nbsp;
                 <Button onClick={() => this.updateLike2(false, like.id)}
-                  variant="contained" startIcon={<ThumbDownAltOutlinedIcon/>}  >
-                  Dislike
+                variant="contained" startIcon={<ThumbDownAltOutlinedIcon />}  >
+                Dislike
                     </Button>
-              </div>}
+            </div>}
 
             {!like.liked && <div>
-                <Button onClick={() => this.updateLike2(true, like.id)}
-                  variant="contained"  startIcon={<ThumbUpAltOutlinedIcon/>} >
-                  Like
+              <Button onClick={() => this.updateLike2(true, like.id)}
+                variant="contained" startIcon={<ThumbUpAltOutlinedIcon />} >
+                Like
                 </Button>
-                <Button onClick={() => this.deleteLike(like.id)}
-                  variant="contained"  >
-                  UnDislike
+              <Button onClick={() => this.deleteLike(like.id)}
+                variant="contained"  >
+                UnDislike
                 </Button>
-              </div>}
+            </div>}
           </div>
         }
 
         {!like && <div>
           <Button onClick={() => this.makeLike2(true)}
-            variant="contained" startIcon={<ThumbUpAltOutlinedIcon/>}> Like </Button> &nbsp;
-          <Button onClick={() => this.makeLike2(false)} 
-            variant="contained" startIcon={<ThumbDownAltOutlinedIcon/>}>Dislike </Button>
+            variant="contained" startIcon={<ThumbUpAltOutlinedIcon />}> Like </Button> &nbsp;
+          <Button onClick={() => this.makeLike2(false)}
+            variant="contained" startIcon={<ThumbDownAltOutlinedIcon />}>Dislike </Button>
         </div>}
       </div>
     )

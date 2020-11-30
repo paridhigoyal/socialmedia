@@ -68,7 +68,7 @@ class PostViewSet(viewsets.ModelViewSet):
                 return self.get_paginated_response(serializer.data)
             serializer = self.get_serializer(post, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except:
+        except Exception:
             return Response({"error": 'The user does not exist'})
 
 

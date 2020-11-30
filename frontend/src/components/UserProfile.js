@@ -3,16 +3,17 @@
 import React, { Component } from 'react'
 import { Button, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createProfile, getProfiles,getUserInfo } from '../actions/index'
+import { createProfile, getProfiles, getUserInfo } from '../actions/index'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import Avatar from '@material-ui/core/Avatar';
 import EditProfile from './EditProfile';
 import CakeIcon from '@material-ui/icons/Cake';
-import WcIcon from '@material-ui/icons/Wc';
 import '../App.css'
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import EditUserInfo from './EditUserInfo';
+import EmailIcon from '@material-ui/icons/Email';
 
 export class UserProfile extends Component {
   constructor(props) {
@@ -67,8 +68,8 @@ export class UserProfile extends Component {
         break;
     }
   }
-  componentDidMount(){
-    // this.props.getUserInfo();
+  componentDidMount() {
+    this.props.getUserInfo();
     this.props.getProfiles();
   }
 
@@ -123,10 +124,9 @@ export class UserProfile extends Component {
           </FormControl>
           <br />
           <FormControl>
-            <InputLabel>Contact No</InputLabel>
+         
             <PhoneInput
               type='text'
-              country={"in"}
               value={this.state.contact_no}
               onChange={contact_no => this.setState({ contact_no })}
               placeholder="contact no" /><br />
@@ -142,7 +142,6 @@ export class UserProfile extends Component {
           </FormControl>
           <br />
           <FormControl>
-            <InputLabel>Date Of Birth</InputLabel>
             <Input
               type='date'
               name='date_of_birth'
@@ -151,8 +150,8 @@ export class UserProfile extends Component {
               placeholder="date_of_birth" /><br />
           </FormControl>
           <br />
-          <Button type='submit' onClick={this.handleSubmit} variant="contained" color="secondary">
-            Add Profile
+          <Button type='submit' onClick={this.handleSubmit} variant="contained" color="primary">
+            Add Profile Details..
     </Button>
         </form>
       </div>
@@ -160,69 +159,77 @@ export class UserProfile extends Component {
   }
 
   render() {
-    const { profiles } = this.props.profilereducer   
-    const { pk } = this.props.authReducer.user 
- 
-
+    const { profiles } = this.props.profilereducer
+    const { user } = this.props.userInfoReducer
+    const { pk, username, first_name, email, last_name } = this.props.authReducer.user
+    const data = { pk, username, first_name, email, last_name }
     return (
       <div>
-         <div>
-        <ul >
-          {profiles && profiles.map((value, index) => (
-            <li key={index} className='Div'>
-              {pk=== value.user_id?<div>
-              <Avatar alt="No profileimage" src={value.profile_picture} />
-              <b> <h3>{value.username}</h3></b>
-              {value.first_name.toUpperCase()} {value.last_name.toUpperCase()}<br /><br />
-             < LocationOnIcon/> {value.location}<br /><br />
-             <b> {value.bio}</b><br/><br />
-             <b> {value.gender==='F'&& <p> <WcIcon />Female</p>}</b>
-             <CakeIcon />{value.date_of_birth}<br/><br />
-             <ContactPhoneIcon/>{value.contact_no}<br /><br/>
-              <div>
-                following: <a href={`/following/${value.user_id}`} id="following">
-                  {value.following_count}</a>&nbsp;
-                followers: <a href={`/followers/${value.user_id}`} id="followers">
-                  {value.followers_count}</a>
-              </div>
-              <br/>
-              <div>
-                {(value.profile_belongs_to_authenticated_user) ?
-                  <EditProfile value={value} /> :
-                  <button
-          type="button"
-          onClick={() => this.setState({ showForm: true })}
-        >
-          Create Profile
-        </button>
-                }
-              </div>
-          
-              </div>:<p></p>}
-            </li>
-          ))
-          }
-        </ul>
-      </div>
+        <div className='Div'>
 
-        {/* <button
-          type="button"
+          <ul >
+            <h4>User Information</h4>
+            <b> <h3>{user.username}</h3></b>
+                <EmailIcon />{user.email}<br />
+                  {user && user.first_name && user.first_name.toUpperCase()} 
+                  {user && user.last_name && user.last_name.toUpperCase()}<br /><br />
+                  <EditUserInfo value={data} />
+            {profiles && profiles.map((value, index) => (
+              <li key={index} >
+               
+                {pk === value.user_id ? <div>
+                  <Avatar alt="No profileimage" src={value.profile_picture} /> 
+                  < LocationOnIcon /> {value.location}<br /><br />
+                  <b> {value.bio}</b><br /><br />
+                  <b> {value.gender === 'F' && <p>Female</p>}</b>
+                  <b> {value.gender === 'M' && <p>Male</p>}</b>
+                  <CakeIcon />{value.date_of_birth}<br /><br />
+                  <ContactPhoneIcon />{value.contact_no}<br /><br />
+                  <div>
+                    following: <a href={`/following/${value.user_id}`} id="following">
+                      {value.following_count}</a>&nbsp;
+                followers: <a href={`/followers/${value.user_id}`} id="followers">
+                      {value.followers_count}</a>
+                  </div>
+                  <br />
+                  <div>
+                    {(value.profile_belongs_to_authenticated_user) ?
+                      <EditProfile value={value} /> :
+                      <Button
+                        type="submit" color="primary" variant="contained" 
+                        onClick={() => this.setState({ showForm: true })}
+                      >
+                       Add Profile details..
+        </Button>
+                    }
+                  </div>
+
+                </div> : <p></p>}
+              </li>
+            ))
+            }
+          </ul>
+        </div>
+
+        <Button
+          type="button" color="primary" variant="contained" 
           onClick={() => this.setState({ showForm: true })}
         >
-          Create Profile
-        </button> */}
+           Add Profile details..
+        </Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ authReducer, profilereducer }) => {
+const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer }) => {
   return {
     authReducer,
-    profilereducer
+    profilereducer,
+    userInfoReducer
 
   }
 }
 
-export default connect(mapStateToProps, { createProfile,getProfiles})(UserProfile)
+export default connect(mapStateToProps, { createProfile, getProfiles, getUserInfo })(UserProfile)

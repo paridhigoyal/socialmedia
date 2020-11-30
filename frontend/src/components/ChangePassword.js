@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { changePassword } from '../actions/index'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { browserHistory } from 'react-router'
+import LockIcon from '@material-ui/icons/Lock';
 import {
   Button,
   FormControl,
@@ -32,7 +33,6 @@ export class ChangePassword extends Component {
   handleOnChange = (event) => {
     let input = this.state.input;
     input[event.target.name] = event.target.value;
-
     this.setState({
       input
     });
@@ -81,8 +81,7 @@ export class ChangePassword extends Component {
       errors["new_password2"] = "Password should be alphanumeric";
     }
 
-    if (typeof input["new_password1"] !== "undefined" && typeof input["new_password2"] !== "undefined") 
-    {
+    if (typeof input["new_password1"] !== "undefined" && typeof input["new_password2"] !== "undefined") {
 
       if (input["new_password1"] !== input["new_password2"]) {
         isValid = false;
@@ -97,7 +96,8 @@ export class ChangePassword extends Component {
 
   render() {
     return (
-      <div>
+      <div className='Div'>
+        <h2>Change Password</h2>
         <form onSubmit={this.handleOnSubmit}>
           <FormControl>
             <InputLabel>New Password</InputLabel>
@@ -123,8 +123,9 @@ export class ChangePassword extends Component {
           <div className="text-danger">{this.state.errors.new_password2}</div>
           <br />
           <Button type='submit' onClick={this.handleOnSubmit.bind(this)}
+
             disabled={!this.state.input.new_password2}
-            variant="contained" color="secondary"> change password</Button>
+            variant="contained" color="primary"><LockIcon /> change password</Button>
         </form>
       </div>
     )

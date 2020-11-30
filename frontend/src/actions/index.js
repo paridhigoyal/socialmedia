@@ -35,7 +35,8 @@ import {
   CREATE_PROFILE,
   USER_INFO_FAILURE,
   USER_INFO_REQUEST,
-  USER_INFO_SUCCESS
+  USER_INFO_SUCCESS,
+  EDIT_USER_INFO
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -263,6 +264,19 @@ export const deletePost = (id) => (dispatch, getState) => {
 
     })
 }
+
+export const editUserInfo = (values) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    axios.put(`${baseURL}/rest-auth/user/`, values, config).then((res) => {
+      dispatch({
+        type: EDIT_USER_INFO,
+        payload: res.data
+      })
+    })
+  }
+}
+
 
 export const getUserInfo = () => (dispatch, getState) => {
   const config = setConfig(getState)

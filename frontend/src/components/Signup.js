@@ -38,8 +38,8 @@ const renderField = ({
   );
 export class Signup extends Component {
   submit = (values) => {
-
     alert("Form submitted successfully.....");
+    console.log(values)
   };
   render() {
     const {
@@ -52,20 +52,21 @@ export class Signup extends Component {
       submitSucceeded,
     } = this.props;
     if (submitSucceeded) {
+      alert("Form submitted successfully.....");
       history.push("/login");
     }
     return (
-      <div>
+      <div className="Div">
         <Grid container direction="row" alignItems="baseline" className="form">
           <Grid item sm></Grid>
           <Grid item sm >
-            <Typography component="h1" variant="h3" className="form-heading">
+            <Typography component="h3" variant="h3" className="form-heading">
               Signup
                 </Typography>
             <form onSubmit={handleSubmit((data) => this.submit({ ...data }))}>
               <Field
                 name="username"
-                label="username"
+                label="Username*"
                 type="text"
                 component={renderField}
                 className="form-field"

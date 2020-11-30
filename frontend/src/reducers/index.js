@@ -5,6 +5,7 @@ import postreducer from "./postreducer";
 import profilereducer from './profilereducer'
 import followerreducer from './followerreducer'
 import commentReducer from './commentReducer'
+import userInfoReducer from './userInfoReducer'
 export default combineReducers({
   authReducer,
   form: formReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   profilereducer,
   followerreducer,
   commentReducer,
+  userInfoReducer
 })

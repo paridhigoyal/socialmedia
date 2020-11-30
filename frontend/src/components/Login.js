@@ -7,6 +7,8 @@ import { connect } from "react-redux"
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { login } from "../actions/index"
 import { Button, FormControl, InputLabel, Input } from '@material-ui/core';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+
 
 class Login extends Component {
   state = {
@@ -24,6 +26,7 @@ class Login extends Component {
 
     return (
       <div className='Div'>
+        <h2>Login</h2>
         <form onSubmit={this.onFormSubmit.bind(this)} >
           <FormControl>
             <InputLabel>Username</InputLabel>
@@ -35,7 +38,9 @@ class Login extends Component {
           </FormControl>
           <br />
           <FormControl>
+
             <InputLabel>Password</InputLabel>
+
             <Input value={this.state.password}
               name="password"
               type="password"
@@ -45,15 +50,15 @@ class Login extends Component {
           <br /><br />
           <Button type='submit' onClick={this.onFormSubmit.bind(this)}
             disabled={(!this.state.password)}
-            variant="contained" color="secondary">
+            variant="contained" color="primary">
+            <LockOpenIcon />
             Login
           </Button>
-
           <CircularProgress style={progress ? { display: "inline-block" } : { display: "none" }} />
         </form>
         <p className="text-helper">
           You dont have an account yet Signup from <Link to="/signup">here</Link><br />
-          <Link className="nav-link" to="/forgetpassword">Forget Password</Link>
+          <Link className="nav-link" to="/forgetpassword">Forget Password ?</Link>
         </p>
       </div>
     )

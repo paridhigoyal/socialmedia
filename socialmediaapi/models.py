@@ -16,8 +16,8 @@ class Profile(models.Model):
     contact_no = models.CharField(max_length=13)
     bio = models.CharField(max_length=100, null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to="frontend/src/profile-pictures",
-                                        null=True, blank=True)
+    profile_picture = models.ImageField(
+        upload_to="frontend/src/profile-pictures", null=True, blank=True)
 
     def get_user_id(self):
         return self.user.pk
@@ -32,8 +32,8 @@ class Profile(models.Model):
         return self.user.last_name
 
     def get_follow_status(self):
-        follow_status = Follower.objects.filter(user=self.user,
-                                                is_followed_by=get_current_authenticated_user())
+        follow_status = Follower.objects.filter(
+            user=self.user, is_followed_by=get_current_authenticated_user())
         return "Following" if follow_status else "Follow"
 
     def get_followers_count(self):
@@ -104,6 +104,10 @@ class Comment(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='comments')
     commented_at = models.DateTimeField(auto_now_add=True)
+
+    def get_user(self):
+        user_dict = vars(self.user)
+        return {"id": user_dict["id"], "username": user_dict["username"]}
 
     def __str__(self):
         return str(self.id)
