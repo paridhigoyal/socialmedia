@@ -53,7 +53,8 @@ export const asyncValidate = (values) => {
     })
     .catch((error) => {
       const errors = error.response.data;
-      console.log(errors)
+      alert(errors.username, errors.email)
+     
     });
 };
 

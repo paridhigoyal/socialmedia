@@ -168,10 +168,10 @@ export class UserProfile extends Component {
         <div className='Div'>
 
           <ul >
-            <h4>User Information</h4>
-            <b> <h3>{user.username}</h3></b>
-                <EmailIcon />{user.email}<br />
-                  {user && user.first_name && user.first_name.toUpperCase()} 
+            <center><h2>User Information..</h2></center><br/>
+            <b> <h3>{user.username}</h3></b><br/>
+                <EmailIcon />{user.email}<br /><br/>
+                  {user && user.first_name && user.first_name.toUpperCase()} &nbsp;
                   {user && user.last_name && user.last_name.toUpperCase()}<br /><br />
                   <EditUserInfo value={data} />
             {profiles && profiles.map((value, index) => (

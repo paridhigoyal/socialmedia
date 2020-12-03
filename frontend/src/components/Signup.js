@@ -120,7 +120,7 @@ Signup = reduxForm({
   form: "signup-form",
   validate,
   asyncValidate,
-  asyncBlurFields: ['username', 'email']
+  asyncBlurFields: []
 })(Signup);
 
 export default Signup;

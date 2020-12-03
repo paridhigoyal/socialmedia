@@ -66,10 +66,26 @@ export class EditProfile extends Component {
         break;
     }
   }
+  validate = () => {
+    let phoneNoError = "";
+    if (this.state.contact_no.length !== 13) {
+      phoneNoError  = "Please enter valid contact no with code";
+    }
+    if (phoneNoError) {
+      this.setState({ phoneNoError });
+      return false;
+    }
+    else {
+      return true;
+    }
+
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const isValid = this.validate();
     let form_data = new FormData();
+    if(isValid){
     form_data.append('profile_picture', this.state.profile_picture, this.state.profile_picture.name);
     form_data.append('bio', this.state.bio);
     form_data.append('contact_no', this.state.contact_no);
@@ -78,6 +94,10 @@ export class EditProfile extends Component {
     form_data.append('date_of_birth', this.state.date_of_birth);
     this.props.editProfile(this.props.value.id, form_data)
     this.props.getProfiles()
+    }
+    else{
+      alert('Please enter valid phone no with proper country code')
+    }
   }
 
   showForm = () => {
