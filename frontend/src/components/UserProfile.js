@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Button, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createProfile, getProfiles, getUserInfo } from '../actions/index'
+import { createProfile, getProfiles, getUserInfo, getUserPosts } from '../actions/index'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import Avatar from '@material-ui/core/Avatar';
@@ -14,6 +14,15 @@ import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import EditUserInfo from './EditUserInfo';
 import EmailIcon from '@material-ui/icons/Email';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
+import CommentIcon from '@material-ui/icons/Comment';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import EditComment from './EditComment';
+import PostRate from './PostRate';
+import EditPost from './EditPost';
+import AddComment from './AddComment';
 
 export class UserProfile extends Component {
   constructor(props) {
@@ -69,8 +78,10 @@ export class UserProfile extends Component {
     }
   }
   componentDidMount() {
+    const { pk } = this.props.authReducer.user
     this.props.getUserInfo();
     this.props.getProfiles();
+    this.props.getUserPosts(pk);
   }
 
   handleSubmit = (e) => {
@@ -159,6 +170,7 @@ export class UserProfile extends Component {
   }
 
   render() {
+    const { posts } = this.props.postreducer
     const { profiles } = this.props.profilereducer
     const { user } = this.props.userInfoReducer
     const { pk, username, first_name, email, last_name } = this.props.authReducer.user
@@ -210,6 +222,74 @@ export class UserProfile extends Component {
             }
           </ul>
         </div>
+        
+        <ul >
+              {posts.length === 0 && <h2>No posts available..</h2>}
+              {posts !== undefined && posts.map((value, index) => (
+              
+                <li key={index} className='Div'>
+                 {value.post_belongs_to_authenticated_user && <div>
+                  <h5> <b>{value.post_by.username} </b></h5>
+
+                  <div>
+                    <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
+                      src={value.image} alt="abc"></img><br />
+                    <b>{value.post_by !== undefined && value.post_by.username} </b>
+                    {value.caption}<br />
+                    <h6 style={{ color: 'gray' }}> <DateRangeOutlinedIcon /> {value.posted_at} </h6>
+                  </div>
+                  <div>
+                    {value.post_belongs_to_authenticated_user &&
+                      <Button type="button" variant="contained"
+                        startIcon={<DeleteForeverRoundedIcon />}
+                        onClick={() => { this.deletePost(value.id) }}>
+                        DeletePost</Button>}
+                  </div><br />
+                  <div>
+                    {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
+                  </div>
+                  <div>
+                    <ThumbUpIcon /> {value.likes_count} &nbsp;&nbsp;
+                     <ThumbDownIcon /> {value.dislikes_count}  &nbsp;<br />
+                  </div>
+                  <PostRate value={value} pk={user.pk} /><br />
+
+                  <div>
+                    <CommentIcon /> {value.comments_count} comments<br />
+
+                    <AddComment id={value.id} />
+                  </div>
+                  <br />
+
+                  <div> {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5></b>}</div>
+                  <div>
+                    <ul>
+
+                      {value.comments.map((data, index) =>
+                        (
+
+                          <li key={index}>
+                            <b>{data.comment_by.username}</b>&nbsp;
+                            {data.content}
+                            {user.pk === data.user && <DeleteForeverRoundedIcon
+                              onClick={() => { this.deleteComment(data.id) }}
+                              variant="contained" />}
+                            {user.pk === data.user && <EditComment data={data} />}
+                            <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
+
+                          </li>
+                        ))
+                      }
+
+                    </ul>
+                  </div>
+                  </div>}
+                </li>
+                  
+              ))
+              }
+              <br />
+            </ul>
 
         <Button
           type="button" color="primary" variant="contained" 
@@ -223,13 +303,15 @@ export class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer }) => {
+const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer, postreducer }) => {
   return {
     authReducer,
     profilereducer,
-    userInfoReducer
+    userInfoReducer,
+    postreducer
 
   }
 }
 
-export default connect(mapStateToProps, { createProfile, getProfiles, getUserInfo })(UserProfile)
+export default connect(mapStateToProps, { createProfile, getProfiles, getUserInfo, 
+  getUserPosts })(UserProfile)

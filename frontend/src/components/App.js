@@ -20,6 +20,7 @@ import UserProfiles from './UserProfiles';
 import ForgetPassword from './ForgetPassword';
 import ChangePassword from './ChangePassword';
 import UserProfile from './UserProfile';
+import UserProfileDetail from './UserProfileDetail';
 import {
   tryAutoSignIn,
 
@@ -82,7 +83,8 @@ function App(props) {
               }
             }}>
           </Route>
-          <Route path='/followers/:id/'
+          <Route path='/followers/:id/' component={Followers}/>
+          {/* <Route path='/followers/:id/'
             render={() => {
               if (isAuthenticated) {
                 return <Followers />;
@@ -90,15 +92,17 @@ function App(props) {
                 return <Redirect to="/login" />;
               }
             }}>
-          </Route>
-          <Route path='/following/:id/'
+          </Route> */}
+          <Route path="/userInfo/:userId" component={UserProfileDetail}/>
+          <Route path='/following/:id/' component={Following}/>
+          {/* <Route path='/following/:id/'
             render={() => {
               if (isAuthenticated) {
                 return <Following {...props} />;
               } else {
                 return <Redirect to="/login" />;
               }
-            }} />
+            }} /> */}
 
           <Route path='/userprofiles'
             render={() => {

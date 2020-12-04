@@ -36,7 +36,10 @@ import {
   USER_INFO_FAILURE,
   USER_INFO_REQUEST,
   USER_INFO_SUCCESS,
-  EDIT_USER_INFO
+  EDIT_USER_INFO,
+  FOLLOWING_FAILURE,
+  FOLLOWING_REQUEST,
+  FOLLOWING_SUCCESS,
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -216,6 +219,34 @@ export const searchuserprofile = (username) => (dispatch, getState) => {
     });
 };
 
+export const getUserPosts =(id) =>(dispatch, getState) =>{
+  const config = setConfig(getState)
+  dispatch({ type: POSTS_REQUEST });
+  axios
+  .get(`${baseURL}/post/${id}/user_posts/`, config)
+  .then((response) =>{
+    dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
+  })
+  .catch((error) => {
+    dispatch({ type: POSTS_FAILURE, payload: error.message });
+  });
+}
+
+export const getUserProfile = (id) =>(dispatch, getState)=>{
+  const config = setConfig(getState)
+  dispatch({ type: PROFILE_REQUEST });
+  axios
+    .get(`${baseURL}/profile/${id}`, config)
+    .then((response) => {
+      console.log(response.data)
+      dispatch({ type: PROFILE_SUCCESS, payload: response.data });
+
+    })
+    .catch((error) => {
+      dispatch({ type: PROFILE_FAILURE, payload: error.message });
+    })
+}
+
 /**getPosts is for calling gettingposts api for getting all posts and dispatching values */
 export const getPosts = () => (dispatch, getState) => {
   const config = setConfig(getState)
@@ -327,18 +358,34 @@ export const follow = (id) => (dispatch, getState) => {
 };
 
 /**getFollowers is for calling api of getfollowers for particular user  */
-export const getFollowers = () => (dispatch, getState) => {
+export const getFollowers = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: FOLLOWER_REQUEST });
   axios
-    .get(`${baseURL}/followers/`, config)
+    .get(`${baseURL}/followers/${id}`, config)
     .then((response) => {
+      console.log(response.data.results)
       dispatch({ type: FOLLOWER_SUCCESS, payload: response.data.results });
     })
     .catch((error) => {
       dispatch({ type: FOLLOWER_FAILURE, payload: error.message });
     })
 }
+
+export const getFollowing = (id) => (dispatch, getState) => {
+  const config = setConfig(getState)
+  dispatch({ type: FOLLOWING_REQUEST });
+  axios
+    .get(`${baseURL}/following/${id}`, config)
+    .then((response) => {
+      console.log(response.data.results)
+      dispatch({ type: FOLLOWING_SUCCESS, payload: response.data.results });
+    })
+    .catch((error) => {
+      dispatch({ type: FOLLOWING_FAILURE, payload: error.message });
+    })
+}
+
 
 /**editPost is for calling edit post api and dispatching values to postreducer */
 export const editPost = (id, postData) => {

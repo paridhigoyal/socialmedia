@@ -2,11 +2,13 @@
  * follow button and number of followers and followings of particular user  */
 
 import React, { Component } from 'react'
-import { getProfiles } from '../actions/index'
+import { getProfiles, getUserProfile } from '../actions/index'
 import { connect } from 'react-redux';
 import EditProfile from './EditProfile';
 import Follow from './Follow'
 import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
+import {Button} from "@material-ui/core/Button/Button";
 
 class Profiles extends Component {
 
@@ -29,10 +31,10 @@ class Profiles extends Component {
               {value.first_name} {value.last_name}<br />
               {value.location}<br />
               <div>
-                following: <a href={`/following/${value.user_id}`} id="following">
-                  {value.following_count}</a>&nbsp;
-                followers: <a href={`/followers/${value.user_id}`} id="followers">
-                  {value.followers_count}</a>
+                following: <Link to={`following/${value.user_id}`}>{value.following_count}</Link>&nbsp;
+        
+                followers:  <Link to={`followers/${value.user_id}`}>{value.followers_count}</Link>&nbsp;
+               
               </div>
               <div>
                 {(value.profile_belongs_to_authenticated_user) ?
@@ -46,6 +48,11 @@ class Profiles extends Component {
                     ? <Follow followStatus={value.follow_status} id={value.user_id} />
                     : <b>  </b>
                 }
+              </div>
+              <div>
+              <Link to={`userInfo/${value.id}`}><button>User Detail</button></Link>
+              {/* <Button onclick=(this.props.)>View {value.username} profile</Button> */}
+                
               </div>
             </li>
           ))
@@ -63,4 +70,4 @@ const mapStateToProps = ({ authReducer, profilereducer }) => {
   }
 }
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(mapStateToProps, { getProfiles,getUserProfile })(Profiles);

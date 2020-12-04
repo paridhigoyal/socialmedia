@@ -7,22 +7,30 @@ import { connect } from 'react-redux'
 export class Followers extends Component {
 
   componentDidMount() {
-    console.log(this.props)
-    this.props.getFollowers()
+    const { match: { params } } = this.props;
+    this.props.getFollowers(params.id)
   }
   render() {
+    const { followers } = this.props.followerreducer
     return (
-      <div>
-
-      </div>
+        <div>
+          <ul>
+          {followers.map((value,index)=>(
+            <li key={index} className="Div>">
+           <b> <h4>{value.user.username}</h4></b>
+            </li>
+          ))
+      }
+          </ul>
+        </div>
     )
   }
 }
 
 const mapStateToProps = ({ authReducer, followerreducer }) => {
-  return (authReducer,
+  return ({authReducer,
     followerreducer
-  )
+  })
 }
 
 export default connect(mapStateToProps, { getFollowers })(Followers);
