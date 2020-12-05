@@ -122,3 +122,25 @@ class PostRate(models.Model):
 
     def __str__(self):
         return str(self.rated_post)
+
+
+class CommentRate(models.Model):
+    liked = models.BooleanField(null=True)
+    rated_comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name='like')
+    rated_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='like')
+
+    def __str__(self):
+        return str(self.rated_comment)
+
+
+class Favourite(models.Model):
+    favourite = models.BooleanField(null=True)
+    favourite_post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='favourites')
+    favourite_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='favourites')
+
+    def __str__(self):
+        return str(self.favourite_post)

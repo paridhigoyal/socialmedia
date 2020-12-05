@@ -7,6 +7,8 @@ import followerreducer from './followerreducer'
 import commentReducer from './commentReducer'
 import userInfoReducer from './userInfoReducer'
 import followingreducer from './followingreducer'
+import userProfileReducer from './userProfileReducer'
+import userPostReducer from './userPostReducer'
 export default combineReducers({
   authReducer,
   form: formReducer,
@@ -15,5 +17,7 @@ export default combineReducers({
   followerreducer,
   commentReducer,
   userInfoReducer,
-  followingreducer
+  followingreducer,
+  userProfileReducer,
+  userPostReducer
 })

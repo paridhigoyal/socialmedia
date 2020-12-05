@@ -4,7 +4,8 @@ from rest_auth.views import PasswordResetConfirmView, PasswordResetView
 from rest_framework import routers
 
 from . import views
-from .views import (CommentUpdateViewSet, PostRateUpdateViewSet, PostViewSet,
+from .views import (CommentRateUpdateViewSet, CommentUpdateViewSet,
+                    FavouriteViewSet, PostRateUpdateViewSet, PostViewSet,
                     ProfileViewSet)
 
 router = routers.DefaultRouter()
@@ -14,6 +15,10 @@ router.register(r'commentupdate', CommentUpdateViewSet,
                 basename='commentsUpdate')
 router.register(r'postrateupdate', PostRateUpdateViewSet,
                 basename='likesupdate')
+router.register(r'commentrateupdate', CommentRateUpdateViewSet,
+                basename='commentlikesupdate')
+router.register(r'favourite', FavouriteViewSet,
+                basename='favouritepost')
 
 urlpatterns = [
     path('', include(router.urls)),
@@ -26,6 +31,8 @@ urlpatterns = [
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
     path('comment/', views.CommentViewSet.as_view(), name='comment'),
     path('postrate/', views.PostRateViewSet.as_view(), name='postrate'),
+    path('commentrate/', views.CommentRateViewSet.as_view(),
+         name='commentrate'),
     path('following/<int:pk>/', views.Following.as_view(), name='following'),
     path('followers/<int:pk>/', views.Followers.as_view(), name='followers'),
     path('follow/<int:pk>/', views.follow, name='follow'),

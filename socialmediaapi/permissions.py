@@ -22,3 +22,19 @@ class IsPostRateOwner(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return ratepost.rated_by == request.user
+
+
+class IsCommentRateOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, ratecomment):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return ratecomment.rated_by == request.user
+
+
+class IsFavouriteOwner(permissions.BasePermission):
+
+    def has_object_permission(self, request, view, favourite):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return favourite.favourite_by == request.user

@@ -40,6 +40,12 @@ import {
   FOLLOWING_FAILURE,
   FOLLOWING_REQUEST,
   FOLLOWING_SUCCESS,
+  USER_PROFILE_FAILURE,
+  USER_PROFILE_REQUEST,
+  USER_PROFILE_SUCCESS,
+  USER_POSTS_FAILURE,
+  USER_POSTS_REQUEST,
+  USER_POSTS_SUCCESS,
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -221,29 +227,29 @@ export const searchuserprofile = (username) => (dispatch, getState) => {
 
 export const getUserPosts =(id) =>(dispatch, getState) =>{
   const config = setConfig(getState)
-  dispatch({ type: POSTS_REQUEST });
+  dispatch({ type:  USER_POSTS_REQUEST });
   axios
   .get(`${baseURL}/post/${id}/user_posts/`, config)
   .then((response) =>{
-    dispatch({ type: POSTS_SUCCESS, payload: response.data.results });
+    dispatch({ type:  USER_POSTS_SUCCESS, payload: response.data.results });
   })
   .catch((error) => {
-    dispatch({ type: POSTS_FAILURE, payload: error.message });
+    dispatch({ type:  USER_POSTS_FAILURE, payload: error.message });
   });
 }
 
 export const getUserProfile = (id) =>(dispatch, getState)=>{
   const config = setConfig(getState)
-  dispatch({ type: PROFILE_REQUEST });
+  dispatch({ type: USER_PROFILE_REQUEST });
   axios
     .get(`${baseURL}/profile/${id}`, config)
     .then((response) => {
       console.log(response.data)
-      dispatch({ type: PROFILE_SUCCESS, payload: response.data });
+      dispatch({ type: USER_PROFILE_SUCCESS, payload: response.data });
 
     })
     .catch((error) => {
-      dispatch({ type: PROFILE_FAILURE, payload: error.message });
+      dispatch({ type: USER_PROFILE_FAILURE, payload: error.message });
     })
 }
 

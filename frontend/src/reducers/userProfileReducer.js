@@ -1,35 +1,38 @@
 import {
-    FOLLOWING_FAILURE,
-    FOLLOWING_REQUEST,
-    FOLLOWING_SUCCESS,
+    USER_PROFILE_FAILURE,
+    USER_PROFILE_REQUEST,
+    USER_PROFILE_SUCCESS,
   
   } from "../actions/action_types"
+  
   const initialState = {
     loading: false,
-    followings: [],
+    profile: [],
+    
     error: ''
   }
-  const followingreducer= (state = initialState, action) => {
+  
+const userProfileReducer= (state = initialState, action) => {
     switch (action.type) {
-      case FOLLOWING_REQUEST:
+      case USER_PROFILE_REQUEST:
         return {
           ...state,
           loading: true
         }
-      case FOLLOWING_SUCCESS:
+      case USER_PROFILE_SUCCESS:
         return {
           loading: false,
-          followings: action.payload,
+          profile: action.payload,
           error: ''
         }
-      case FOLLOWING_FAILURE:
+      case USER_PROFILE_FAILURE:
         return {
           loading: false,
-          followings: [],
+          profile: [],
           error: action.payload
         }
-  
       default: return state
     }
   }
-  export default followingreducer;
+  
+  export default userProfileReducer;

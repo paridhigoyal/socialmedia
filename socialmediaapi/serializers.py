@@ -3,7 +3,8 @@ import datetime
 
 from rest_framework import serializers
 
-from .models import Comment, Follower, Post, PostRate, Profile
+from .models import (Comment, CommentRate, Favourite, Follower, Post, PostRate,
+                     Profile)
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -78,14 +79,62 @@ class PostRateSerializer(serializers.ModelSerializer):
         return data
 
 
+class FavouriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Favourite
+        fields = '__all__'
+        read_only_fields = ('id', 'favourite_by')
+
+    def validate(self, data):
+        favourite_by_id = self.context['request'].user.id
+        favourite_post = data['favourite_post']
+
+        favourite = Favourite.objects.filter(
+            favourite_by=favourite_by_id, favourite_post=favourite_post.id)
+        if favourite.exists():
+            raise serializers.ValidationError(
+                "this favourite with this user and post already exists")
+        return data
+
+
+class CommentRateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CommentRate
+        fields = '__all__'
+        read_only_fields = ('id', 'rated_by')
+
+    def validate(self, data):
+        rated_by_id = self.context['request'].user.id
+        rated_comment = data['rated_comment']
+
+        like = CommentRate.objects.filter(
+            rated_by=rated_by_id, rated_comment=rated_comment.id)
+        if like.exists():
+            raise serializers.ValidationError(
+                "this like with this user and post already exists")
+        return data
+
+
 class CommentSerializer(serializers.ModelSerializer):
     comment_by = serializers.DictField(
         child=serializers.CharField(), source='get_user', read_only=True)
+    like = CommentRateSerializer(many=True, read_only=True)
+    likes_count = serializers.SerializerMethodField(read_only=True)
+    dislikes_count = serializers.SerializerMethodField(read_only=True)
+
+    def get_likes_count(self, obj):
+        return obj.like.filter(liked=True).count()
+
+    def get_dislikes_count(self, obj):
+        return obj.like.filter(liked=False).count()
 
     class Meta:
         model = Comment
         fields = ['id', 'content', 'user', 'comment_by',
-                  'commented_post', 'commented_at']
+                  'commented_post', 'commented_at',
+                  'likes_count', 'dislikes_count', 'like']
         read_only_fields = ('id', ' commented_at', 'user')
 
 
@@ -133,3 +182,10 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ['id', 'content', 'user', 'commented_post', 'commented_at']
         read_only_fields = ('id', ' commented_at', 'user', 'commented_post')
+
+
+class CommentRateUpdateSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = CommentRate
+        fields = '__all__'
+        read_only_fields = ['id', 'rated_by', 'rated_comment']

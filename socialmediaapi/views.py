@@ -8,13 +8,16 @@ from rest_framework.decorators import action, permission_classes
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Comment, Follower, Post, PostRate, Profile
+from .models import (Comment, CommentRate, Favourite, Follower, Post, PostRate,
+                     Profile)
 from .paginators import PagePagination
-from .permissions import IsInstanceUser, IsPostOwner, IsPostRateOwner
-from .serializers import (CommentSerializer, CommentUpdateSerializer,
-                          FollowerSerializer, PostRateSerializer,
-                          PostRateUpdateSerializer, PostSerializer,
-                          ProfileSerializer)
+from .permissions import (IsCommentRateOwner, IsFavouriteOwner, IsInstanceUser,
+                          IsPostOwner, IsPostRateOwner)
+from .serializers import (CommentRateSerializer, CommentRateUpdateSerializer,
+                          CommentSerializer, CommentUpdateSerializer,
+                          FavouriteSerializer, FollowerSerializer,
+                          PostRateSerializer, PostRateUpdateSerializer,
+                          PostSerializer, ProfileSerializer)
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -79,6 +82,32 @@ class PostRateViewSet(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(rated_by=self.request.user)
+
+
+class FavouriteViewSet(viewsets.ModelViewSet):
+    queryset = Favourite.objects.all()
+    serializer_class = FavouriteSerializer
+    pagination_class = PagePagination
+    permission_classes = [IsAuthenticated, IsFavouriteOwner, ]
+
+    def perform_create(self, serializer):
+        return serializer.save(favourite_by=self.request.user)
+
+    @action(detail=True,  methods=['GET'],
+            url_path="favourite_posts", url_name="favourite_posts")
+    def get_user_favourite_posts(self, request, pk=None):
+        try:
+            user = get_object_or_404(User, pk=pk)
+            favourite = Favourite.objects.filter(
+                favourite_by=user)
+            page = self.paginate_queryset(favourite)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = self.get_serializer(favourite, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({"error": 'The user does not exist'})
 
 
 class PostRateUpdateViewSet(mixins.RetrieveModelMixin,
@@ -148,6 +177,26 @@ class CommentUpdateViewSet(mixins.RetrieveModelMixin,
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception:
             return Response({'error': "Bad request"})
+
+
+class CommentRateViewSet(generics.ListCreateAPIView):
+    queryset = CommentRate.objects.all()
+    serializer_class = CommentRateSerializer
+    pagination_class = PagePagination
+
+    def perform_create(self, serializer):
+        return serializer.save(rated_by=self.request.user)
+
+
+class CommentRateUpdateViewSet(mixins.RetrieveModelMixin,
+                               mixins.ListModelMixin,
+                               mixins.UpdateModelMixin,
+                               mixins.DestroyModelMixin,
+                               viewsets.GenericViewSet):
+    queryset = CommentRate.objects.all()
+    serializer_class = CommentRateUpdateSerializer
+    pagination_class = PagePagination
+    permission_classes = [IsAuthenticated, IsCommentRateOwner, ]
 
 
 @permission_classes([IsAuthenticated])

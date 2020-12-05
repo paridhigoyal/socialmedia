@@ -170,7 +170,7 @@ export class UserProfile extends Component {
   }
 
   render() {
-    const { posts } = this.props.postreducer
+    const { posts } = this.props.userPostReducer
     const { profiles } = this.props.profilereducer
     const { user } = this.props.userInfoReducer
     const { pk, username, first_name, email, last_name } = this.props.authReducer.user
@@ -303,12 +303,12 @@ export class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer, postreducer }) => {
+const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer, userPostReducer }) => {
   return {
     authReducer,
     profilereducer,
     userInfoReducer,
-    postreducer
+    userPostReducer
 
   }
 }
