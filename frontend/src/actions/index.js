@@ -46,6 +46,9 @@ import {
   USER_POSTS_FAILURE,
   USER_POSTS_REQUEST,
   USER_POSTS_SUCCESS,
+  SET_COMMENT_LIKE,
+UPDATE_COMMENT_LIKE,
+ DELETE_COMMENT_LIKE,
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -464,6 +467,46 @@ export const deleteComment = (id) => {
           payload: res.data
         })
       })
+  }
+}
+
+export const makeCommentLike = (values) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    axios.post(`${baseURL}/commentrate/`, values, config).then((res) => {
+     dispatch({
+        type: SET_COMMENT_LIKE,
+        payload: res.data
+    })
+
+    })
+  }
+}
+
+/**update like is for updating postrate */
+export const updateCommentLike = (values, id) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    axios.put(`${baseURL}/commentrateupdate/${id}/`, values, config).then((res) => {
+      dispatch({
+        type: UPDATE_COMMENT_LIKE,
+        payload: res.data
+      })
+    })
+  }
+}
+
+/**deleteLike is for deleting previous postrate */
+export const deleteCommentLike = (id) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    
+    axios.delete(`${baseURL}/commentrateupdate/${id}/`, config).then((res) => {
+      dispatch({
+        type: DELETE_COMMENT_LIKE,
+        payload: res.data
+      })
+    })
   }
 }
 

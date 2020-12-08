@@ -12,9 +12,19 @@ ul{   list-style: none;   list-style-type: none; }
 
 .Div{
   /* display:inline-block; */
-  margin:20px;
+  /* margin:20px; */
+  block-size: fit-content;
+  width: 50%;
   background-color:#F0F0F0;
-  
+  display: block;
+  margin-left: auto;
+  margin-right: auto; 
+  padding-left: 3.8em;
+  padding-right: 3.8em;
+  padding-top:2.0em ;
+  margin-top: 40px;
+  padding-bottom:1.2em ;
+  text-align: center; 
 }
 .form {
   justify-content: center;
@@ -32,6 +42,11 @@ ul{   list-style: none;   list-style-type: none; }
 .form-error {
   color:seagreen;
 }
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
 
 
 

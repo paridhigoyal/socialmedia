@@ -123,6 +123,7 @@ class CommentSerializer(serializers.ModelSerializer):
     like = CommentRateSerializer(many=True, read_only=True)
     likes_count = serializers.SerializerMethodField(read_only=True)
     dislikes_count = serializers.SerializerMethodField(read_only=True)
+  
 
     def get_likes_count(self, obj):
         return obj.like.filter(liked=True).count()
@@ -149,6 +150,7 @@ class PostSerializer(serializers.ModelSerializer):
     caption = serializers.CharField()
     likes = PostRateSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
+    favourites = FavouriteSerializer(many=True, read_only=True)
 
     def get_comments_count(self, obj):
         return obj.comments.count()
@@ -164,7 +166,7 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id', 'post_belongs_to_authenticated_user', 'post_by',
                   'caption', 'image',
                   'likes_count', 'dislikes_count',
-                  'comments_count', 'posted_at', 'comments', 'likes']
+                  'comments_count', 'posted_at', 'comments', 'likes', 'favourites']
         write_only_fields = ['caption', 'image', ]
         read_only_fields = ('id', 'posted_at',)
 

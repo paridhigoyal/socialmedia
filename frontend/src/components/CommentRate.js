@@ -74,14 +74,10 @@ export class PostRate extends Component {
         }
 
         {!like && <div>
-          {/* <Button onClick={() => this.makeLike2(true)}
-            variant="contained" startIcon={<ThumbUpAltOutlinedIcon />}> Like </Button> &nbsp; */}
             <ThumbUpAltOutlinedIcon onClick={() => this.makeLike2(true)} variant="contained" /> &nbsp;
             {this.props.value.likes_count} &nbsp;
             <ThumbDownAltOutlinedIcon onClick={() => this.makeLike2(false)} variant="contained" /> &nbsp;
             {this.props.value.dislikes_count}
-          {/* <Button onClick={() => this.makeLike2(false)}
-            variant="contained" startIcon={<ThumbDownAltOutlinedIcon />}>Dislike </Button> */}
         </div>}
       </div>
     )
