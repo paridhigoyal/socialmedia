@@ -50,8 +50,6 @@ const postreducer = (state = initialState, action) => {
         ...state,
         posts
       }
-    
-    
 
     case SET_LIKE:
       postIndex = state.posts.findIndex((post) => (post.id === action.payload.id))
@@ -81,7 +79,6 @@ const postreducer = (state = initialState, action) => {
         ...state,
         posts
       }
-
 
     case EDIT_POST:
       postIndex = posts.findIndex((post) => (post.id === action.payload.id))

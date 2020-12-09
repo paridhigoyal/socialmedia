@@ -3,7 +3,6 @@
 import axios from "axios";
 import { baseURL } from '../utility/index';
 import Cookies from 'js-cookie';
-
 import {
   LOGIN,
   LOGIN_ERROR,
@@ -47,8 +46,8 @@ import {
   USER_POSTS_REQUEST,
   USER_POSTS_SUCCESS,
   SET_COMMENT_LIKE,
-UPDATE_COMMENT_LIKE,
- DELETE_COMMENT_LIKE,
+  UPDATE_COMMENT_LIKE,
+  DELETE_COMMENT_LIKE,
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -162,10 +161,10 @@ export const makeLike = (values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.post(`${baseURL}/postrate/`, values, config).then((res) => {
-     dispatch({
+      dispatch({
         type: SET_LIKE,
         payload: res.data
-    })
+      })
 
     })
   }
@@ -228,20 +227,22 @@ export const searchuserprofile = (username) => (dispatch, getState) => {
     });
 };
 
-export const getUserPosts =(id) =>(dispatch, getState) =>{
+/**getUserPosts is for getting posts of particular user */
+export const getUserPosts = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
-  dispatch({ type:  USER_POSTS_REQUEST });
+  dispatch({ type: USER_POSTS_REQUEST });
   axios
-  .get(`${baseURL}/post/${id}/user_posts/`, config)
-  .then((response) =>{
-    dispatch({ type:  USER_POSTS_SUCCESS, payload: response.data.results });
-  })
-  .catch((error) => {
-    dispatch({ type:  USER_POSTS_FAILURE, payload: error.message });
-  });
+    .get(`${baseURL}/post/${id}/user_posts/`, config)
+    .then((response) => {
+      dispatch({ type: USER_POSTS_SUCCESS, payload: response.data.results });
+    })
+    .catch((error) => {
+      dispatch({ type: USER_POSTS_FAILURE, payload: error.message });
+    });
 }
 
-export const getUserProfile = (id) =>(dispatch, getState)=>{
+/**getUserProfile is for getting profile info of users */
+export const getUserProfile = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: USER_PROFILE_REQUEST });
   axios
@@ -305,6 +306,7 @@ export const deletePost = (id) => (dispatch, getState) => {
     })
 }
 
+/**edutUserInfo is for editing user info of loggedin user */
 export const editUserInfo = (values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -317,7 +319,7 @@ export const editUserInfo = (values) => {
   }
 }
 
-
+/**getUserinfo is for getting information of particular user */
 export const getUserInfo = () => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: USER_INFO_REQUEST });
@@ -325,7 +327,7 @@ export const getUserInfo = () => (dispatch, getState) => {
     .get(`${baseURL}/rest-auth/user/`, config)
     .then((response) => {
       dispatch({ type: USER_INFO_SUCCESS, payload: response.data });
-     
+
     })
     .catch((error) => {
       dispatch({ type: USER_INFO_FAILURE, payload: error.message });
@@ -381,6 +383,7 @@ export const getFollowers = (id) => (dispatch, getState) => {
     })
 }
 
+/**getFollowing action is for getting following list of a user */
 export const getFollowing = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
   dispatch({ type: FOLLOWING_REQUEST });
@@ -470,20 +473,21 @@ export const deleteComment = (id) => {
   }
 }
 
+/**makeCommentLike is for updating commentrate */
 export const makeCommentLike = (values) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
     axios.post(`${baseURL}/commentrate/`, values, config).then((res) => {
-     dispatch({
+      dispatch({
         type: SET_COMMENT_LIKE,
         payload: res.data
-    })
+      })
 
     })
   }
 }
 
-/**update like is for updating postrate */
+/**updateCommentLike is for updating previous commentrate */
 export const updateCommentLike = (values, id) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
@@ -496,11 +500,11 @@ export const updateCommentLike = (values, id) => {
   }
 }
 
-/**deleteLike is for deleting previous postrate */
+/**deleteCommentLike is for deleting previous commentrate */
 export const deleteCommentLike = (id) => {
   return (dispatch, getState) => {
     const config = setConfig(getState)
-    
+
     axios.delete(`${baseURL}/commentrateupdate/${id}/`, config).then((res) => {
       dispatch({
         type: DELETE_COMMENT_LIKE,

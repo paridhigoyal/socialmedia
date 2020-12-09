@@ -16,7 +16,7 @@ export class EditPost extends Component {
     }
     this.onInputChange = this.onInputChange.bind(this);
   }
-  componentDidMount(){
+  componentDidMount() {
     this.props.getPosts()
   }
 
@@ -43,7 +43,7 @@ export class EditPost extends Component {
     form_data.append('caption', this.state.caption)
     await this.props.editPost(this.props.value.id, form_data)
     await this.props.getPosts()
-    
+
   }
 
   showForm = () => {
@@ -68,7 +68,7 @@ export class EditPost extends Component {
         </FormControl>
         <br />
         <Button disabled={!this.state.image}
-          type='submit' onClick={this.handleSubmit} 
+          type='submit' onClick={this.handleSubmit}
           variant="contained" color="primary">
           Update Post
     </Button>
@@ -80,9 +80,9 @@ export class EditPost extends Component {
   render() {
     return (
       <div>
-        <Button type="button" variant="contained" startIcon={< EditIcon/>}
+        <Button type="button" variant="contained" startIcon={< EditIcon />}
           onClick={() => this.setState({ showForm: true })}>
-            Edit Post</Button>
+          Edit Post</Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
     )

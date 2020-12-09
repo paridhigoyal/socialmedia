@@ -8,7 +8,6 @@ import EditProfile from './EditProfile';
 import Follow from './Follow'
 import Avatar from '@material-ui/core/Avatar';
 import { Link } from 'react-router-dom';
-import {Button} from "@material-ui/core/Button/Button";
 
 class Profiles extends Component {
 
@@ -32,9 +31,9 @@ class Profiles extends Component {
               {value.location}<br />
               <div>
                 following: <Link to={`following/${value.user_id}`}>{value.following_count}</Link>&nbsp;
-        
+
                 followers:  <Link to={`followers/${value.user_id}`}>{value.followers_count}</Link>&nbsp;
-               
+
               </div>
               <div>
                 {(value.profile_belongs_to_authenticated_user) ?
@@ -50,9 +49,7 @@ class Profiles extends Component {
                 }
               </div>
               <div>
-              <Link to={`userInfo/${value.id}`}><button>User Detail</button></Link>
-              {/* <Button onclick=(this.props.)>View {value.username} profile</Button> */}
-                
+                <Link to={`userInfo/${value.id}`}><button>User Detail</button></Link>
               </div>
             </li>
           ))
@@ -70,4 +67,4 @@ const mapStateToProps = ({ authReducer, profilereducer }) => {
   }
 }
 
-export default connect(mapStateToProps, { getProfiles,getUserProfile })(Profiles);
+export default connect(mapStateToProps, { getProfiles, getUserProfile })(Profiles);

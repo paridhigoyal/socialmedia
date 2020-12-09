@@ -9,6 +9,7 @@ import EditPost from './EditPost';
 import AddComment from './AddComment';
 import { Button } from '@material-ui/core';
 import EditComment from './EditComment';
+import CommentRate from './CommentRate'
 import PostRate from './PostRate';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
@@ -29,7 +30,6 @@ class Posts extends Component {
     this.props.deletePost(id)
     this.props.getPosts()
   }
-
 
   render() {
     const { posts } = this.props.postreducer
@@ -56,50 +56,44 @@ class Posts extends Component {
                   </div>
                   <PostRate value={value} pk={user.pk} /><br />
                   <div className="flex">
-                  <div >
-                    {value.post_belongs_to_authenticated_user &&
-                      <Button type="button" variant="contained"
-                        startIcon={<DeleteForeverRoundedIcon />}
-                        onClick={() => { this.deletePost(value.id) }}>
-                        DeletePost</Button>}
-                  </div> &nbsp;&nbsp;
+                    <div >
+                      {value.post_belongs_to_authenticated_user &&
+                        <Button type="button" variant="contained"
+                          startIcon={<DeleteForeverRoundedIcon />}
+                          onClick={() => { this.deletePost(value.id) }}>
+                          DeletePost</Button>}
+                    </div> &nbsp;&nbsp;
                   <div>
-                    {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
+                      {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
+                    </div>
                   </div>
-                  </div>
-               
-                 
 
                   <div>
                     <CommentIcon /> {value.comments_count} comments<br />
-
                     <AddComment id={value.id} />
                   </div>
                   <br />
 
                   {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5>  <hr></hr></b>}
                   <div>
-                   
+
                     <ul>
 
                       {value.comments.map((data, index) =>
                         (
-
                           <li key={index}>
                             <div className="flex">
-                            <b>{data.comment_by.username}</b>&nbsp;
+                              <b>{data.comment_by.username}</b>&nbsp;
                             <div>{data.content}</div>
-                            
-                              
+                              <CommentRate value={data} pk={user.pk} /><br />
+
                               <div>
-                            {user.pk === data.user && <DeleteForeverRoundedIcon
-                              onClick={() => { this.deleteComment(data.id) }}
-                              variant="contained" />}</div>   
-                             <div>{user.pk === data.user && <EditComment data={data} />} </div>
-                            <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
+                                {user.pk === data.user && <DeleteForeverRoundedIcon
+                                  onClick={() => { this.deleteComment(data.id) }}
+                                  variant="contained" />}</div>
+                              <div>{user.pk === data.user && <EditComment data={data} />} </div>
+                              <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
                             </div>
-
-
                           </li>
                         ))
                       }

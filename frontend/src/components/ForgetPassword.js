@@ -10,7 +10,6 @@ export class ForgetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
       email: ""
     }
   }

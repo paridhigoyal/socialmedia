@@ -54,7 +54,7 @@ export const asyncValidate = (values) => {
     .catch((error) => {
       const errors = error.response.data;
       alert(errors.username, errors.email)
-     
+
     });
 };
 

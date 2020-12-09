@@ -10,7 +10,6 @@ import {
 const initialState = {
   loading: false,
   profiles: [],
-  
   error: ''
 }
 
@@ -33,7 +32,6 @@ const profilereducer = (state = initialState, action) => {
         profiles: [],
         error: action.payload
       }
-      
 
     default: return state
   }

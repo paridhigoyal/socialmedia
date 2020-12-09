@@ -135,7 +135,7 @@ export class UserProfile extends Component {
           </FormControl>
           <br />
           <FormControl>
-         
+
             <PhoneInput
               type='text'
               value={this.state.contact_no}
@@ -180,17 +180,17 @@ export class UserProfile extends Component {
         <div className='Div'>
 
           <ul >
-            <center><h2>User Information..</h2></center><br/>
-            <b> <h3>{user.username}</h3></b><br/>
-                <EmailIcon />{user.email}<br /><br/>
-                  {user && user.first_name && user.first_name.toUpperCase()} &nbsp;
+            <center><h2>User Information..</h2></center><br />
+            <b> <h3>{user.username}</h3></b><br />
+            <EmailIcon />{user.email}<br /><br />
+            {user && user.first_name && user.first_name.toUpperCase()} &nbsp;
                   {user && user.last_name && user.last_name.toUpperCase()}<br /><br />
-                  <EditUserInfo value={data} />
+            <EditUserInfo value={data} />
             {profiles && profiles.map((value, index) => (
               <li key={index} >
-               
+
                 {pk === value.user_id ? <div>
-                  <Avatar alt="No profileimage" src={value.profile_picture} /> 
+                  <Avatar alt="No profileimage" src={value.profile_picture} />
                   < LocationOnIcon /> {value.location}<br /><br />
                   <b> {value.bio}</b><br /><br />
                   <b> {value.gender === 'F' && <p>Female</p>}</b>
@@ -208,10 +208,10 @@ export class UserProfile extends Component {
                     {(value.profile_belongs_to_authenticated_user) ?
                       <EditProfile value={value} /> :
                       <Button
-                        type="submit" color="primary" variant="contained" 
+                        type="submit" color="primary" variant="contained"
                         onClick={() => this.setState({ showForm: true })}
                       >
-                       Add Profile details..
+                        Add Profile details..
         </Button>
                     }
                   </div>
@@ -222,80 +222,80 @@ export class UserProfile extends Component {
             }
           </ul>
         </div>
-        
+
         <ul >
-              {posts.length === 0 && <h2>No posts available..</h2>}
-              {posts !== undefined && posts.map((value, index) => (
-              
-                <li key={index} className='Div'>
-                 {value.post_belongs_to_authenticated_user && <div>
-                  <h5> <b>{value.post_by.username} </b></h5>
+          {posts.length === 0 && <h2>No posts available..</h2>}
+          {posts !== undefined && posts.map((value, index) => (
 
-                  <div>
-                    <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
-                      src={value.image} alt="abc"></img><br />
-                    <b>{value.post_by !== undefined && value.post_by.username} </b>
-                    {value.caption}<br />
-                    <h6 style={{ color: 'gray' }}> <DateRangeOutlinedIcon /> {value.posted_at} </h6>
-                  </div>
-                  <div>
-                    {value.post_belongs_to_authenticated_user &&
-                      <Button type="button" variant="contained"
-                        startIcon={<DeleteForeverRoundedIcon />}
-                        onClick={() => { this.deletePost(value.id) }}>
-                        DeletePost</Button>}
-                  </div><br />
-                  <div>
-                    {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
-                  </div>
-                  <div>
-                    <ThumbUpIcon /> {value.likes_count} &nbsp;&nbsp;
+            <li key={index} className='Div'>
+              {value.post_belongs_to_authenticated_user && <div>
+                <h5> <b>{value.post_by.username} </b></h5>
+
+                <div>
+                  <img style={{ resizeMode: 'cover', width: 300, height: 200 }}
+                    src={value.image} alt="abc"></img><br />
+                  <b>{value.post_by !== undefined && value.post_by.username} </b>
+                  {value.caption}<br />
+                  <h6 style={{ color: 'gray' }}> <DateRangeOutlinedIcon /> {value.posted_at} </h6>
+                </div>
+                <div>
+                  {value.post_belongs_to_authenticated_user &&
+                    <Button type="button" variant="contained"
+                      startIcon={<DeleteForeverRoundedIcon />}
+                      onClick={() => { this.deletePost(value.id) }}>
+                      DeletePost</Button>}
+                </div><br />
+                <div>
+                  {value.post_belongs_to_authenticated_user && <EditPost value={value} />}
+                </div>
+                <div>
+                  <ThumbUpIcon /> {value.likes_count} &nbsp;&nbsp;
                      <ThumbDownIcon /> {value.dislikes_count}  &nbsp;<br />
-                  </div>
-                  <PostRate value={value} pk={user.pk} /><br />
+                </div>
+                <PostRate value={value} pk={user.pk} /><br />
 
-                  <div>
-                    <CommentIcon /> {value.comments_count} comments<br />
+                <div>
+                  <CommentIcon /> {value.comments_count} comments<br />
 
-                    <AddComment id={value.id} />
-                  </div>
-                  <br />
+                  <AddComment id={value.id} />
+                </div>
+                <br />
 
-                  <div> {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5></b>}</div>
-                  <div>
-                    <ul>
+                <div> {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5></b>}</div>
+                <div>
+                  <ul>
 
-                      {value.comments.map((data, index) =>
-                        (
+                    {value.comments.map((data, index) =>
+                      (
 
-                          <li key={index}>
-                            <b>{data.comment_by.username}</b>&nbsp;
+                        <li key={index}>
+                          <b>{data.comment_by.username}</b>&nbsp;
                             {data.content}
-                            {user.pk === data.user && <DeleteForeverRoundedIcon
-                              onClick={() => { this.deleteComment(data.id) }}
-                              variant="contained" />}
-                            {user.pk === data.user && <EditComment data={data} />}
-                            <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
+                          {user.pk === data.user && <DeleteForeverRoundedIcon
+                            onClick={() => { this.deleteComment(data.id) }}
+                            variant="contained" />}
+                          {user.pk === data.user && <EditComment data={data} />}
+                          <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
 
-                          </li>
-                        ))
-                      }
+                        </li>
+                      ))
+                    }
 
-                    </ul>
-                  </div>
-                  </div>}
-                </li>
-                  
-              ))
-              }
-              <br />
-            </ul>
+                  </ul>
+                </div>
+              </div>}
+            </li>
+
+          ))
+          }
+          <br />
+        </ul>
 
         <Button
-          type="button" color="primary" variant="contained" 
+          type="button" color="primary" variant="contained"
           onClick={() => this.setState({ showForm: true })}
         >
-           Add Profile details..
+          Add Profile details..
         </Button>
         {this.state.showForm ? this.showForm() : null}
       </div>
@@ -313,5 +313,7 @@ const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer, userPos
   }
 }
 
-export default connect(mapStateToProps, { createProfile, getProfiles, getUserInfo, 
-  getUserPosts })(UserProfile)
+export default connect(mapStateToProps, {
+  createProfile, getProfiles, getUserInfo,
+  getUserPosts
+})(UserProfile)

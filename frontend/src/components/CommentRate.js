@@ -1,9 +1,9 @@
-/** Posrrate component consists of like and dislike functionality. 
- * one can like , dislike and undo like and dislike the post */
+/** CommentRate component consists of like and dislike functionality. 
+ * one can like , dislike and undo like and dislike the comment */
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { makeLike, updateLike, deleteLike, getPosts } from '../actions/index'
+import { makeCommentLike, updateCommentLike, deleteCommentLike, getPosts } from '../actions/index'
 import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -23,11 +23,11 @@ export class PostRate extends Component {
 
   makeLike2 = (like) => {
     const values = {
-      rated_post: this.props.value.id,
+      rated_comment: this.props.value.id,
       rated_by: this.props.pk,
       liked: like
     }
-    this.props.makeLike(values)
+    this.props.makeCommentLike(values)
     this.props.getPosts()
   }
 
@@ -35,20 +35,18 @@ export class PostRate extends Component {
     const values = {
       liked: likeType,
     }
-    this.props.updateLike(values, id)
+    this.props.updateCommentLike(values, id)
     this.props.getPosts()
   }
   deleteLike = (id) => {
-    this.props.deleteLike(id)
+    this.props.deleteCommentLike(id)
     this.props.getPosts()
   }
 
   render() {
 
-    const like = this.props.value.likes.find((liked) => this.props.pk === liked.rated_by)
-    console.log(this.props.value.likes_count)
-
-
+    const like = this.props.value.like.find((liked) => this.props.pk === liked.rated_by)
+    
     return (
       <div>
         {like &&
@@ -84,4 +82,4 @@ export class PostRate extends Component {
   }
 }
 
-export default connect(null, { makeLike, updateLike, deleteLike, getPosts })(PostRate)
+export default connect(null, { makeCommentLike, updateCommentLike, deleteCommentLike, getPosts })(PostRate)

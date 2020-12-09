@@ -13,22 +13,23 @@ export class Followers extends Component {
   render() {
     const { followers } = this.props.followerreducer
     return (
-        <div>
-          <ul>
-          {followers.map((value,index)=>(
+      <div>
+        <ul>
+          {followers.map((value, index) => (
             <li key={index} className="Div>">
-           <b> <h4>{value.user.username}</h4></b>
+              <b> <h4>{value.user.username}</h4></b>
             </li>
           ))
-      }
-          </ul>
-        </div>
+          }
+        </ul>
+      </div>
     )
   }
 }
 
 const mapStateToProps = ({ authReducer, followerreducer }) => {
-  return ({authReducer,
+  return ({
+    authReducer,
     followerreducer
   })
 }

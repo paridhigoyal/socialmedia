@@ -9,30 +9,29 @@ import {
 
 const initialState = {
   loading: false,
-  user:[],
+  user: [],
   error: ''
 }
 
 const userInfoReducer = (state = initialState, action) => {
   switch (action.type) {
-      case USER_INFO_REQUEST:
-        return {
-          ...state,
-          loading: true
-        }
-      case USER_INFO_SUCCESS:
-        return {
-          loading: false,
-          user: action.payload,
-          error: ''
-        }
-      case USER_INFO_FAILURE:
-        return {
-          loading: false,
-          user: [],
-          error: action.payload
-        }
-
+    case USER_INFO_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case USER_INFO_SUCCESS:
+      return {
+        loading: false,
+        user: action.payload,
+        error: ''
+      }
+    case USER_INFO_FAILURE:
+      return {
+        loading: false,
+        user: [],
+        error: action.payload
+      }
 
     default: return state
   }

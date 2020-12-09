@@ -89,5 +89,4 @@ const mapStateToProps = ({ authReducer, postreducer, commentReducer }) => {
   }
 }
 
-
 export default connect(mapStateToProps, { addComment, getPosts })(AddComment)

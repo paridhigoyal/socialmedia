@@ -23,7 +23,6 @@ import UserProfile from './UserProfile';
 import UserProfileDetail from './UserProfileDetail';
 import {
   tryAutoSignIn,
-
 } from '../actions/index'
 import '../App.css'
 
@@ -32,8 +31,6 @@ function App(props) {
 
   useEffect(() => {
     tryAutoSignIn()
-
-
   }, [tryAutoSignIn]);
 
   return (
@@ -83,27 +80,9 @@ function App(props) {
               }
             }}>
           </Route>
-          <Route path='/followers/:id/' component={Followers}/>
-          {/* <Route path='/followers/:id/'
-            render={() => {
-              if (isAuthenticated) {
-                return <Followers />;
-              } else {
-                return <Redirect to="/login" />;
-              }
-            }}>
-          </Route> */}
-          <Route path="/userInfo/:userId" component={UserProfileDetail}/>
-          <Route path='/following/:id/' component={Following}/>
-          {/* <Route path='/following/:id/'
-            render={() => {
-              if (isAuthenticated) {
-                return <Following {...props} />;
-              } else {
-                return <Redirect to="/login" />;
-              }
-            }} /> */}
-
+          <Route path='/followers/:id/' component={Followers} />
+          <Route path="/userInfo/:userId" component={UserProfileDetail} />
+          <Route path='/following/:id/' component={Following} />
           <Route path='/userprofiles'
             render={() => {
               if (isAuthenticated) {
@@ -112,7 +91,6 @@ function App(props) {
                 return <Redirect to="/login" />;
               }
             }} />
-
         </Switch>
       </Router>
     </div>
