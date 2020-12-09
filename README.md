@@ -44,7 +44,6 @@ The explosion of social media project  is to changing the way of communication. 
 │   │   ├── actions<br/>
 │   │   │   ├── action_types.js<br/>
 │   │   │   ├── index.js<br/>
-│   │   │   └── setState.js<br/>
 │   │   ├── app<br/>
 │   │   │   └── store.js<br/>
 │   │   ├── App.css<br/>
@@ -54,31 +53,38 @@ The explosion of social media project  is to changing the way of communication. 
 │   │   │   ├── AddPost.js<br/>
 │   │   │   ├── App.js<br/>
 │   │   │   ├── ChangePassword.js<br/>
+|   │   │   ├── CommentRate.js<br/>
 │   │   │   ├── EditComment.js<br/>
 │   │   │   ├── EditPost.js<br/>
 │   │   │   ├── EditProfile.js<br/>
+|   │   │   ├── EditUserInfo.js<br/>
 │   │   │   ├── Followers.js<br/>
 │   │   │   ├── Following.js<br/>
 │   │   │   ├── Follow.js<br/>
 │   │   │   ├── ForgetPassword.js<br/>
 │   │   │   ├── Login.js<br/>
-│   │   │   ├── Nav.js<br/>
+│   │   │   ├── NavigationBar.js<br/>
 │   │   │   ├── PostRate.js<br/>
 │   │   │   ├── Posts.js<br/>
 │   │   │   ├── SearchUserPost.js<br/>
 │   │   │   ├── Signup.js<br/>
+|   │   │   ├── UserProfileDetail.js<br/>
 │   │   │   ├── UserProfile.js<br/>
 │   │   │   ├── UserProfiles.js<br/>
 │   │   │   └── validate.js<br/>
 │   │   ├── index.css<br/>
 │   │   ├── index.js<br/>
-│   │   ├── reducers<br/>
-│   │   │   ├── auth_reducer.js<br/>
-│   │   │   ├── commentReducer.js<br/>
-│   │   │   ├── followerreducer.js<br/>
-│   │   │   ├── index.js<br/>
-│   │   │   ├── postreducer.js<br/>
-│   │   │   └── profilereducer.js<br/>
+│   │   ├── reducers
+│   │   |   ├── auth_reducer.js
+│   │   |   ├── commentReducer.js
+│   │   |   ├── followerreducer.js
+│   │   |   ├── followingreducer.js
+│   │   |   ├── index.js
+│   │   |   ├── postreducer.js
+│   │   |   ├── profilereducer.js
+│   │   |   ├── userInfoReducer.js
+│   │   |   ├── userPostReducer.js
+│   │   |   └── userProfileReducer.js
 │   │   ├── serviceWorker.js<br/>
 │   │   ├── setupTests.js<br/>
 │   │   └── utility<br/>
