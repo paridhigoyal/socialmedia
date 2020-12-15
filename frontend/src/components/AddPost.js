@@ -49,10 +49,10 @@ export class AddPost extends Component {
 
   render() {
     return (<div className="Div">
-      <h2>Post Something......</h2>
+      <h2>Post Something......</h2><hr/>
       <form onSubmit={this.handleSubmit}>
         <FormControl>
-          <InputLabel>Upload Image:</InputLabel>
+         
           <Input type='file'
             name='image'
             accept="image/png, image/jpeg"

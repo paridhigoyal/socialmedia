@@ -13,11 +13,12 @@ export class Following extends Component {
   render() {
     const { followings } = this.props.followingreducer
     return (
-      <div>
+      <div className="Div">
         <ul>
+          <h2> Following List....</h2><hr/>
           {followings.map((value, index) => (
             <li key={index} className="Div>">
-              {value.is_followed_by.username}
+               <b> <h4>{value.is_followed_by.username}</h4></b>
             </li>
           ))
           }

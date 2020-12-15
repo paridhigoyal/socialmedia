@@ -180,7 +180,7 @@ export class UserProfile extends Component {
         <div className='Div'>
 
           <ul >
-            <center><h2>User Information..</h2></center><br />
+            <center><h2>User Information..</h2></center><hr/><br />
             <b> <h3>{user.username}</h3></b><br />
             <EmailIcon />{user.email}<br /><br />
             {user && user.first_name && user.first_name.toUpperCase()} &nbsp;

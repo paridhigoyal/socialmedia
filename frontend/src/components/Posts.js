@@ -10,6 +10,7 @@ import AddComment from './AddComment';
 import { Button } from '@material-ui/core';
 import EditComment from './EditComment';
 import CommentRate from './CommentRate'
+import FavouritePost from './FavouritePost'
 import PostRate from './PostRate';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import DateRangeOutlinedIcon from '@material-ui/icons/DateRangeOutlined';
@@ -38,13 +39,16 @@ class Posts extends Component {
     return (
       <div className='App' >
         <div >
-          {(user !== undefined && user.pk) && <div>
+          
+          {(user !== undefined && user.pk) && <div >
+            <h2> Posts...</h2><hr/>
             <ul >
+         
               {posts.length === 0 && <h2>No posts available..</h2>}
               {posts !== undefined && posts.map((value, index) => (
 
                 <li key={index} className='Div'>
-
+                
                   <h5> <b>{value.post_by.username} </b></h5>
 
                   <div>
@@ -54,7 +58,9 @@ class Posts extends Component {
                     {value.caption}<br />
                     <h6 style={{ color: 'gray' }}> <DateRangeOutlinedIcon /> {value.posted_at} </h6>
                   </div>
-                  <PostRate value={value} pk={user.pk} /><br />
+                  <div className="flex">
+                  <div><FavouritePost value={value} pk={user.pk} /></div> &nbsp; &nbsp;
+                  <div><PostRate value={value} pk={user.pk} /></div></div>
                   <div className="flex">
                     <div >
                       {value.post_belongs_to_authenticated_user &&
@@ -74,7 +80,8 @@ class Posts extends Component {
                   </div>
                   <br />
 
-                  {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5>  <hr></hr></b>}
+                  {value.comments_count !== 0 && <b><h5><CommentIcon /> comments.....</h5> 
+                   <hr></hr></b>}
                   <div>
 
                     <ul>
@@ -82,17 +89,17 @@ class Posts extends Component {
                       {value.comments.map((data, index) =>
                         (
                           <li key={index}>
-                            <div className="flex">
+                            <div className="comment">
                               <b>{data.comment_by.username}</b>&nbsp;
                             <div>{data.content}</div>
-                              <CommentRate value={data} pk={user.pk} /><br />
+                             <div> <CommentRate value={data} pk={user.pk} /></div>
 
                               <div>
                                 {user.pk === data.user && <DeleteForeverRoundedIcon
                                   onClick={() => { this.deleteComment(data.id) }}
                                   variant="contained" />}</div>
                               <div>{user.pk === data.user && <EditComment data={data} />} </div>
-                              <h6 style={{ color: 'gray' }}>{data.commented_at}</h6>
+                              <div className="datetime"><h6 style={{ color: 'gray' }}>{data.commented_at}</h6></div>
                             </div>
                           </li>
                         ))

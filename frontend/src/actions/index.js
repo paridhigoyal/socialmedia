@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { baseURL } from '../utility/index';
-import Cookies from 'js-cookie';
 import {
   LOGIN,
   LOGIN_ERROR,
@@ -48,6 +47,11 @@ import {
   SET_COMMENT_LIKE,
   UPDATE_COMMENT_LIKE,
   DELETE_COMMENT_LIKE,
+  UNMARK_POST_AS_FAVOURITE,
+  MARK_POST_AS_FAVOURITE,
+  USER_FAV_REQUEST,
+  USER_FAV_SUCCESS,
+  USER_FAV_FAILURE
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -195,6 +199,48 @@ export const deleteLike = (id) => {
     })
   }
 }
+
+export const markPostFavourite = (values) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    axios.post(`${baseURL}/favourite/`, values, config).then((res) => {
+      dispatch({
+        type: MARK_POST_AS_FAVOURITE,
+        payload: res.data
+      })
+
+    })
+  }
+}
+
+export const unmarkPostFavourite = (id) => {
+  return (dispatch, getState) => {
+    const config = setConfig(getState)
+    axios.delete(`${baseURL}/favourite/${id}/`, config).then((res) => {
+      dispatch({
+        type: UNMARK_POST_AS_FAVOURITE,
+        payload: res.data
+      })
+    })
+  }
+}
+
+export const getUserFav = (id) => (dispatch, getState) => {
+  const config = setConfig(getState)
+  dispatch({ type: USER_FAV_REQUEST });
+  axios
+    .get(`${baseURL}/favourite/${id}/favourite_posts/`, config)
+    .then((response) => {
+      console.log(response.data)
+      dispatch({ type: USER_FAV_SUCCESS, payload: response.data });
+
+    })
+    .catch((error) => {
+      dispatch({ type: USER_FAV_FAILURE, payload: error.message });
+    })
+}
+
+
 
 /**searchuserPost is for searching userposts */
 export const searchUserPost = (username) => {
@@ -353,14 +399,16 @@ export const getProfiles = () => (dispatch, getState) => {
 /**follow is for calling follow api  */
 export const follow = (id) => (dispatch, getState) => {
   const config = setConfig(getState)
+
   axios
-    .get(`${baseURL}/follow/${id}/`, config, {
+    .get(`${baseURL}/follow/${id}/`,  config, {
       headers: {
-        'Authorization': Cookies.get('sessionid'),
-        'X-CSRFToken': Cookies.get('csrftoken')
+        'Content-Type': 'application/json',
+        // 'Authorization': Cookies.get('sessionid'),
       },
     })
     .then((response) => {
+      console.log(response)
       dispatch({ type: GET_FOLLOW_SUCCESS, payload: response.data.results });
     })
     .catch((error) => {

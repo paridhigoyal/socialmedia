@@ -51,6 +51,7 @@ class Profiles extends Component {
               <div>
                 <Link to={`userInfo/${value.id}`}><button>User Detail</button></Link>
               </div>
+              <hr/>
             </li>
           ))
           }

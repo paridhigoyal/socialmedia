@@ -26,7 +26,7 @@ class Login extends Component {
 
     return (
       <div className='Div'>
-        <h2>Login</h2>
+        <h2>Login</h2> <hr/>
         <form onSubmit={this.onFormSubmit.bind(this)} >
           <FormControl>
             <InputLabel>Username</InputLabel>

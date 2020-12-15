@@ -120,10 +120,10 @@ class CommentRateSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     comment_by = serializers.DictField(
         child=serializers.CharField(), source='get_user', read_only=True)
+    commented_at = serializers.CharField(source='get_date', read_only=True)
     like = CommentRateSerializer(many=True, read_only=True)
     likes_count = serializers.SerializerMethodField(read_only=True)
     dislikes_count = serializers.SerializerMethodField(read_only=True)
-  
 
     def get_likes_count(self, obj):
         return obj.like.filter(liked=True).count()
@@ -142,6 +142,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     post_belongs_to_authenticated_user = serializers.BooleanField(
         source='get_post_belongs_to_authenticated_user', read_only=True)
+    posted_at = serializers.CharField(source='get_date', read_only=True)
     post_by = serializers.DictField(
         child=serializers.CharField(), source='get_user', read_only=True)
     comments_count = serializers.SerializerMethodField(read_only=True)
@@ -166,7 +167,8 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id', 'post_belongs_to_authenticated_user', 'post_by',
                   'caption', 'image',
                   'likes_count', 'dislikes_count',
-                  'comments_count', 'posted_at', 'comments', 'likes', 'favourites']
+                  'comments_count', 'posted_at', 'comments',
+                  'likes', 'favourites']
         write_only_fields = ['caption', 'image', ]
         read_only_fields = ('id', 'posted_at',)
 

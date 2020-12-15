@@ -13,8 +13,9 @@ export class Followers extends Component {
   render() {
     const { followers } = this.props.followerreducer
     return (
-      <div>
+      <div className="Div">
         <ul>
+          <h2>Followers List...</h2><hr/>
           {followers.map((value, index) => (
             <li key={index} className="Div>">
               <b> <h4>{value.user.username}</h4></b>

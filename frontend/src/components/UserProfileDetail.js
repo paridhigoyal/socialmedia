@@ -28,7 +28,7 @@ class UserProfileDetail extends Component {
               <b> <h3>{profile.username}</h3></b><br />
               {profile && profile.first_name && profile.first_name.toUpperCase()} &nbsp;
         {profile && profile.last_name && profile.last_name.toUpperCase()}<br /><br />
-              < LocationOnIcon /> {profile.location}<br /><br />
+              <LocationOnIcon /> {profile.location}<br /><br />
               <b> {profile.bio}</b><br /><br />
               <b> {profile.gender === 'F' && <p>Female</p>}</b>
               <b> {profile.gender === 'M' && <p>Male</p>}</b>
@@ -37,7 +37,7 @@ class UserProfileDetail extends Component {
               <div>
                 following: <a href={`/following/${profile.user_id}`} id="following">
                   {profile.following_count}</a>&nbsp;
-      followers: <a href={`/followers/${profile.user_id}`} id="followers">
+              followers: <a href={`/followers/${profile.user_id}`} id="followers">
                   {profile.followers_count}</a>
               </div>
             </li>

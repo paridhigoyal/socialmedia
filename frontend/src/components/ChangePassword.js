@@ -97,7 +97,7 @@ export class ChangePassword extends Component {
   render() {
     return (
       <div className='Div'>
-        <h2>Change Password</h2>
+        <h2>Change Password</h2><hr/>
         <form onSubmit={this.handleOnSubmit}>
           <FormControl>
             <InputLabel>New Password</InputLabel>

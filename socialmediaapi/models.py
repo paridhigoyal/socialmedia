@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from django_currentuser.db.models import CurrentUserField
@@ -63,6 +64,28 @@ class Post(models.Model):
         user_dict = vars(self.post_by)
         return {"id": user_dict["id"], "username": user_dict["username"]}
 
+    def get_date(self):
+        dateAndTime = datetime.now()
+        noOfDays = self.posted_at.date() - dateAndTime.date()
+        minutes = 60-(self.posted_at.minute - dateAndTime.minute)
+        diffOfHour = 24-(dateAndTime.hour - self.posted_at.hour)
+
+        if self.posted_at.day == dateAndTime.day:
+
+            if minutes < 60 and diffOfHour==0:
+                return str(minutes) + " minutes ago"
+            else:
+                return str(diffOfHour) + " hours ago"
+        else:
+            if noOfDays == 1:
+                return "yesterday"
+            elif self.posted_at.year == dateAndTime.year:
+                return '{:%B %d }'.format(self.posted_at)
+            else:
+                return '{:%B %d,%Y }'.format(self.posted_at)
+
+        return self.posted_at
+
     def __str__(self):
         return str(self.id)
 
@@ -108,6 +131,26 @@ class Comment(models.Model):
     def get_user(self):
         user_dict = vars(self.user)
         return {"id": user_dict["id"], "username": user_dict["username"]}
+
+    def get_date(self):
+        dateAndTime = datetime.now()
+        noOfDays = self.commented_at.date() - dateAndTime.date()
+        minutes = 60-(self.commented_at.minute - dateAndTime.minute)
+        diffOfHour =24-( dateAndTime.hour - self.commented_at.hour)
+
+        if self.commented_at.day == dateAndTime.day:
+            if minutes < 60 and diffOfHour==0:
+                return str(minutes) + " minutes ago"
+            if diffOfHour > 0 :
+                return str(diffOfHour) + " hours ago"
+        else:
+            if noOfDays == 1:
+                return "yesterday"
+            elif self.commented_at.year == dateAndTime.year:
+                return '{:%B %d }'.format(self.commented_at)
+            else:
+                return '{:%B %d,%y }'.format(self.commented_at)
+        return self.commented_at
 
     def __str__(self):
         return str(self.id)

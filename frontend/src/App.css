@@ -47,3 +47,10 @@ ul {
   display: flex;
   justify-content: center;
 }
+.comment{
+  display: flex;
+  text-align: left;
+}
+.datetime{
+ text-align: right ;
+}
