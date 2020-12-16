@@ -39,7 +39,6 @@ export class FavouritePost extends Component {
      const fav = this.props.value.favourites.find((fav) => this.props.pk === fav.favourite_by)
     return (
       <div>
-        {console.log(fav)}
         {fav &&
           <div>
             {fav.favourite && <div>

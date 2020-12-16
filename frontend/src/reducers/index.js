@@ -9,6 +9,8 @@ import userInfoReducer from './userInfoReducer'
 import followingreducer from './followingreducer'
 import userProfileReducer from './userProfileReducer'
 import userPostReducer from './userPostReducer'
+import userFavPostReducer from './userFavPostReducer'
+import postDetailReducer from './postDeatilReducer'
 export default combineReducers({
   authReducer,
   form: formReducer,
@@ -19,5 +21,7 @@ export default combineReducers({
   userInfoReducer,
   followingreducer,
   userProfileReducer,
-  userPostReducer
+  userPostReducer,
+  userFavPostReducer,
+  postDetailReducer
 })

@@ -54,3 +54,18 @@ ul {
 .datetime{
  text-align: right ;
 }
+.block{
+  float: left;
+  block-size: fit-content;
+  width: 20%;
+  background-color: #f0f0f0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3.8em;
+  padding-right: 3.8em;
+  padding-top: 2em;
+  margin-top: 40px;
+  padding-bottom: 1.2em;
+  text-align: center;
+}

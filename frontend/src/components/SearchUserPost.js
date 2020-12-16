@@ -7,7 +7,7 @@ import { FormControl, InputAdornment } from '@material-ui/core';
 import styled from 'styled-components';
 import { Form } from 'react-bootstrap';
 import InputBase from '@material-ui/core/InputBase';
-import { searchUserPost } from '../actions/index'
+import {searchUserPost} from '../actions/index'
 
 const Styles = styled.div`
 
@@ -18,7 +18,7 @@ const Styles = styled.div`
   }
 `;
 
-class SearchUserPost extends Component {
+export class SearchUserPost extends Component {
   constructor(props) {
     super(props)
     this.state = {

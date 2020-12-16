@@ -51,7 +51,10 @@ import {
   MARK_POST_AS_FAVOURITE,
   USER_FAV_REQUEST,
   USER_FAV_SUCCESS,
-  USER_FAV_FAILURE
+  USER_FAV_FAILURE,
+  FAV_POSTS_SUCCESS,
+  FAV_POSTS_FAILURE,
+  FAV_POSTS_REQUEST,
 } from "./action_types"
 
 /**tryAutoSignIn function is for taking value of login credentials even after
@@ -231,15 +234,28 @@ export const getUserFav = (id) => (dispatch, getState) => {
   axios
     .get(`${baseURL}/favourite/${id}/favourite_posts/`, config)
     .then((response) => {
-      console.log(response.data)
-      dispatch({ type: USER_FAV_SUCCESS, payload: response.data });
-
+      dispatch({ type: USER_FAV_SUCCESS, payload: response.data.results });
     })
     .catch((error) => {
       dispatch({ type: USER_FAV_FAILURE, payload: error.message });
     })
 }
 
+export const getFavPostDetail = (id) =>{
+ return(dispatch, getState) => {
+  const config = setConfig(getState)
+  dispatch({ type: FAV_POSTS_REQUEST });
+  axios
+    .get(`${baseURL}/post/${id}/`, config)
+    .then((response) => {
+      console.log(response)
+      dispatch({ type: FAV_POSTS_SUCCESS, payload: response.data.results });
+    })
+    .catch((error) => {
+      dispatch({ type: FAV_POSTS_FAILURE, payload: error.message });
+    });
+};
+}
 
 
 /**searchuserPost is for searching userposts */
@@ -423,7 +439,7 @@ export const getFollowers = (id) => (dispatch, getState) => {
   axios
     .get(`${baseURL}/followers/${id}`, config)
     .then((response) => {
-      console.log(response.data.results)
+ 
       dispatch({ type: FOLLOWER_SUCCESS, payload: response.data.results });
     })
     .catch((error) => {
@@ -438,7 +454,7 @@ export const getFollowing = (id) => (dispatch, getState) => {
   axios
     .get(`${baseURL}/following/${id}`, config)
     .then((response) => {
-      console.log(response.data.results)
+
       dispatch({ type: FOLLOWING_SUCCESS, payload: response.data.results });
     })
     .catch((error) => {

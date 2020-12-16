@@ -3,7 +3,7 @@
 import React, { Component } from 'react'
 import { Button, Radio, FormControl, FormLabel, RadioGroup, FormControlLabel, InputLabel, Input } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createProfile, getProfiles, getUserInfo, getUserPosts } from '../actions/index'
+import { createProfile, getProfiles, getUserInfo, getUserPosts, getUserFav } from '../actions/index'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import Avatar from '@material-ui/core/Avatar';
@@ -82,6 +82,7 @@ export class UserProfile extends Component {
     this.props.getUserInfo();
     this.props.getProfiles();
     this.props.getUserPosts(pk);
+    this.props.getUserFav(pk);
   }
 
   handleSubmit = (e) => {
@@ -171,14 +172,29 @@ export class UserProfile extends Component {
 
   render() {
     const { posts } = this.props.userPostReducer
+    const { favposts } = this.props.userFavPostReducer
     const { profiles } = this.props.profilereducer
     const { user } = this.props.userInfoReducer
     const { pk, username, first_name, email, last_name } = this.props.authReducer.user
     const data = { pk, username, first_name, email, last_name }
     return (
       <div>
+         <ul className="block">
+          {favposts.length===0 && <h2>No Fav Posts..</h2> }
+          {favposts.length!==0 && <div>
+            <h2>Fav Posts... </h2>
+          {favposts.map((value, index)=>(
+            <li key={index}>
+               click to view post... <a href={`/post/${value.favourite_post}`} >
+               {value.favourite_post}</a>&nbsp;
+       
+            </li>
+          ))}
+          
+          </div>}
+        </ul>
         <div className='Div'>
-
+       
           <ul >
             <center><h2>User Information..</h2></center><hr/><br />
             <b> <h3>{user.username}</h3></b><br />
@@ -222,7 +238,7 @@ export class UserProfile extends Component {
             }
           </ul>
         </div>
-
+       
         <ul >
           {posts.length === 0 && <h2>No posts available..</h2>}
           {posts !== undefined && posts.map((value, index) => (
@@ -290,6 +306,7 @@ export class UserProfile extends Component {
           }
           <br />
         </ul>
+       
 
         <Button
           type="button" color="primary" variant="contained"
@@ -303,17 +320,20 @@ export class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = ({ authReducer, profilereducer, userInfoReducer, userPostReducer }) => {
+const mapStateToProps = (
+  { authReducer, profilereducer, userInfoReducer,userPostReducer, userFavPostReducer }
+  ) => {
   return {
     authReducer,
     profilereducer,
     userInfoReducer,
-    userPostReducer
+    userPostReducer,
+    userFavPostReducer
 
   }
 }
 
 export default connect(mapStateToProps, {
   createProfile, getProfiles, getUserInfo,
-  getUserPosts
+  getUserPosts, getUserFav
 })(UserProfile)
