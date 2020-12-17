@@ -98,7 +98,7 @@ class Posts extends Component {
                                 {user.pk === data.user && <DeleteForeverRoundedIcon
                                   onClick={() => { this.deleteComment(data.id) }}
                                   variant="contained" />}</div>
-                              <div>{user.pk === data.user && <EditComment data={data} />} </div>
+                              <div>{user.pk === data.user && <EditComment data={data} />} </div> &nbsp;
                               <div className="datetime"><h6 style={{ color: 'gray' }}>{data.commented_at}</h6></div>
                             </div>
                           </li>

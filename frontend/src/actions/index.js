@@ -249,7 +249,7 @@ export const getFavPostDetail = (id) =>{
     .get(`${baseURL}/post/${id}/`, config)
     .then((response) => {
       console.log(response)
-      dispatch({ type: FAV_POSTS_SUCCESS, payload: response.data.results });
+      dispatch({ type: FAV_POSTS_SUCCESS, payload: response.data });
     })
     .catch((error) => {
       dispatch({ type: FAV_POSTS_FAILURE, payload: error.message });
@@ -347,6 +347,7 @@ export const addPost = (values) => {
         type: POST_CREATED,
         payload: res.data
       })
+      alert('Post created successfully!!')
 
     })
   }

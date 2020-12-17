@@ -41,6 +41,7 @@ class Profiles extends Component {
                   <p></p>
                 }
               </div>
+             
               <div >
                 {
                   (!value.profile_belongs_to_authenticated_user)
@@ -48,8 +49,9 @@ class Profiles extends Component {
                     : <b>  </b>
                 }
               </div>
+              <br/>
               <div>
-                <Link to={`userInfo/${value.id}`}><button>User Detail</button></Link>
+                <Link to={`userInfo/${value.id}`}><button>USER DETAIL</button></Link>
               </div>
               <hr/>
             </li>

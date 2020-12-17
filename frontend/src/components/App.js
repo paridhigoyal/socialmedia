@@ -21,7 +21,6 @@ import ForgetPassword from './ForgetPassword';
 import ChangePassword from './ChangePassword';
 import UserProfile from './UserProfile';
 import UserProfileDetail from './UserProfileDetail';
-import ViewFavPost from './ViewFavPost'
 import {
   tryAutoSignIn,
 } from '../actions/index'
@@ -82,7 +81,6 @@ function App(props) {
             }}>
           </Route>
           <Route path='/followers/:id/' component={Followers} />
-          <Route path='/post/:id/' component={ViewFavPost} />
           <Route path="/userInfo/:userId" component={UserProfileDetail} />
           <Route path='/following/:id/' component={Following} />
           <Route path='/userprofiles'

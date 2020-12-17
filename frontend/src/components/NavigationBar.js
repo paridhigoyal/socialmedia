@@ -59,9 +59,7 @@ class NavigationBar extends Component {
             Post Something..<i className="fa fa-user ml-1"></i>
              </Link> &nbsp;&nbsp;&nbsp;
              
-             <Link className="btn btn-sm btn-outline-info" to="/changepassword">
-               changepassword<i className="fa fa-user ml-1"></i>
-             </Link> &nbsp; &nbsp;&nbsp;
+             
              <Link className="btn btn-sm btn-outline-info" to="/userprofiles">
               Profiles..<i className="fa fa-user ml-1"></i>
              </Link> &nbsp;&nbsp;&nbsp;
