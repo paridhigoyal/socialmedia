@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django_currentuser.db.models import CurrentUserField
@@ -68,11 +69,11 @@ class Post(models.Model):
         dateAndTime = datetime.now()
         noOfDays = self.posted_at.date() - dateAndTime.date()
         minutes = 60-(self.posted_at.minute - dateAndTime.minute)
-        diffOfHour = 24-(dateAndTime.hour - self.posted_at.hour)
+        diffOfHour = (dateAndTime.hour - self.posted_at.hour)
 
         if self.posted_at.day == dateAndTime.day:
 
-            if minutes < 60 and diffOfHour==0:
+            if minutes < 60 and diffOfHour == 0:
                 return str(minutes) + " minutes ago"
             else:
                 return str(diffOfHour) + " hours ago"
@@ -136,12 +137,12 @@ class Comment(models.Model):
         dateAndTime = datetime.now()
         noOfDays = self.commented_at.date() - dateAndTime.date()
         minutes = 60-(self.commented_at.minute - dateAndTime.minute)
-        diffOfHour =24-( dateAndTime.hour - self.commented_at.hour)
+        diffOfHour = 24-(dateAndTime.hour - self.commented_at.hour)
 
         if self.commented_at.day == dateAndTime.day:
-            if minutes < 60 and diffOfHour==0:
+            if minutes < 60 and diffOfHour == 0:
                 return str(minutes) + " minutes ago"
-            if diffOfHour > 0 :
+            if diffOfHour > 0:
                 return str(diffOfHour) + " hours ago"
         else:
             if noOfDays == 1:
